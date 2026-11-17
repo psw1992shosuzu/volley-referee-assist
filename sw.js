@@ -1,5 +1,4 @@
-// v1.1 GitHub Pages / Android PWA: path-relative files work below /repo-name/ too.
-const CACHE = 'volley-referee-assist-v12-20261117';
+const CACHE = 'volley-referee-assist-v12-20261117-fixed';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './diagnostics.html'];
 const SCOPE = new URL('./', self.location.href).pathname;
 self.addEventListener('install', event => {
@@ -15,14 +14,14 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin || !url.pathname.startsWith(SCOPE)) return;
   if (request.mode === 'navigate') {
-    // Online: refresh before rendering. Offline: use cached local HTML.
     event.respondWith(fetch(request).then(response => {
       if (response.ok) {
         const copy = response.clone();
-        event.waitUntil(caches.open(CACHE).then(cache => cache.put('./index.html', copy)).catch(() => {}));
+        // Cache each navigation under its own URL: opening diagnostics must never overwrite index.html.
+        event.waitUntil(caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {}));
       }
       return response;
-    }).catch(() => caches.match('./index.html')));
+    }).catch(async () => (await caches.match(request)) || (await caches.match('./index.html')) || Response.error()));
     return;
   }
   event.respondWith(caches.match(request).then(cached => cached || fetch(request)));
