@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "VOLLEY REFEREE ASSIST｜Android審判補助",
+  "short_name": "Volley審判",
+  "description": "6人制・9人制の審判補助。得点・サービス順・選手交代・タイマーをAndroid横画面で管理（端末内保存）",
+  "lang": "ja",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f5f8",
+  "theme_color": "#10334b",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b"><link rel="manifest" href="./manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes">
+<title>VOLLEY REFEREE ASSIST v1.1｜Android・PWA版</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP","Yu Gothic",sans-serif;color:#19384b;background:#f2f5f8;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer;touch-action:manipulation}header{background:#10334b;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:5}header .head{max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:auto}header h1{font-size:17px;margin:0;letter-spacing:.01em}header .meta{font-size:11px;color:#bbd6e4}.pill{font-size:12px;padding:6px 9px;background:#ffffff22;border-radius:99px;white-space:nowrap}main{max-width:1100px;margin:auto;padding:12px 12px 85px}.alert{padding:11px;border-radius:10px;font-size:12px;line-height:1.65;background:#fff9e9;border:1px solid #e8ce85;margin-bottom:10px}.status{padding:13px;border-radius:11px;background:#ecf7f2;border:1px solid #b5dbc5;font-size:13px;margin-bottom:10px}.status.warn{background:#fff5e8;border-color:#f1cea2}.status.error{background:#fff0ef;border-color:#eeb4b2}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}.tabs button{background:#fff;border:1px solid #d2dfe5;border-radius:9px;padding:12px 4px;font-weight:800;color:#425d6d;font-size:13px}.tabs button.on{color:#fff;background:#185778;border-color:#185778}.card{background:#fff;border:1px solid #dce6eb;border-radius:13px;padding:14px;margin-bottom:11px;box-shadow:0 2px 5px #15324909}.card h2{font-size:15px;margin:0 0 10px;line-height:1.4}.help{font-size:12px;color:#577183;line-height:1.6}.tiny{font-size:11px;color:#657c8c}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:9px}.teamcard{border:2px solid #d3e3eb;background:#f6fafc;border-radius:13px;text-align:center;padding:10px}.teamcard.onserve{border-color:#15816b;background:#f1fbf7}.tname{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pts{font-size:clamp(47px,11vw,74px);font-weight:850;font-variant-numeric:tabular-nums;line-height:1.2}.serve{font-size:12px;color:#0e745d;font-weight:850;min-height:22px}.serve.no{color:#81919b}.pointbtn{background:#13648e;border:0;color:#fff;border-radius:10px;width:100%;padding:15px 4px;min-height:66px;font-size:17px;font-weight:850}.teamcard.onserve .pointbtn{background:#168064}.pointbtn:disabled{background:#aabcc5}.hero{padding:12px;text-align:center;border-radius:12px;background:#e8f2f6;margin:10px 0}.hero .label{font-size:12px;color:#546c7b;font-weight:800}.hero .number{font-size:clamp(27px,7vw,42px);font-weight:900;line-height:1.3;color:#075f4a}.hero .second{font-weight:800;color:#a45e03}.rowbtn{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:9px;padding:11px 10px;font-size:13px;font-weight:800;min-height:46px}.btn:disabled{opacity:.38;cursor:not-allowed}.btn-primary{background:#136a96;color:white}.btn-sub{background:#e7f0f5;color:#1d506b}.btn-mute{background:#f1f3f5;color:#445e6b}.btn-danger{background:#fff0eb;color:#a03428}.btn-wide{width:100%}.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.court{border:1px solid #d8e4ea;border-radius:11px;padding:10px;min-width:0}.court-head{display:flex;justify-content:space-between;gap:6px;font-size:12px;font-weight:800;margin-bottom:7px}.net{height:4px;background:#a5bbc7;border-radius:4px;margin-bottom:7px}.courtgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.player{background:#eff4f7;border:1px solid #dde7ec;min-height:63px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:3px 1px}.player strong{font-size:clamp(17px,5vw,22px)}.player small{font-size:10px;color:#5b7383}.player.hot{background:#d8f5e8;border-color:#20aa7c}.player.next{background:#fff2d6;border-color:#e7b852}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{display:flex;flex-direction:column;gap:5px;margin:0 0 11px;font-size:12px;color:#335469;font-weight:800;min-width:0}.field input,.field textarea,.field select{min-width:0;width:100%;font-size:15px;padding:10px;border-radius:9px;border:1px solid #bed1db;background:white;color:#16374a;min-height:44px}.field textarea{resize:vertical;min-height:72px}.lineup{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lineup .field{margin-bottom:6px}.lineup input{text-align:center;font-weight:800}.controlhead{font-size:13px;font-weight:850;color:#234c62;padding-bottom:8px}.panelhead{display:flex;justify-content:space-between;gap:7px;align-items:center}.stack{display:flex;flex-wrap:wrap;gap:6px}.tag{background:#eaf0f4;border-radius:6px;padding:4px 7px;font-size:11px;color:#3e6174;font-weight:750}.event{border-bottom:1px solid #e7edf0;padding:9px 0}.event:last-child{border:0}.event b{font-size:13px}.event div{font-size:11px;color:#657887}.queue{padding:8px 10px;border:1px solid #c9dfe9;background:#f3f9fc;border-radius:8px;margin:10px 0}.queue p{font-size:12px;margin:4px 0}.ready{display:inline-flex;align-items:center;gap:5px;color:#126b58;font-size:12px;font-weight:850}.bad{color:#a6331f}.layout{display:grid;grid-template-columns:1fr;gap:0}.lock{font-weight:750;color:#924d13}.footer{font-size:12px;color:#6d8390;margin:15px 4px}.banner{background:#e8f2f8;border-left:4px solid #2b779e;padding:11px 12px;font-size:12px;line-height:1.6;border-radius:7px;margin-bottom:12px}.danger-note{background:#fff3ea;border-color:#e2ba97}.hidden{display:none!important}a{color:#135d83;word-break:break-word}.checkblock{margin:11px 0;padding:12px;background:#f7fafb;border-radius:9px}.checkblock label{font-size:13px;display:flex;align-items:center;gap:8px}.checkblock input{width:18px;height:18px}.sticky-foot{position:sticky;bottom:0;background:#f2f5f8e8;backdrop-filter:blur(5px);padding:8px 0 2px}.smallskip{display:inline-block;font-size:11px;color:#586f81}.guide li{margin:5px 0}@media(max-width:590px){main{padding:9px 9px 70px}.card{padding:11px}.cols{grid-template-columns:1fr}.player{min-height:58px}.pointbtn{min-height:67px}}@media(min-width:880px){.layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.layout>div{min-width:0}}
+
+/* v0.4: single-screen referee dashboard, portrait first */
+body.live-game{height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:#eaf0f5}
+body.live-game header{position:relative;flex:none;padding:7px 11px}
+body.live-game header h1{font-size:13px;letter-spacing:.025em}
+body.live-game header .meta{font-size:10px}
+body.live-game .pill{font-size:11px;padding:5px 7px}
+body.live-game main{flex:1;min-height:0;max-width:850px;width:100%;display:flex;flex-direction:column;overflow-y:auto;padding:6px 7px max(6px,env(safe-area-inset-bottom))}
+body.live-game .alert{display:none}
+body.live-game .tabs{flex:none;gap:4px;margin:0 0 5px}
+body.live-game .tabs button{font-size:12px;min-height:35px;padding:7px 1px;border-radius:7px}
+body.live-game #contents{flex:1;min-height:0;display:flex;flex-direction:column}
+body.live-game #notice{position:fixed;top:44px;left:50%;transform:translateX(-50%);width:min(95vw,600px);z-index:30;pointer-events:none}
+body.live-game #notice .status{box-shadow:0 5px 20px #1d345530;padding:9px;margin:0;font-size:12px}
+.live-dashboard{width:100%;min-height:100%;display:flex;flex-direction:column;gap:8px;justify-content:flex-start;color:#17384d}
+.live-scores{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:none}
+.live-score-team{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;min-width:0;border:2px solid #cfdee7;border-radius:12px;background:#fff;color:#173d55;min-height:118px;padding:7px 6px}
+.live-score-team.is-serving{border-color:#00876c;background:#e6f8f0}
+.live-score-team:disabled{opacity:.65}
+.live-team-name{font-size:14px;line-height:1.2;font-weight:800;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.live-score-number{font-size:clamp(40px,11vw,58px);font-weight:900;line-height:1.12;font-variant-numeric:tabular-nums}
+.live-score-action{display:block;width:100%;border-radius:7px;background:#155f8c;color:#fff;font-size:12px;font-weight:800;padding:5px 8px;text-align:center}
+.live-score-team.is-serving .live-score-action{background:#078266}
+.live-serve-band{background:#0d3b56;color:#fff;border-radius:10px;display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:7px 9px;position:relative;flex:none}
+.live-serve-band>div{display:flex;flex-direction:column;min-width:0;gap:2px}
+.live-serve-band>div span{font-size:10px;color:#b9dbe8}
+.live-serve-band>div strong{font-size:clamp(14px,4vw,19px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-serve-band em{position:absolute;right:7px;top:7px;font-size:11px;color:#f9d68a;font-weight:800;font-style:normal;background:#244e65;border-radius:5px;padding:2px 4px}
+.rotation-block{background:#fff;border:1px solid #d8e4ec;border-radius:11px;padding:7px 7px 5px;flex:none}
+.rotation-label{display:flex;justify-content:space-between;align-items:baseline;gap:4px;margin-bottom:5px}
+.rotation-label strong{font-size:13px}
+.rotation-label span{font-size:10px;color:#557787;white-space:nowrap}
+.mini-courts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini-court{padding:5px;background:#f4f8fa;border:1.5px solid #d7e3e9;border-radius:9px;min-width:0;transition:background .2s}
+.mini-court.just-rotated{background:#dcefe9;border-color:#00876c}
+.mini-court-head{display:flex;align-items:center;justify-content:space-between;gap:3px;margin-bottom:4px}
+.mini-court-head strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-court-head span{font-size:9px;color:#466a78;white-space:nowrap}
+.mini-net{height:3px;background:#aec3cf;margin-bottom:4px;border-radius:2px}
+.mini-court-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.mini-player{min-width:0;min-height:47px;border-radius:6px;background:#fff;border:1px solid #d7e5ee;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2px 0}
+.mini-player small{font-size:9px;color:#667f8c;line-height:1.2}
+.mini-player strong{font-size:clamp(14px,4vw,21px);line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini-player.hot{background:#c5f3df;border-color:#1b9d74}
+.mini-player.next{background:#fff0c8;border-color:#e1ae35}
+.live-last-update{font-size:10px;line-height:1.25;color:#486878;min-height:13px;margin-top:5px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.live-controls{display:flex;flex-direction:column;gap:5px;flex:none;margin-top:auto}
+.timeout-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.live-to-btn{min-height:38px;background:#e8f1fa;border:1px solid #b5d4e8;border-radius:8px;color:#124765;font-size:12px;font-weight:800}
+.live-to-btn b{color:#0e7c66;margin-left:4px}
+.live-to-btn:disabled{opacity:.42}
+.timeout-clock{display:flex;align-items:center;gap:6px;min-height:42px;padding:4px 6px 4px 8px;border:1px solid #d5e0e7;border-radius:8px;background:#fff}
+.clock-caption{font-size:11px;font-weight:750;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clock-caption span{font-size:10px;display:block;color:#4c7183}
+.clock-digits{font-size:27px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;color:#006e59;min-width:55px;text-align:right}
+.clock-digits small{font-size:11px;margin-left:1px}
+.timeout-clock.clock-ending .clock-digits{color:#b3331a}
+.clock-btn{border:0;border-radius:7px;min-height:33px;padding:3px 7px;background:#136b92;color:#fff;font-size:11px;font-weight:800;white-space:nowrap}
+.clock-btn:disabled{opacity:.4}
+.clock-btn.reset-btn{background:#e4edf1;color:#245269}
+.live-bottom-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.live-action{min-height:37px;padding:5px 4px;font-size:12px;font-weight:800;border:1px solid #c9d8e0;border-radius:8px;background:#fff;color:#2a5870}
+.live-action:disabled{opacity:.35}
+.live-action.emph{background:#fff2d3;border-color:#e6bc5b;color:#845309}
+.service-actions{display:grid;grid-template-columns:2fr 1fr;gap:5px}
+@media(min-width:590px){body.live-game main{max-width:770px}body.live-game .live-score-team{min-height:135px}.mini-player{min-height:51px}.live-dashboard{justify-content:flex-start}}
+@media(max-height:740px) and (max-width:590px){body.live-game header{padding:5px 9px}body.live-game header .meta{display:none}body.live-game .tabs button{min-height:30px;padding:5px 1px}.live-dashboard{gap:5px}.live-score-team{min-height:98px;padding:5px}.live-score-number{font-size:39px}.live-score-action{padding:3px 6px}.live-serve-band{padding:5px 7px}.rotation-block{padding:5px 6px 4px}.rotation-label{margin-bottom:3px}.mini-court{padding:3px}.mini-court-head{margin-bottom:2px}.mini-net{height:2px;margin-bottom:3px}.mini-player{min-height:39px}.mini-court-grid{gap:3px}.live-last-update{margin-top:3px}.live-to-btn{min-height:32px}.timeout-clock{min-height:36px;padding:2px 5px}.clock-btn{min-height:30px}.clock-digits{font-size:23px}.live-action{min-height:31px}.rotation-label strong{font-size:12px}}
+@media(max-height:630px) and (max-width:590px){body.live-game main{overflow-y:auto}.mini-player{min-height:35px}.live-score-team{min-height:85px}.live-score-number{font-size:33px}.live-serve-band strong{font-size:14px}.rotation-block{padding:4px}.live-dashboard{gap:2px}}
+
+/* v0.4: inter-set 3-minute clock, visible throughout preparation and on any tab */
+#break-panel{display:none}
+#break-panel.active{display:block;position:sticky;top:0;z-index:4;margin-bottom:9px}
+.break-wrap{border-radius:12px;background:#0a405f;border:1px solid #0d6e94;color:#fff;padding:10px 12px;box-shadow:0 4px 14px #0e375a24}
+.break-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.break-heading>div:first-child{display:flex;flex-direction:column;gap:3px}
+.break-heading strong{font-size:17px;line-height:1.1}
+.break-heading span{font-size:11px;color:#b8d7e7}
+.break-time{font-size:clamp(35px,9vw,46px);line-height:1.1;font-weight:900;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.break-controls{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin-top:6px}
+.break-controls>span{margin-right:auto;font-size:11px;font-weight:750;color:#d3e8ee}
+.break-controls button{border:0;border-radius:7px;background:#e3f0f6;color:#163c55;font-weight:850;font-size:12px;min-height:34px;padding:6px 10px}
+.break-wrap.break-done{background:#155b4a;border-color:#2c927b}
+.break-wrap.break-done .break-time{color:#c6f5ce}
+body.live-game #break-panel.active{flex:none}
+@media(max-width:350px){.break-wrap{padding:8px}.break-heading strong{font-size:15px}.break-heading span{font-size:10px}.break-time{font-size:32px}.break-controls button{padding:5px 6px}}
+
+/* v0.4 / 競技条件、個別入力、確定スコア・次サービス順 */
+.set-mini-meta{font-size:11px;font-weight:800;text-align:center;color:#315b6e;line-height:1.2;margin-bottom:-3px}
+.bench-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;margin:9px 0 6px}
+.bench-entry{display:grid;grid-template-columns:1fr auto;gap:7px}
+.bench-entry input{width:100%;min-width:0;border-radius:9px;border:1px solid #bed1db;padding:10px;min-height:44px;font-size:16px}
+.bench-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;margin:8px 0 4px}
+.bench-chip{display:inline-flex;align-items:center;gap:7px;padding:4px 7px 4px 10px;background:#eaf4f9;border:1px solid #c8dce6;color:#1d506b;border-radius:22px;font-size:13px;font-weight:750}
+.bench-chip button{border:0;background:#d1e4ee;color:#214e67;border-radius:50%;width:25px;height:25px;line-height:1;font-weight:900}
+.btn-small{padding:4px 8px;min-height:32px;font-size:11px}
+.service-preview{background:#e6f4ed;border:1px solid #a6d7bd;color:#0c654c;border-radius:9px;font-weight:800;padding:11px;font-size:14px;margin:7px 0}
+.match-rule-note{padding:8px 10px;border-radius:8px;background:#f2f7fa;border:1px solid #d3e1e9;font-size:12px;color:#35556a}
+.nextset-summary{border-left:4px solid #14836a}
+.previous-result{font-size:15px;font-weight:850;color:#125a48}
+.end-overlay{position:fixed;inset:0;background:#082739ba;display:flex;justify-content:center;align-items:center;z-index:50;padding:14px}
+.end-dialog{max-width:470px;width:100%;max-height:90dvh;overflow-y:auto;padding:22px 18px;background:white;border-radius:18px;box-shadow:0 12px 60px #041c30a0}
+.end-dialog h2{font-size:19px;margin:0 0 8px;color:#183d55}
+.end-score{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:16px 0}
+.end-score>div{flex:1;min-width:0;padding:12px 4px;text-align:center;background:#edf5f9;border-radius:10px;font-size:12px;overflow-wrap:anywhere}
+.end-score b{font-size:44px;line-height:1.2;display:block;font-variant-numeric:tabular-nums;color:#113f60}
+.end-score>span{font-size:28px;color:#7390a0}
+.end-winner{border-radius:8px;background:#e7f6ee;border:1px solid #a3d7b9;padding:10px;font-size:13px;text-align:center;font-weight:800;color:#12674e}
+.end-winner.not-ready{background:#fff3e8;border-color:#e7c7a4;color:#864725}
+@media(max-width:360px){.end-dialog{padding:15px 12px}.end-score b{font-size:39px}.bench-head{font-size:11px}}
+/* v0.5: service-fault controls sit directly below the score area */
+.score-service-actions{flex:none;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:6px}
+.score-service-actions .live-action{font-size:12px;min-height:40px;border-width:1.5px}
+.score-service-actions .emph{background:#fff0c3;border-color:#dba343;color:#6f4509}
+@media(max-height:740px) and (max-width:590px){.score-service-actions .live-action{min-height:34px;padding:4px 4px;font-size:11px}}
+@media(max-height:630px) and (max-width:590px){.score-service-actions .live-action{min-height:30px}}
+/* v0.6: deciding-set court-change reminder (does not move or auto-replace players) */
+.court-change-popup{flex:none;position:relative;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 10px;border-radius:11px;border:2px solid #e6aa30;background:#fff6d7;box-shadow:0 3px 10px #17384b18;color:#563806;animation:cc-in .16s ease-out}
+.court-change-popup strong{display:block;font-size:16px;line-height:1.3}.court-change-popup small{display:block;font-size:11px;line-height:1.45;color:#775518;margin-top:3px}
+.court-change-popup button{border:0;border-radius:8px;background:#176f61;color:#fff;font-weight:850;font-size:12px;min-height:32px;padding:5px 8px;white-space:nowrap}.cc-commands{display:flex;flex-direction:column;gap:4px}.court-change-popup button.cc-undo{background:#fff;border:1px solid #d6b67b;color:#704707}
+.court-change-done{color:#0b7863;font-weight:900}
+.court-review-warning{background:#fff4dc;border:1px solid #dbb264;border-radius:9px;padding:10px;margin:10px 0;font-size:12px;color:#744608}
+.court-review-warning button{border:0;background:#176f61;color:white;padding:8px 11px;border-radius:7px;font-size:12px;font-weight:850;margin-top:6px}
+@keyframes cc-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:360px){.court-change-popup{gap:6px;padding:8px 9px}.court-change-popup strong{font-size:14px}.court-change-popup small{font-size:10px}.court-change-popup button{padding:5px 6px;font-size:11px;min-height:30px}}
+
+/* v0.7 landscape: court-first design, physical left/right sides with centered net */
+.nine-next-alert{display:flex;flex-direction:column;gap:3px;padding:11px 12px;margin:9px 0;background:#e1f4ee;border:1px solid #91ceba;border-radius:10px;color:#0d604b}
+.nine-next-alert strong{font-size:15px}.nine-next-alert span{font-size:12px;line-height:1.5}
+.manual-service-override{display:flex;align-items:center;gap:6px;margin:9px 0;font-size:12px;color:#775027}.manual-service-override input{width:17px;height:17px}
+body.landscape-game{height:100dvh;overflow:hidden}
+body.landscape-game header{padding:4px 11px}
+body.landscape-game header h1{font-size:12px}
+body.landscape-game header .meta{display:none}
+body.landscape-game main{max-width:none!important;width:100%;padding:3px 6px max(3px,env(safe-area-inset-bottom));overflow:hidden}
+body.landscape-game .tabs{margin-bottom:3px}
+body.landscape-game .tabs button{min-height:26px;font-size:11px;padding:3px}
+body.landscape-game #contents{min-height:0;overflow:hidden}
+.h-dashboard{width:100%;height:100%;display:flex;flex-direction:column;gap:4px;overflow:hidden;min-height:0}
+.h-headline{height:27px;flex:none;display:flex;align-items:center;gap:10px;color:#25485d;font-size:11px;min-width:0;white-space:nowrap}
+.h-headline>strong{font-size:12px}.h-headline>span{font-weight:600;color:#446e83;overflow:hidden;text-overflow:ellipsis}
+.h-top-actions{display:flex;gap:5px;margin-left:auto;align-items:center}
+.h-top-actions button{min-height:27px;border:1px solid #bcd0de;background:#fff;color:#244e64;border-radius:6px;padding:3px 9px;font-weight:800;font-size:10px;white-space:nowrap}
+.h-top-actions button:last-child{background:#fff0d0;border-color:#d8ad5e}
+.h-top-actions button:disabled{opacity:.42}
+.h-court-area{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:5px;flex:1;min-height:0;overflow:hidden}
+.h-side{min-width:0;min-height:0;display:flex;gap:4px;flex-direction:column}
+.h-team-score{min-height:52px;flex:none;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:9px;border:1.5px solid #b8d3e1;background:#fff;color:#1a4d6a;padding:3px 7px}
+.h-team-score b{font-size:clamp(31px,7.3vh,43px);font-weight:950;line-height:1;font-variant-numeric:tabular-nums}
+.h-team-name{font-weight:800;font-size:clamp(11px,2.3vw,15px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40%}
+.h-score-action{display:inline-flex;background:#176b97;color:white;border-radius:6px;padding:6px 9px;font-size:12px;font-weight:900;white-space:nowrap}
+.h-side.serving .h-team-score{background:#e6f8ef;border-color:#1c9c78}.h-side.serving .h-score-action{background:#067d5d}
+.h-team-score:disabled{opacity:.58}
+.h-team-court{flex:1;min-height:0;display:flex;flex-direction:column;padding:4px 7px 6px;background:#fff;border:1px solid #cfdee6;border-radius:9px;overflow:hidden}
+.h-court-title{flex:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;line-height:1}
+.h-court-title strong{font-size:10px;color:#194b63}.h-court-title span{font-size:10px;color:#5c8293}
+.h-court-number-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:3px}
+.h-court-number-grid.nine{grid-template-columns:repeat(3,minmax(0,1fr))}
+.h-player{display:flex;min-height:0;min-width:0;align-items:center;justify-content:center;gap:4px;background:#f1f6f9;border:1px solid #cbdce4;border-radius:5px}
+.h-player small{font-size:10px;color:#4c7283}.h-player b{font-size:clamp(13px,4.1vh,19px);white-space:nowrap;font-variant-numeric:tabular-nums}
+.h-player.hot{border:2px solid #16a27e;background:#c9f6e5;color:#005d49}.h-player.next{border:2px solid #e1b44f;background:#fff0c9;color:#704e13}
+.h-net{display:flex;align-items:center;justify-content:center;position:relative;min-height:0;overflow:hidden;background:#e4eaf0;border-radius:5px}
+.h-net-line{position:absolute;top:0;bottom:0;left:50%;width:4px;transform:translateX(-50%);background:repeating-linear-gradient(180deg,#5a8191 0px,#5a8191 4px,#9fb6c1 4px,#9fb6c1 7px)}
+.h-net span{position:relative;padding:6px 0;background:#244a5a;color:#fff;border-radius:4px;font-size:9px;letter-spacing:.01em;writing-mode:vertical-rl}
+.h-under{flex:none;display:flex;flex-direction:column;gap:4px;min-height:0}
+.h-serve-info{background:#0c3b56;border-radius:8px;color:#fff;min-height:38px;padding:4px 12px;display:flex;align-items:center;gap:15px}
+.h-serve-info>div{display:flex;align-items:center;gap:7px;min-width:0;flex:1}
+.h-serve-info small{color:#bdd8e5;font-size:10px;white-space:nowrap}.h-serve-info b{font-size:clamp(12px,2vw,16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-try{font-weight:800;font-size:11px;color:#ffe1a3;white-space:nowrap}
+.h-9-actions{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:5px}
+.h-9-actions button{min-height:30px;border-radius:7px;border:1px solid #c6d7e0;background:#fff;color:#275167;font-weight:850;font-size:12px;padding:4px 9px}
+.h-9-actions button.h-fault{background:#fff0c3;border-color:#deb253;color:#66420b}
+.h-9-actions button:disabled{opacity:.5}
+.h-to-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,2.25fr);gap:6px;min-height:34px}
+.h-timeout-buttons{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.h-timeout-buttons button{background:#e7f1f9;border:1px solid #aecadd;color:#155375;border-radius:7px;min-width:0;min-height:34px;padding:4px 5px;font-size:11px;font-weight:850;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.h-timeout-buttons button:disabled{opacity:.43}
+.h-timer .timeout-clock{min-height:34px;height:100%;padding:2px 4px;gap:4px}
+.h-timer .clock-caption{font-size:10px}.h-timer .clock-caption span{display:none}
+.h-timer .clock-digits{font-size:21px;min-width:43px}.h-timer .clock-digits small{font-size:10px}
+.h-timer .clock-btn{min-height:27px;font-size:10px;padding:3px 6px}
+.h-dashboard>.court-change-popup{z-index:12;position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:min(570px,96%);box-shadow:0 9px 28px #14384b60}
+@media (max-height:400px){.h-headline{height:22px}.h-team-score{min-height:43px;gap:6px}.h-team-score b{font-size:30px}.h-score-action{padding:4px 8px;font-size:11px}.h-serve-info{min-height:33px}.h-9-actions button{min-height:27px}.h-to-row{min-height:30px}.h-timeout-buttons button{min-height:30px}.h-timer .timeout-clock{min-height:30px}.h-player small{font-size:9px}.h-player b{font-size:14px}}
+@media (max-width:640px) and (orientation:landscape){.h-headline{gap:5px;font-size:9px}.h-headline>strong{font-size:10px}.h-top-actions{gap:3px}.h-top-actions button{padding:2px 5px;font-size:9px;min-height:24px}.h-team-name{font-size:10px}.h-serve-info{padding:3px 6px;gap:5px}.h-serve-info>div{gap:4px}.h-serve-info small{font-size:9px}.h-serve-info b{font-size:11px}.h-timeout-buttons button{font-size:10px}.h-timer .clock-caption{font-size:9px}.h-timer .clock-btn{font-size:9px}}
+
+
+/* v0.8 match review, reversible undo and input lock */
+/* transient feedback stays above the controls in landscape */
+body.landscape-game #notice{top:0;left:50%;width:min(56vw,420px);transform:translateX(-50%);z-index:30}
+body.landscape-game #notice .status{padding:4px 8px;font-size:10px;line-height:1.2;border-radius:0 0 7px 7px}
+
+.h-top-actions button.h-lock{background:#ebf2f5;border-color:#8eaebe}
+.h-top-actions button.h-lock.on{background:#fff0ca;color:#80520e;border-color:#cf9f40}
+.h-team-score:disabled{opacity:.73}
+.h-dashboard .h-side:has(.h-team-score:disabled) .h-team-court{background:#f4f5f6}
+.review-dialog{max-width:510px;padding:16px 18px}
+.review-title{display:flex;justify-content:space-between;align-items:center;gap:9px}
+.review-title h2{margin:0}
+.review-close{border:1px solid #c7d8e1;background:#edf4f8;border-radius:8px;padding:7px 10px;font-weight:800;color:#275369}
+.review-meta{font-size:12px;color:#607e8d;margin-top:5px}
+.review-score{display:grid;grid-template-columns:1fr 38px 1fr;align-items:center;gap:7px;margin:11px 0}
+.review-score>div:not(.review-separator){background:#edf6fa;border:1px solid #cbdfe9;border-radius:9px;padding:8px;text-align:center;min-width:0}
+.review-score small{font-size:11px;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#456c81;font-weight:800}
+.review-score strong{display:block;font-size:37px;font-variant-numeric:tabular-nums;line-height:1.1;color:#164d6c}
+.review-separator{text-align:center;font-size:10px;font-weight:850;color:#658191}
+.review-serve{padding:9px;background:#0e3d56;color:white;border-radius:9px;font-size:12px;line-height:1.8}
+.review-serve strong{font-weight:850;color:#e5fffa}
+.review-cc{font-size:12px;color:#765013;background:#fff4d9;padding:6px 9px;border-radius:6px}
+.review-dialog h3{font-size:13px;margin:13px 0 5px}
+.review-events{padding:0;list-style:none;display:flex;flex-direction:column;gap:3px;margin:0 0 12px}
+.review-events li{padding:5px 8px;border-radius:6px;background:#f2f6f8;font-size:11px;line-height:1.35}
+.review-events li b{font-weight:800;display:block}
+.review-events li span{color:#698090}
+.review-actions{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:5px}
+.review-actions button{padding:8px 5px;min-height:36px;font-size:12px}
+@media(max-height:400px) and (orientation:landscape){.review-dialog{max-height:94dvh;overflow:auto;padding:11px 15px}.review-score{margin:7px 0}.review-score strong{font-size:27px}.review-dialog h3{margin:8px 0 3px}.review-events li{padding:3px 6px}}
+@media(max-width:650px) and (orientation:landscape){.h-headline{gap:3px}.h-headline>span{display:none}.h-top-actions{gap:2px}.h-top-actions button{padding:2px 4px;font-size:9px}}
+@media(max-width:590px) and (orientation:portrait){.live-bottom-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.live-bottom-actions .live-action{font-size:10px;padding:7px 2px;min-width:0}}
+
+/* v0.9: once the set has a winner, score/fault/TO inputs lock until review or undo */
+.h-team-score:disabled .h-score-action{background:#e6edf0;color:#5a7280}
+.h-team-score:disabled{cursor:default}
+.live-score-team:disabled .live-score-action{background:#e6edf0;color:#5a7280}
+/* v1.0 Android tools: stay-awake/fullscreen & small-screen dialog controls */
+.android-panel{margin:10px 0;padding:10px;border:1px solid #c9dce7;border-radius:9px;background:#f5f9fc}
+.android-panel .android-status{font-size:11px;line-height:1.65;color:#385d70;margin:4px 0 8px}
+.android-buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.android-buttons button{font-size:12px;min-height:38px;padding:7px 5px;border:1px solid #a9c9da;border-radius:8px;background:#e7f2f8;color:#155270;font-weight:850}
+.android-buttons button.on{background:#e0f7e9;border-color:#61ae83;color:#126040}
+.android-hint{font-size:11px;color:#5e7585;line-height:1.6;margin:6px 0 0}
+.android-review{margin-top:7px;padding:8px}
+.android-review .android-buttons button{min-height:32px}
+@media(max-height:400px) and (orientation:landscape){.review-dialog{max-height:94dvh;overflow:auto}.android-review{padding:5px}.android-review .android-hint{display:none}}
+@media(max-width:590px) and (orientation:portrait){.android-buttons button{min-height:42px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div><h1>VOLLEY REFEREE ASSIST</h1><div class="meta">副審・審判サポート v1.1（Android・PWA対応）</div></div><div id="headset" class="pill">第1セット</div></div></header>
+<main>
+<div class="alert">競技規則の確認を支援する<strong>非公式の試作版</strong>です。記録用紙、大会要項、主審・記録員の判断が優先されます。特に例外的交代、リベロ、反則時の得点訂正は未自動化です。</div>
+<div id="boot-state" role="status" style="padding:13px;background:#fff3d9;border:1px solid #e6b955;border-radius:10px;margin-bottom:12px;color:#60420b;font-size:13px;line-height:1.6"><strong>アプリを起動しています。</strong> この表示が消えない場合、ChatGPTのプレビューではHTMLを実行できない可能性があります。ファイルを端末に保存してChromeで直接開いてください。PWA版はHTTPSのサイトへの設置が必要です。</div>
+<noscript><div style="padding:12px;background:#ffe5de">JavaScriptを利用できません。ブラウザのJavaScriptを有効にし、HTMLファイルをChromeまたはEdgeで開いてください。</div></noscript>
+<div id="notice"></div>
+<nav class="tabs" aria-label="メニュー"><button data-tab="game">試合</button><button data-tab="sub">選手交代</button><button data-tab="setup">試合準備</button><button data-tab="history">履歴</button></nav>
+<div id="break-panel" aria-live="off"></div>
+<section id="contents"></section>
+<div id="dialog-root"></div>
+</main>
+<script>
+window.addEventListener('error', function(event){
+ var box=document.getElementById('boot-state');
+ if(box){box.textContent='起動エラー: '+(event.message||'JavaScriptの実行が停止しました')+'。ファイルをChrome/Edgeで開き直してください。';}
+});
+window.addEventListener('unhandledrejection', function(event){
+ var box=document.getElementById('boot-state');
+ if(box){box.textContent='起動エラー: '+(event.reason&&event.reason.message||'データの読み込みに失敗しました')+'。ファイルをChrome/Edgeで開き直してください。';}
+});
+</script>
+<script>
+(()=>{'use strict';
+const KEY='volley_referee_assist_v10', V09_KEY='volley_referee_assist_v09', V08_KEY='volley_referee_assist_v08', V07_KEY='volley_referee_assist_v07', PREV_KEY='volley_referee_assist_v06', OLD_KEY='volley_referee_assist_v05', OLDER_KEY='volley_referee_assist_v04', LEGACY_KEY='volley_referee_assist_v03', ANCIENT_KEY='volley_referee_assist_v02';
+const clone=o=>JSON.parse(JSON.stringify(o));
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ids=(n,offset)=>Array.from({length:n},(_,j)=>String(offset+j+1));
+const makeSlots=nums=>nums.map(n=>({starter:n,current:n,reserve:null,used:false,returned:false}));
+function defaultRules(f){return {sets:3,regular:f===6?25:21,final:f===6?25:21,winBy:2,courtChangeAt:"auto"};}
+function init(f=6){const ts=[0,1].map(i=>{const line=ids(f,i===0?0:20);return{name:i?'Bチーム':'Aチーム',roster:[...line],slots:makeSlots(line),next9:0,subs:0,timeouts:0,lastSubRally:-1};});return {v:10,format:f,set:1,rules:defaultRules(f),teams:ts,scores:[0,0],rotationCounts:[0,0],lastUpdate:'開始前',courtChange:{required:false,confirmed:false,threshold:null,reachedBy:null,reachedScore:null},breakClock:{active:false,fromSet:0,remaining:180,running:false,endsAt:0},serving:0,attempt:1,lastRallyServer:null,lastRallyServerNumber:null,expectedNextServing:null,leftTeam:0,rallyNo:0,ready:false,matchEnded:false,controlsLocked:false,events:[],finishedSets:[],createdAt:new Date().toISOString()};}
+function targetForSet(set=s.set){return set===s.rules.sets?s.rules.final:s.rules.regular;}
+function courtThreshold(d=s){const rule=d.rules?.courtChangeAt??'auto';if(rule==='off')return null;if(['8','11','13'].includes(String(rule)))return Number(rule);if(d.format===9)return 11;const points=d.rules?.final??25;return points===15?8:points===25?13:11;}
+function isDecidingSet(d=s){return d.set===d.rules.sets;}
+function normalizeCourtChange(d){if(!d.courtChange||typeof d.courtChange!=='object')d.courtChange={required:false,confirmed:false,threshold:null,reachedBy:null,reachedScore:null};const c=d.courtChange;if(typeof c.required!=='boolean')c.required=false;if(typeof c.confirmed!=='boolean')c.confirmed=false;const n=courtThreshold(d);if(d.ready&&isDecidingSet(d)&&n!==null&&!c.required&&!c.confirmed&&Math.max(...(d.scores||[0,0]))>=n){c.required=true;c.threshold=n;c.reachedBy=d.scores[0]>=n?0:1;c.reachedScore=[...d.scores];}return c;}
+function courtChangeNotice(){const c=normalizeCourtChange(s);if(!s.ready||!c.required||c.confirmed)return '';const label=c.reachedBy===null?'規定得点到達':esc(s.teams[c.reachedBy]?.name||'得点到達');return `<aside class="court-change-popup" role="alert" aria-label="コートチェンジのお知らせ"><div><strong>⇄ コートチェンジ</strong><small>最終第${s.set}セット：${c.threshold}点到達 ／ ${label}<br>コートを交替し、完了後に確認してください。</small></div><div class="cc-commands"><button type="button" class="cc-undo" data-action="undo">↶ 直前を戻す</button><button type="button" data-action="court-confirm">交代済み ✓</button></div></aside>`;}
+function confirmCourtChange(){const c=normalizeCourtChange(s);if(!s.ready||!c.required||c.confirmed)return;modify(`最終セット コートチェンジ確認済み（${c.threshold}点）`,()=>{c.confirmed=true;s.leftTeam=1-s.leftTeam;s.lastUpdate=`コートチェンジ確認済み（${c.threshold}点）`;});}
+function setWins(){return [0,1].map(i=>s.finishedSets.filter(x=>x.winner===i).length);}
+function winsNeeded(){return s.rules.sets===5?3:2;}
+function winnerOfScore(score=s.scores){const [a,b]=score,target=targetForSet();return Math.max(a,b)>=target&&Math.abs(a-b)>=s.rules.winBy?(a>b?0:1):null;}
+function draftFromState(){benchDraft=s.teams.map(t=>t.roster.filter(v=>!t.slots.some(sl=>sl.current===v)));}
+let s=init(6),undo=[],redo=[],reviewOpen=false,benchDraft=[[],[]],endReview=false,tab='setup',queue=[],selectedTeam=0,flash='',flashType='',pulseTeam=-1;
+let timeoutClock={team:-1,remaining:30,running:false,endsAt:0},timerTick=null,breakTick=null;
+let wakeDesired=false,wakeSentinel=null,wakeError='',orientationLocked=false,restoredFromStorage=false;
+try{wakeDesired=localStorage.getItem('volley_android_wake_desired')==='1';}catch(e){}
+function wakeSupported(){return Boolean(window.isSecureContext&&navigator.wakeLock&&navigator.wakeLock.request);}
+function wakeStatus(){return !wakeSupported()?'この起動方法では画面保持に非対応':wakeSentinel&&!wakeSentinel.released?'画面保持 ON':wakeDesired?'画面保持を再取得待ち':'画面保持 OFF';}
+async function acquireWake(){
+ if(!wakeDesired||!wakeSupported()||document.visibilityState!=='visible')return;
+ if(wakeSentinel&&!wakeSentinel.released)return;
+ try{const lock=await navigator.wakeLock.request('screen');wakeSentinel=lock;wakeError='';
+   lock.addEventListener('release',()=>{if(wakeSentinel===lock){wakeSentinel=null;updateAndroidStatus();}});
+   updateAndroidStatus();
+ }catch(e){wakeError=e&&e.message?e.message:'要求が拒否されました';updateAndroidStatus();}
+}
+async function toggleWake(){
+ if(!wakeDesired&&!wakeSupported()){notify('画面保持には対応ブラウザとHTTPSなどの安全な接続が必要です。端末側の画面消灯設定を調整してください。','warn');render();return;}
+ wakeDesired=!wakeDesired;
+ try{localStorage.setItem('volley_android_wake_desired',wakeDesired?'1':'0');}catch(e){}
+ if(wakeDesired){await acquireWake();notify(wakeSentinel&&!wakeSentinel.released?'画面保持を有効にしました。':'画面保持を要求しましたが、端末で許可されない可能性があります。','warn');}
+ else{if(wakeSentinel){try{await wakeSentinel.release();}catch(e){}wakeSentinel=null;}notify('画面保持を解除しました。','ok');}
+ render();
+}
+function inStandalone(){try{return window.matchMedia('(display-mode: standalone)').matches;}catch(e){return false;}}
+function androidPanel(inReview=false){const text=wakeStatus();return `<section class="android-panel ${inReview?'android-review':''}" aria-label="Android端末の設定"><b style="font-size:12px">Androidでの使用</b><div class="android-status">画面：${esc(text)} ／ ${document.fullscreenElement?'全画面':'通常表示'} ／ ${inStandalone()?'インストール起動':'ブラウザ起動'}${wakeError?' ／ '+esc(wakeError):''}</div><div class="android-buttons"><button type="button" data-action="wake-toggle" class="${wakeDesired?'on':''}">画面保持 ${wakeDesired?'OFFにする':'ONにする'}</button><button type="button" data-action="fullscreen-toggle" class="${document.fullscreenElement?'on':''}">${document.fullscreenElement?'全画面を終了':'全画面にする'}</button></div><p class="android-hint">横向き表示は端末を回転してください。画面保持は端末・ブラウザ・接続方式によって使えない場合があります。</p></section>`;}
+function updateAndroidStatus(){if(reviewOpen||tab==='setup')render();}
+async function toggleFullscreen(){
+ try{
+   if(document.fullscreenElement){await document.exitFullscreen();orientationLocked=false;}
+   else if(document.documentElement.requestFullscreen){await document.documentElement.requestFullscreen();
+     if(tab==='game'&&screen.orientation&&screen.orientation.lock){try{await screen.orientation.lock('landscape');orientationLocked=true;}catch(e){orientationLocked=false;}}
+   }else{throw new Error('全画面表示に対応していません');}
+ }catch(e){notify('全画面にできませんでした。端末を横向きにして使用してください。','warn');}
+ render();
+}
+
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({s,undo:undo.slice(-70),redo:redo.slice(-70),timeoutClock}));}catch(e){notify('端末内に保存できませんでした。履歴からJSONを書き出してください。','error');}}
+function upgrade(x){if(!x||![2,3,4,5,6,7,8,9,10].includes(x.v)||![6,9].includes(x.format)||x.teams?.length!==2)return null;x.v=10;x.controlsLocked=Boolean(x.controlsLocked);if(![0,1].includes(x.leftTeam))x.leftTeam=0;if(![0,1].includes(x.expectedNextServing))x.expectedNextServing=null;if(typeof x.lastRallyServerNumber!=='string')x.lastRallyServerNumber=null;x.rotationCounts=Array.isArray(x.rotationCounts)?x.rotationCounts:[0,0];x.lastUpdate=typeof x.lastUpdate==='string'?x.lastUpdate:'読み込み完了';if(!x.breakClock||typeof x.breakClock!=='object')x.breakClock={active:false,fromSet:0,remaining:180,running:false,endsAt:0};x.rules=x.rules&&Number.isInteger(x.rules.regular)?x.rules:defaultRules(x.format);x.rules.sets=[3,5].includes(x.rules.sets)?x.rules.sets:3;x.rules.final=[15,21,25].includes(x.rules.final)?x.rules.final:defaultRules(x.format).final;x.rules.courtChangeAt=['auto','8','11','13','off'].includes(String(x.rules.courtChangeAt))?String(x.rules.courtChangeAt):'auto';x.rules.winBy=2;x.matchEnded=Boolean(x.matchEnded);x.finishedSets=Array.isArray(x.finishedSets)?x.finishedSets:[];x.finishedSets.forEach(y=>{if(!Number.isInteger(y.winner)&&Array.isArray(y.scores))y.winner=y.scores[0]>y.scores[1]?0:1;});normalizeCourtChange(x);return x;}
+function restore(){try{let raw=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(V09_KEY)||localStorage.getItem(V08_KEY)||localStorage.getItem(V07_KEY)||localStorage.getItem(PREV_KEY)||localStorage.getItem(OLD_KEY)||localStorage.getItem(OLDER_KEY)||localStorage.getItem(LEGACY_KEY)||localStorage.getItem(ANCIENT_KEY)||'null');if(raw?.s){const next=upgrade(raw.s);if(next){s=next;draftFromState();undo=Array.isArray(raw.undo)?raw.undo.map(upgrade).filter(Boolean):[];redo=Array.isArray(raw.redo)?raw.redo.map(upgrade).filter(Boolean):[];
+ const c=raw.timeoutClock;
+ if(c&&[0,1].includes(c.team)&&Number.isFinite(c.remaining)&&c.remaining>=0&&c.remaining<=30){
+  timeoutClock={team:c.team,remaining:c.running?Math.max(0,(Number(c.endsAt)-Date.now())/1000):c.remaining,running:Boolean(c.running&&Number(c.endsAt)>Date.now()),endsAt:c.running?Number(c.endsAt):0};
+ }
+ tab=s.ready?'game':'setup';restoredFromStorage=true;persist();syncBreakTicker();syncTimeoutTicker();}}}catch(e){/* new session */}}
+let flashClear=null;function notify(t,k='warn'){flash=t;flashType=k;if(flashClear!==null)clearTimeout(flashClear);flashClear=setTimeout(()=>{flash='';showNotice();},2600);}
+function event(label){s.events.push({set:s.set,at:new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'}),label,score:[...s.scores]});}
+function modify(label,fn){redo=[];undo.push(clone(s));if(undo.length>70)undo.shift();fn();event(label);persist();render();}
+function undoLast(){if(!undo.length)return;redo.push(clone(s));if(redo.length>70)redo.shift();clearTimer();s=upgrade(undo.pop());draftFromState();endReview=false;queue=[];syncBreakTicker();persist();notify('直前の操作を取り消しました（30秒タイマーは再開しません）。','ok');render();}
+function redoLast(){if(!redo.length)return;undo.push(clone(s));if(undo.length>70)undo.shift();clearTimer();s=upgrade(redo.pop());draftFromState();endReview=false;queue=[];syncBreakTicker();persist();notify('取り消した操作をやり直しました（30秒タイマーは再開しません）。','ok');render();}
+const serveNum=i=>s.format===6?s.teams[i].slots[0].current:s.teams[i].slots[s.teams[i].next9].current;
+const nextNum=i=>s.format===6?s.teams[i].slots[i===s.serving?0:1].current:s.teams[i].slots[s.teams[i].next9].current;
+function point(i,reason=''){if(s.ready&&winnerOfScore()!==null){notify('セット成立済みです。スコアを確認して確定してください。誤入力なら「戻す」で訂正できます。','warn');render();return;}if(!s.ready){notify('先に試合準備を確定してください。','error');render();return;}const hadChange=Boolean(s.courtChange?.required||s.courtChange?.confirmed),old=s.serving,sideout=i!==old;pulseTeam=sideout&&s.format===6?i:-1;modify(`${s.teams[i].name} +1${reason?'（'+reason+'）':''}${sideout?'・サイドアウト':''}`,()=>{s.lastRallyServer=old;s.lastRallyServerNumber=serveNum(old);s.rallyNo++;s.scores[i]++;if(sideout){if(s.format===6){let a=s.teams[i].slots;s.teams[i].slots=[...a.slice(1),a[0]];s.rotationCounts[i]=(s.rotationCounts[i]||0)+1;}else{s.teams[old].next9=(s.teams[old].next9+1)%9;}s.serving=i;}s.lastUpdate=sideout?(s.format===6?`${s.teams[i].name} 得点・ローテーション更新`:`${s.teams[i].name} 得点・サービス権移動`):`${s.teams[i].name} 得点・サーバー継続`;s.attempt=1;if(isDecidingSet()&&!hadChange){const n=courtThreshold();if(n!==null&&Math.max(...s.scores)>=n){s.courtChange={required:true,confirmed:false,threshold:n,reachedBy:i,reachedScore:[...s.scores]};s.lastUpdate=`コートチェンジ：${n}点到達`;}}});if(!hadChange&&s.courtChange?.required&&navigator.vibrate)navigator.vibrate([120,65,120]);if(winnerOfScore()!==null)notify('セット成立条件に到達しました。スコアを確認して「セット終了」を押してください。','ok');}
+function fault9(){if(!s.ready||s.format!==9||winnerOfScore()!==null)return;if(s.attempt===1)modify('第1サービス失敗 → 第2サービス（得点なし）',()=>{s.attempt=2;});else point(1-s.serving,'第2サービス失敗');}
+function verify(){const e=document.getElementById('observed');let n=e?.value?.trim();if(!/^[0-9]{1,3}$/.test(n)){notify('実際のサーバーの背番号を入力してください。','error');render();return;}const expected=serveNum(s.serving);if(n===expected)notify(`照合一致：サーバー #${expected}（${s.teams[s.serving].name}）です。`,'ok');else notify(`サーバー順の不一致：予定 #${expected}、入力 #${n}。記録員とサービスオーダー票を確認してください。アプリは自動で得点を訂正しません。`,'error');render();}
+function boxNumber(n,position,type=''){return `<div class="player ${type}"><strong>#${esc(n)}</strong><small>${esc(position)}</small></div>`;}
+function court(i){let t=s.teams[i],s0='';if(s.format===6){for(let p of [4,3,2,5,6,1])s0+=boxNumber(t.slots[p-1].current,'P'+p,(i===s.serving&&p===1?'hot':i!==s.serving&&p===2?'next':''));}else{for(let p=0;p<9;p++)s0+=boxNumber(t.slots[p].current,'サービス順'+(p+1),(p===t.next9?(i===s.serving?'hot':'next'):''));}return `<div class="court"><div class="court-head"><span>${esc(t.name)}</span><span>${i===s.serving?'サービス側':'レシーブ側'}</span></div><div class="net"></div><div class="courtgrid">${s0}</div><div class="tiny" style="margin-top:7px">${s.format===6?'上：前衛 P4・P3・P2／下：後衛 P5・P6・P1':'これはサービス順です（実際の配置ではありません）'}</div></div>`;}
+function liveCourt(i){const t=s.teams[i],order=s.format===6?[4,3,2,5,6,1]:[1,2,3,4,5,6,7,8,9];let b=order.map(p=>{const index=p-1,num=t.slots[index].current,hot=i===s.serving&&(s.format===6?p===1:index===t.next9),next=i!==s.serving&&(s.format===6?p===2:index===t.next9);return `<div class="mini-player ${hot?'hot':next?'next':''}"><small>${s.format===6?'P'+p:p+'番'}</small><strong>#${esc(num)}</strong></div>`;}).join('');return `<div class="mini-court ${pulseTeam===i?'just-rotated':''}" aria-label="${esc(t.name)} の${s.format===6?'ローテーション':'サービス順'}"><div class="mini-court-head"><strong>${esc(t.name)}</strong><span>${s.format===6?`回転 ${s.rotationCounts[i]||0}回`:`次：${t.next9+1}番`}</span></div><div class="mini-net"></div><div class="mini-court-grid">${b}</div></div>`;}
+function timerButtons(){const active=timeoutClock.team>=0;const now=active?Math.max(0,timeoutClock.remaining):30;return `<div class="timeout-clock ${active&&now<=5?'clock-ending':''}" aria-live="off"><div class="clock-caption">30秒タイマー <span id="clock-team">${active?esc(s.teams[timeoutClock.team]?.name||''):''}</span></div><span class="clock-digits" id="clock-digits">${String(Math.ceil(now)).padStart(2,'0')}<small>秒</small></span><button data-action="timer-toggle" class="clock-btn" ${active?'':'disabled'}>${!active?'一時停止':timeoutClock.running?'一時停止':now<=0?'再スタート':'再開'}</button><button data-action="timer-reset" class="clock-btn reset-btn">30秒に戻す</button></div>`;}
+
+function isLandscape(){return window.innerWidth>window.innerHeight;}
+function horizontalNumbers(teamIndex,side){
+ const t=s.teams[teamIndex],rows=s.format===6?(side==='left'?[[5,4],[6,3],[1,2]]:[[2,1],[3,6],[4,5]]):[[1,2,3],[4,5,6],[7,8,9]];
+ return `<div class="h-court-number-grid ${s.format===9?'nine':''}" aria-label="${esc(t.name)} の${s.format===6?'ポジション':'サービス順'}">${rows.flat().map(p=>{let idx=p-1,active=teamIndex===s.serving&&(s.format===6?p===1:idx===t.next9),pending=teamIndex!==s.serving&&(s.format===6?p===2:idx===t.next9);return `<div class="h-player ${active?'hot':pending?'next':''}"><small>${s.format===6?'P'+p:'順'+p}</small><b>#${esc(t.slots[idx].current)}</b></div>`;}).join('')}</div>`;
+}
+function landscapeTeam(teamIndex,side){const t=s.teams[teamIndex],serving=s.serving===teamIndex,active=s.ready&&!s.matchEnded&&!s.controlsLocked&&winnerOfScore()===null;return `<section class="h-side ${side} ${serving?'serving':''}" aria-label="${esc(t.name)} ${side==='left'?'左':'右'}コート"><button data-action="point" data-team="${teamIndex}" class="h-team-score" ${active?'':'disabled'} aria-label="${esc(t.name)}に1点"><span class="h-team-name">${serving?'● ':''}${esc(t.name)}</span><b>${s.scores[teamIndex]}</b><span class="h-score-action">${winnerOfScore()!==null?'確定待ち':'＋1点'}</span></button><div class="h-team-court"><div class="h-court-title"><strong>${s.format===6?'ローテーション':'サービス順'}</strong><span>${s.format===6?`回転 ${s.rotationCounts[teamIndex]||0}`:`次の順番 ${t.next9+1}`}</span></div>${horizontalNumbers(teamIndex,side)}</div></section>`;}
+function landscapeGame(){const active=s.ready&&!s.matchEnded,scoring=active&&!s.controlsLocked&&winnerOfScore()===null,cc=normalizeCourtChange(s),left=s.leftTeam===1?1:0,right=1-left;const server=serveNum(s.serving),receiver=nextNum(1-s.serving);return `<div class="h-dashboard">
+<div class="h-headline"><strong>第${s.set}/${s.rules.sets}セット　${targetForSet()}点制${s.controlsLocked?'【ロック中】':winnerOfScore()!==null?'【セット成立・確定待ち】':''}</strong><span>セット獲得 ${setWins()[0]}－${setWins()[1]}　｜　${s.format}人制</span><div class="h-top-actions"><button data-action="review">確認</button><button data-action="toggleLock" class="h-lock ${s.controlsLocked?'on':''}" ${active?'':'disabled'}>${s.controlsLocked?'🔒 解除':'ロック'}</button><button data-action="swapSides" ${active&&!s.controlsLocked?'':'disabled'}>⇄ 左右入替</button><button data-action="openSub">選手交代</button><button data-action="undo" ${undo.length&&!s.controlsLocked?'':'disabled'}>↶ 戻す</button><button data-action="nextset" ${active&&!s.controlsLocked?'':'disabled'}>セット終了</button></div></div>
+<div class="h-court-area">${landscapeTeam(left,'left')}<div class="h-net" aria-label="ネット"><div class="h-net-line"></div><span>NET</span></div>${landscapeTeam(right,'right')}</div>
+<div class="h-under"><div class="h-serve-info"><div><small>● 現在のサーバー</small><b>${active?`${esc(s.teams[s.serving].name)} #${esc(server)}`:'準備中'}</b></div><div><small>次のサーバー</small><b>${active?`${esc(s.teams[1-s.serving].name)} #${esc(receiver)}`:'—'}</b></div>${s.format===9?`<span class="h-try">第${s.attempt}サービス</span>`:''}</div>${s.format===9?`<div class="h-9-actions"><button data-action="fault" class="h-fault" ${scoring?'':'disabled'}>${s.attempt===1?'第1サービス失敗 → 第2へ':'第2サービス失敗 → 相手＋1'}</button><button data-action="nocount" ${scoring?'':'disabled'}>ノーカウント</button></div>`:''}<div class="h-to-row"><div class="h-timeout-buttons">${s.teams.map((t,i)=>`<button data-action="timeout" data-team="${i}" ${scoring&&t.timeouts<2?'':'disabled'}>TO ${esc(t.name)} ${t.timeouts}/2</button>`).join('')}</div><div class="h-timer">${timerButtons()}</div></div></div>
+${courtChangeNotice()}</div>`;}
+
+function game(){if(isLandscape())return landscapeGame();const active=s.ready&&!s.matchEnded&&!s.controlsLocked,scoring=active&&winnerOfScore()===null;const server=serveNum(s.serving),receiver=nextNum(1-s.serving);const cc=normalizeCourtChange(s);return `<div class="live-dashboard"><div class="set-mini-meta">第${s.set}/${s.rules.sets}セット・${targetForSet()}点／2点差　｜　セット ${setWins().join(" - ")}${cc.confirmed?' <span class="court-change-done">✓コート交代済</span>':''}${winnerOfScore()!==null?'　｜　セット成立・確定待ち':''}</div><section class="live-scores" aria-label="得点とサービス権">${s.teams.map((t,i)=>`<button class="live-score-team ${s.serving===i?'is-serving':''}" data-action="point" data-team="${i}" ${scoring?'':'disabled'} aria-label="${esc(t.name)}に1点"><span class="live-team-name">${s.serving===i?'● ':''}${esc(t.name)}</span><span class="live-score-number">${s.scores[i]}</span><span class="live-score-action">${winnerOfScore()!==null?'確定待ち':'＋1点'}</span></button>`).join('')}</section>${s.format===9?`<div class="service-actions score-service-actions"><button data-action="fault" class="live-action emph" ${scoring?'':'disabled'}>${s.attempt===1?'第1サービス失敗 → 第2へ':'第2サービス失敗 → 相手＋1'}</button><button data-action="nocount" class="live-action" ${scoring?'':'disabled'}>ノーカウント</button></div>`:''}<div class="live-serve-band"><div><span>いまのサーバー</span><strong>${active?`${esc(s.teams[s.serving].name)}　#${esc(server)}`:'準備中'}</strong></div><div><span>次のサーバー</span><strong>${active?`${esc(s.teams[1-s.serving].name)}　#${esc(receiver)}`:'―'}</strong></div>${s.format===9?`<em>第${s.attempt}サービス</em>`:''}</div><section class="rotation-block"><div class="rotation-label"><strong>${s.format===6?'ローテーション':'サービス順'}</strong><span>緑＝現在　黄＝次</span></div><div class="mini-courts">${liveCourt(0)}${liveCourt(1)}</div><div class="live-last-update" role="status">${esc(s.lastUpdate||'セット開始')} ${s.format===9?'／ 9人制は実際の立ち位置ではありません':''}</div></section>${courtChangeNotice()}<section class="live-controls"><div class="timeout-actions">${s.teams.map((t,i)=>`<button class="live-to-btn" data-action="timeout" data-team="${i}" ${scoring&&t.timeouts<2?'':'disabled'}>TO ${esc(t.name)} <b>${t.timeouts}/2</b></button>`).join('')}</div>${timerButtons()}<div class="live-bottom-actions"><button class="live-action" data-action="review">確認</button><button class="live-action" data-action="toggleLock">${s.controlsLocked?'🔒 解除':'ロック'}</button><button class="live-action" data-action="openSub">選手交代</button><button class="live-action" data-action="undo" ${undo.length&&!s.controlsLocked?'':'disabled'}>↶ 戻す</button><button class="live-action" data-action="nextset" ${active?'':'disabled'}>セット終了</button></div></section></div>`;}
+function eligibleSubs(team){const inCourt=team.slots.map(x=>x.current);return team.roster.filter(x=>!inCourt.includes(x));}
+function sub(){let t=s.teams[selectedTeam],ben=eligibleSubs(t);return `<div class="layout"><div><section class="card"><h2>通常の選手交代チェック</h2><div class="twocol"><label class="field">チーム<select id="subteam">${s.teams.map((t,i)=>`<option value="${i}" ${i===selectedTeam?'selected':''}>${esc(t.name)}</option>`).join('')}</select></label><label class="field">コートから出る選手<select id="outplayer">${t.slots.map((sl,i)=>`<option value="${i}">#${esc(sl.current)}（${s.format===6?'P'+(i+1):'サービス順'+(i+1)}）</option>`).join('')}</select></label></div><label class="field">コートに入る選手<select id="inplayer"><option value="">選択してください</option>${ben.map(v=>`<option value="${esc(v)}">#${esc(v)}</option>`).join('')}</select></label><div class="rowbtn"><button class="btn btn-sub" data-action="addSub" ${s.ready&&winnerOfScore()===null?'':'disabled'}>＋ 交代を追加</button><button class="btn btn-mute" data-action="clearQueue">候補をクリア</button></div><div class="queue"><div class="controlhead">同一要求の交代候補（複数組可）</div>${queue.length?queue.map((q,i)=>`<p>${i+1}. ${esc(s.teams[q.team].name)}：#${esc(q.out)} → #${esc(q.in)}　<button data-action="removeQueue" data-index="${i}" class="btn btn-mute" style="min-height:32px;padding:4px 9px">削除</button></p>`).join(''):'<p class="tiny">交代候補はありません</p>'}</div><button class="btn btn-primary btn-wide" data-action="commitSubs" ${s.ready&&winnerOfScore()===null&&queue.length?'':'disabled'}>候補をまとめて確認・記録</button><p class="help">複数の交代は1つの要求としてまとめて登録します。一度記録した後、同じラリー間に同一チームの交代要求を追加した場合は警告します。</p></section></div><div><section class="card"><h2>交代回数・組み合わせ</h2>${s.teams.map((t,i)=>`<p><b>${esc(t.name)}</b>：通常交代 <b>${t.subs}/6</b> 回</p><div class="stack">${t.slots.filter(sl=>sl.used).map(sl=>`<span class="tag">#${esc(sl.starter)} ⇄ #${esc(sl.reserve)} ${sl.returned?'（復帰済）':'（交代中）'}</span>`).join('')||'<span class="tiny">交代記録なし</span>'}</div>`).join('')}<p class="help">先発選手の復帰は、当初交代した選手との同一ペアのみです。6人制・9人制の通常交代に共通する基本チェックとして実装しています。</p></section><section class="card"><h2>この版で自動判定しないもの</h2><p class="help">例外的な選手交代、リベロ入替え、失格等、異なる中断の許可状況、登録資格、競技団体固有の例外規定などは審判団で確認してください。</p></section></div></div>`;}
+function lineupFields(i){const t=s.teams[i],pos=s.format===6?[4,3,2,5,6,1]:[1,2,3,4,5,6,7,8,9];return `<section class="card"><div class="panelhead"><h2>${esc(t.name)}／背番号登録</h2><button type="button" class="btn btn-mute btn-small" data-action="clearLine" data-team="${i}">番号を消去</button></div><label class="field">チーム名<input data-name="${i}" maxlength="24" value="${esc(t.name)}"></label><div class="controlhead">${s.format===6?'コート上の6人をP1〜P6に個別入力':'サービス順1〜9番を個別入力'}</div><div class="lineup">${pos.map(p=>{const j=p-1;return `<label class="field">${s.format===6?'P':'順'}${p}<input data-slot="${i}" data-pos="${j}" inputmode="numeric" autocomplete="off" maxlength="3" placeholder="番号" value="${esc(t.slots[j].current)}"></label>`;}).join('')}</div><div class="bench-head"><b>控え選手（必要な人数だけ）</b><span class="tiny">カンマ不要・1人ずつ追加</span></div><div class="bench-entry"><input data-bench-new="${i}" inputmode="numeric" maxlength="3" autocomplete="off" aria-label="控え選手の背番号" placeholder="例：14"><button type="button" class="btn btn-sub" data-action="benchAdd" data-team="${i}">＋追加</button></div><div class="bench-chips" id="benchchips-${i}">${benchChips(i)}</div><p class="tiny">先発の番号は自動で登録されます。控えはこの欄に追加するだけです。</p>${s.format===9?`<label class="field">次にサービスする順番<select data-next9="${i}">${t.slots.map((x,j)=>`<option value="${j}" ${t.next9===j?'selected':''}>${j+1}番／#${esc(x.current)}</option>`).join('')}</select></label>`:''}</section>`;}
+function benchChips(i){return benchDraft[i].length?benchDraft[i].map((n,j)=>`<span class="bench-chip">#${esc(n)} <button data-action="benchRemove" data-team="${i}" data-index="${j}" aria-label="背番号${esc(n)}を削除" type="button">×</button></span>`).join(''):'<span class="tiny">控え未登録（あとで追加できます）</span>';}
+function refreshBench(i){const target=document.getElementById('benchchips-'+i);if(target)target.innerHTML=benchChips(i);}
+function addBench(i){const inp=document.querySelector(`[data-bench-new="${i}"]`),v=inp?.value.trim();if(!validNum(v)){notify('控え選手の背番号を1〜3桁で入力してください。','error');showNotice();return;}const starters=[...document.querySelectorAll(`[data-slot="${i}"]`)].map(e=>e.value.trim());if(starters.includes(v)||benchDraft[i].includes(v)){notify('その背番号はすでに入力されています。','error');showNotice();return;}benchDraft[i].push(v);inp.value='';refreshBench(i);flash='';showNotice();inp.focus();}
+function removeBench(i,j){benchDraft[i].splice(j,1);refreshBench(i);}
+function showNotice(){const n=document.getElementById('notice');if(flash)n.innerHTML=`<div class="status ${flashType==='error'?'error':flashType==='ok'?'':'warn'}">${esc(flash)}</div>`;else n.innerHTML='';}
+function previewNextService(){const el=document.getElementById('service-preview');if(!el)return;const team=Number(document.getElementById('firstServe')?.value??0),a=s.teams[team];const index=s.format===6?0:Number(document.querySelector(`[data-next9="${team}"]`)?.value??a.next9),input=document.querySelector(`[data-slot="${team}"][data-pos="${index}"]`),number=input?.value.trim()||'未入力';el.textContent=`最初のサービス：${document.querySelector(`[data-name="${team}"]`)?.value||a.name} ／ ${s.format===6?'P1':'順'+(index+1)} ／ #${number}`;}
+function setup(){const wins=setWins(),previous=s.finishedSets.at(-1),locked=s.ready||s.set>1;return `<div class="banner">${s.matchEnded?'試合は終了済みです。履歴で結果を確認できます。':s.ready?'現在のセットは開始済みです。':'試合条件・番号・サービス順を確認してセットを開始してください。'} 背番号は個別入力、控えは「＋追加」で登録します。</div>${previous?`<section class="card nextset-summary"><div class="controlhead">前セットの確定結果</div><div class="previous-result">第${previous.set}セット　${esc(previous.scores.join(' − '))}　｜　${esc(previous.names[previous.winner])} 獲得</div>${s.format===9&&previous.lastRallyServer!==null?`<div class="nine-next-alert"><strong>次セットの最初のサービス：${esc(s.teams[1-previous.lastRallyServer].name)}</strong><span>前セット最後のラリーでサーブしたのは ${esc(s.teams[previous.lastRallyServer].name)} ${previous.lastRallyServerNumber?'#'+esc(previous.lastRallyServerNumber):''}。その反対チームから開始します。</span></div>`:''}<p class="help">9人制は最後の得点チームではなく、最終ラリーで実際にサーブを打ったチームを基準にします。サービス順は前セットから継続します。記録員・サービスオーダー票と照合してください。</p></section>`:''}<section class="card"><h2>試合条件</h2><div class="twocol"><label class="field">競技方式<select id="format" ${locked?'disabled':''}><option value="6" ${s.format===6?'selected':''}>6人制</option><option value="9" ${s.format===9?'selected':''}>9人制</option></select></label><label class="field">試合形式<select id="matchSets" ${locked?'disabled':''}><option value="3" ${s.rules.sets===3?'selected':''}>3セットマッチ（2セット先取）</option><option value="5" ${s.rules.sets===5?'selected':''}>5セットマッチ（3セット先取）</option></select></label><label class="field">通常セット（第1〜${s.rules.sets-1}）<select id="regularTarget" ${locked?'disabled':''}>${[15,21,25].map(v=>`<option value="${v}" ${v===s.rules.regular?'selected':''}>${v}点</option>`).join('')}</select></label><label class="field">最終第${s.rules.sets}セット<select id="finalTarget" ${locked?'disabled':''}>${[15,21,25].map(v=>`<option value="${v}" ${v===s.rules.final?'selected':''}>${v}点</option>`).join('')}</select></label><label class="field">最終セットのコートチェンジ通知<select id="courtChangeAt" ${locked?'disabled':''}>${[['auto',`自動（${s.format===9?11:s.rules.final===15?8:s.rules.final===25?13:11}点）`],['8','8点で通知'],['11','11点で通知'],['13','13点で通知'],['off','通知しない']].map(([v,label])=>`<option value="${v}" ${String(s.rules.courtChangeAt)===v?'selected':''}>${label}</option>`).join('')}</select></label></div><div class="match-rule-note">2点差でセット成立（デュース継続）／${s.rules.sets}セットマッチ・<b>${winsNeeded()}セット先取</b>／第${s.set}セットは <b>${targetForSet()}点制</b>／最終セットのコートチェンジ <b>${courtThreshold()===null?'通知なし':courtThreshold()+'点'}</b>／セット ${wins.join(' - ')}</div><p class="tiny">大会要項に合わせて設定してください。6人制・5セットマッチの最終セットは標準で15点制です。9人制の5セットマッチは大会特別規則向けです。試合開始後は変更できません。コートチェンジ通知は最終セットのみで、操作を確定するまで表示されます。</p></section><section class="card"><h2>第${s.set}セット・サービス順の確認</h2><label class="field">このセットで最初にサービスするチーム<select id="firstServe" ${s.ready?'disabled':''}>${s.teams.map((t,i)=>`<option value="${i}" ${s.serving===i?'selected':''}>${esc(t.name)}</option>`).join('')}</select></label><div class="service-preview" id="service-preview">開始サーバーを確認中</div>${s.format===9&&s.set>1&&s.expectedNextServing!==null?`<label class="manual-service-override"><input id="manual-start-override" type="checkbox">例外として開始チームを修正する（事前確認が必要）</label>`:''}<p class="help">6人制はP1が最初のサーバーです。9人制は選択したサービス順に対応する選手を確認してください。</p></section><div class="cols">${lineupFields(0)}${lineupFields(1)}</div><section class="card"><h2>開始前の最終確認</h2><div class="checkblock"><label><input id="checkorder" type="checkbox" ${s.ready?'checked disabled':''}>両チームの番号・サービス順・開始サーバーを確認した</label></div><button data-action="applySetup" class="btn btn-primary btn-wide" ${s.ready||s.matchEnded?'disabled':''}>確認して第${s.set}セットを開始</button><p class="help">現在のセット目標：${targetForSet()}点／2点差で成立。必要な控え選手を追加してから開始してください。</p></section>${androidPanel()}<section class="card"><h2>データの初期化</h2><button data-action="reset" class="btn btn-danger btn-wide">現在の試合を初期化</button></section>`;}
+function logs(n){let arr=s.events.slice(-n).reverse();return arr.length?arr.map(e=>`<div class="event"><b>第${e.set}セット：${esc(e.label)}</b><div>${esc(e.at)} ／ スコア ${esc(e.score[0])} - ${esc(e.score[1])}</div></div>`).join(''):'<p class="help">まだ履歴がありません</p>';}
+function history(){return `${s.matchEnded?`<section class="card nextset-summary"><h2>試合終了</h2><div class="previous-result">${esc(s.teams[setWins()[0]>setWins()[1]?0:1].name)} が勝利</div><p class="help">${s.rules.sets}セットマッチ（${winsNeeded()}セット先取）／ セットカウント ${setWins().join(' − ')}</p></section>`:''}<section class="card"><h2>記録の保存・復元</h2><div class="rowbtn"><button data-action="json" class="btn btn-primary">JSON形式で保存</button><button data-action="csv" class="btn btn-sub">操作履歴CSVで保存</button></div><label class="field" style="margin-top:12px">JSONファイルから復元<input id="jsonfile" type="file" accept="application/json,.json"></label><p class="help">データはこのブラウザの端末内に保存されます。別の端末への同期はありません。保存・復元の対象は試合データです。復元時は現在のデータが置き換わります。</p></section><section class="card"><h2>終了したセット</h2>${s.finishedSets.length?s.finishedSets.map(x=>`<div class="event"><b>第${x.set}セット：${x.scores.join(' - ')}（${esc(x.names[x.winner]||'得点確認')}）</b><div>${esc(x.names.join(' 対 '))}${x.lastRallyServer===null?'':` ／ 最終ラリーのサービス側：${esc(x.names[x.lastRallyServer])}`}</div></div>`).join(''):'<p class="help">記録なし</p>'}</section><section class="card"><h2>操作履歴</h2><button data-action="undo" class="btn btn-mute" ${undo.length&&!s.controlsLocked?'':'disabled'}>直前の操作を戻す</button> <button data-action="redo" class="btn btn-mute" ${redo.length&&!s.controlsLocked?'':'disabled'}>やり直す</button>${logs(500)}</section><section class="card"><h2>参照元（2026年度）</h2><p class="help"><a href="https://www.jva.or.jp/referee/clinic/" target="_blank" rel="noopener noreferrer">JVA 審判講習資料</a> ／ <a href="https://www.jva.or.jp/referee/scoresheet/" target="_blank" rel="noopener noreferrer">JVA 公式記録用紙・サービスオーダー票</a> ／ <a href="https://www.jva.or.jp/wp-content/uploads/2026/04/Vb_6nin_WEB-V2.pdf" target="_blank" rel="noopener noreferrer">6人制競技規則（15章ほか）</a></p></section>`;}
+function reviewPanel(){if(!reviewOpen)return '';const left=s.leftTeam===1?1:0,right=1-left;
+ const recent=s.events.slice(-5).reverse().map(e=>`<li><b>${esc(e.label)}</b><span>第${e.set}セット・${esc(e.at)}　${e.score[0]}－${e.score[1]}</span></li>`).join('')||'<li>まだ操作記録はありません</li>';
+ return `<div class="end-overlay" role="dialog" aria-modal="true" aria-label="試合状況の確認"><div class="end-dialog review-dialog"><div class="review-title"><h2>試合状況の確認</h2><button class="review-close" data-action="reviewClose">閉じる ×</button></div><div class="review-meta">第${s.set}/${s.rules.sets}セット｜${s.format}人制｜${targetForSet()}点制</div><div class="review-score"><div><small>${esc(s.teams[left].name)}（左）</small><strong>${s.scores[left]}</strong></div><div class="review-separator">NET</div><div><small>${esc(s.teams[right].name)}（右）</small><strong>${s.scores[right]}</strong></div></div><div class="review-serve"><div>現在のサービス　<strong>${esc(s.teams[s.serving].name)} #${esc(serveNum(s.serving))}</strong>${s.format===9?` ／ 第${s.attempt}サービス`:''}</div><div>次にサービス権を得た場合　<strong>${esc(s.teams[1-s.serving].name)} #${esc(nextNum(1-s.serving))}</strong></div></div>${s.courtChange?.required?`<p class="review-cc">コートチェンジ：${s.courtChange.confirmed?'確認済み':'未確認'}（${s.courtChange.threshold}点）</p>`:''}${androidPanel(true)}<h3>最近の操作（最新5件）</h3><ol class="review-events">${recent}</ol><div class="review-actions"><button data-action="undo" class="btn btn-sub" ${!undo.length||s.controlsLocked?'disabled':''}>↶ 戻す</button><button data-action="redo" class="btn btn-sub" ${!redo.length||s.controlsLocked?'disabled':''}>↷ やり直す</button><button data-action="reviewClose" class="btn btn-primary">試合に戻る</button></div><p class="tiny">訂正時は、得点・サービス権・選手の順番を記録用紙と照合してください。取り消し／やり直しはタイマーの経過時間を復元しません。</p></div></div>`;}
+function toggleLock(){if(!s.ready||s.matchEnded)return;s.controlsLocked=!s.controlsLocked;persist();render();}
+
+function render(){document.body.classList.toggle('live-game',tab==='game');document.body.classList.toggle('landscape-game',tab==='game'&&isLandscape());document.getElementById('headset').textContent=`${s.format}人制・${s.rules.sets}S / 第${s.set}セット${s.ready?'':'・準備中'}`;let n=document.getElementById('notice');if(flash){n.innerHTML=`<div class="status ${flashType==='error'?'error':flashType==='ok'?'':'warn'}">${esc(flash)}</div>`;}else{n.innerHTML=s.ready?'':`<div class="status warn">試合は準備中です。両チームのサービス順を確定してください。</div>`;}document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));document.getElementById('contents').innerHTML=tab==='game'?game():tab==='sub'?sub():tab==='setup'?setup():history();const panel=document.getElementById('break-panel');panel.innerHTML=breakPanel();panel.classList.toggle('active',Boolean(s.breakClock?.active));document.getElementById('dialog-root').innerHTML=reviewOpen?reviewPanel():endReviewPanel();previewNextService();}
+function validNum(x){return /^[0-9]{1,3}$/.test(x);}
+function parseRoster(value){return value.split(/[\s,、，;；]+/).map(x=>x.trim()).filter(Boolean);}
+function formTeam(i){const name=document.querySelector(`[data-name="${i}"]`)?.value.trim()||`チーム${i+1}`,order=s.teams[i].slots.map((_,p)=>(document.querySelector(`[data-slot="${i}"][data-pos="${p}"]`)?.value||'').trim()),bench=benchDraft[i];if(order.some(x=>!validNum(x))||new Set(order).size!==order.length)throw Error(`${name}：コート上の背番号に空欄・重複・不正値があります。`);if(bench.some(x=>!validNum(x))||new Set(bench).size!==bench.length||bench.some(x=>order.includes(x)))throw Error(`${name}：控え選手の背番号に重複・不正値があります。`);const next9=s.format===9?Number(document.querySelector(`[data-next9="${i}"]`)?.value||0):0;if(!Number.isInteger(next9)||next9<0||next9>=9)throw Error('9人制の次サーバー順が不正です。');return {name,roster:[...order,...bench],slots:makeSlots(order),next9,subs:0,timeouts:0,lastSubRally:-1};}
+function applySetup(){if(s.ready||s.matchEnded)return;if(s.breakClock?.active&&s.breakClock.running&&breakRemaining()>0&&!confirm('セット間の3分間がまだ経過していません。次セットを開始しますか？'))return;if(!document.getElementById('checkorder')?.checked){notify('順番と登録選手の確認にチェックを入れてください。','error');render();return;}let data,serving;try{data=[formTeam(0),formTeam(1)];serving=Number(document.getElementById('firstServe').value);if(![0,1].includes(serving))throw Error('開始サーバーが不正です。');if(s.format===9&&s.set>1&&s.expectedNextServing!==null&&serving!==s.expectedNextServing){if(!document.getElementById('manual-start-override')?.checked)throw Error(`9人制：前セット最後のサービスを打ったチームの反対側（${s.teams[s.expectedNextServing].name}）から開始してください。変更には「例外として修正」のチェックが必要です。`);if(!confirm('前セットの最後のサーバーに基づく自動判定を変更します。大会特別規則または記録員との確認は済んでいますか？'))return;}}catch(e){notify(e.message,'error');render();return;}modify(`第${s.set}セットのラインアップ確定`,()=>{s.teams=data;s.serving=serving;s.ready=true;s.controlsLocked=false;endReview=false;s.attempt=1;s.lastRallyServer=null;s.lastRallyServerNumber=null;s.lastUpdate='第'+s.set+'セット開始';s.breakClock={active:false,fromSet:0,remaining:180,running:false,endsAt:0};s.expectedNextServing=null;});syncBreakTicker();tab='game';draftFromState();notify('ラインアップ確定。試合を開始できます。','ok');render();}
+function validatePair(team,slotIndex,inN){if(!validNum(inN))return '入る選手の背番号が不正です。';if(!team.roster.includes(inN))return `#${inN} は登録選手にありません。`;if(!Number.isInteger(slotIndex)||slotIndex<0||slotIndex>=team.slots.length)return '交代する選手を指定してください。';if(team.slots.some(x=>x.current===inN))return `#${inN} はすでにコートにいます。`;let sl=team.slots[slotIndex];if(sl.current===sl.starter){if(sl.used)return `#${sl.starter} は既に交代と復帰を済ませています。`;if(team.slots.some(x=>x.starter===inN||x.reserve===inN))return `#${inN} は別の先発・交代ペアに関連しています。`;return '';}
+if(sl.current===sl.reserve){if(sl.returned)return '復帰済みのペアです。';if(inN!==sl.starter)return `#${sl.current} がベンチへ戻るときは先発 #${sl.starter} としか交代できません。`;return '';}
+return '交代ペアの状態が不正です。';}
+function substitutePair(team,slotIndex,inN){const sl=team.slots[slotIndex];if(sl.current===sl.starter){sl.used=true;sl.reserve=inN;sl.current=inN;}else{sl.current=sl.starter;sl.returned=true;}team.subs++;}
+function addSub(){if(!s.ready||winnerOfScore()!==null)return;let team=selectedTeam,t=s.teams[team],si=Number(document.getElementById('outplayer').value),v=document.getElementById('inplayer').value;if(queue.some(q=>q.team===team&&q.index===si)){notify("同じサービス順・ポジションの交代を1つの要求に重複登録できません。","error");render();return;}let shadow=clone(t);for(let q of queue.filter(q=>q.team===team))substitutePair(shadow,q.index,q.in);let why=validatePair(shadow,si,v);if(why){notify(why,'error');render();return;}if(shadow.subs>=6){notify('通常交代が6回に達しています。','error');render();return;}queue.push({team,index:si,out:t.slots[si].current,in:v});notify('交代候補に追加しました。同時交代がある場合は続けて追加してください。','ok');render();}
+function commitSubs(){if(!queue.length||!s.ready||winnerOfScore()!==null)return;let copies=clone(s.teams);for(let q of queue){if(copies[q.team].lastSubRally===s.rallyNo){notify(`${copies[q.team].name} は同一ラリー間にすでに選手交代を記録しています。連続した別要求はできません（例外を除く）。`,'error');render();return;}let why=validatePair(copies[q.team],q.index,q.in);if(why){notify(why,'error');render();return;}if(copies[q.team].subs>=6){notify('選手交代回数が上限です。','error');render();return;}substitutePair(copies[q.team],q.index,q.in);}const label=queue.map(q=>`${s.teams[q.team].name} #${q.out}→#${q.in}`).join(' / ');if(!confirm(`${label}\n\nこれらの交代を同一要求として記録しますか？`))return;modify(`通常選手交代：${label}`,()=>{for(let q of queue){substitutePair(s.teams[q.team],q.index,q.in);s.teams[q.team].lastSubRally=s.rallyNo;}});queue=[];notify('選手交代を記録しました。','ok');render();}
+function openEndReview(){if(!s.ready||s.matchEnded)return;endReview=true;render();}
+function endReviewPanel(){if(!endReview)return '';const winner=winnerOfScore(),wins=setWins(),endMatch=winner!==null&&(wins[winner]+1>=winsNeeded()),target=targetForSet();return `<div class="end-overlay" role="dialog" aria-modal="true" aria-label="セット終了スコア確認"><div class="end-dialog"><h2>第${s.set}セット終了の確認</h2><p class="help">得点を見直し、記録員のスコアと一致することを確認してください。</p>${s.format===9&&s.lastRallyServer!==null?`<div class="nine-next-alert"><strong>次セットは ${esc(s.teams[1-s.lastRallyServer].name)} のサービスから</strong><span>最終ラリーでサービスを打ったのは ${esc(s.teams[s.lastRallyServer].name)}　#${esc(s.lastRallyServerNumber||'不明')}。最後の得点がレシーブ側でも、サーブを打った側を基準に判定します。</span></div>`:''}<div class="end-score"><div>${esc(s.teams[0].name)}<b>${s.scores[0]}</b></div><span>−</span><div>${esc(s.teams[1].name)}<b>${s.scores[1]}</b></div></div><div class="end-winner ${winner===null?'not-ready':''}">${winner===null?`まだ成立条件に達していません（${target}点以上・${s.rules.winBy}点差）`:`${esc(s.teams[winner].name)} がセット獲得`}</div>${s.courtChange?.required&&!s.courtChange?.confirmed?`<div class="court-review-warning">コートチェンジの確認が未完了です。<br><button data-action="court-confirm">実施済みとして記録する</button></div>`:''}<p class="help">${winner===null?'このまま得点を修正してください。':endMatch?'${winsNeeded()}セット先取のため、この確定で試合終了です。':`確定すると3分タイマーを開始し、第${s.set+1}セットのサービス順・先発確認に進みます。`}</p><div class="rowbtn"><button data-action="endCancel" class="btn btn-mute">試合に戻る</button><button data-action="endCommit" class="btn btn-primary" ${winner===null||s.controlsLocked||s.courtChange?.required&&!s.courtChange?.confirmed?'disabled':''}>${endMatch?'結果を確定・試合終了':'確定して次セットへ'}</button></div></div></div>`;}
+function nextSet(){if(!s.ready||s.matchEnded||s.controlsLocked||(s.courtChange?.required&&!s.courtChange?.confirmed)||winnerOfScore()===null)return;const old=s.set,win=winnerOfScore(),oldLast=s.lastRallyServer,oldLastNumber=s.lastRallyServerNumber,oldServ=s.serving,wins=setWins(),endMatch=(wins[win]+1>=winsNeeded());modify(`第${old}セット終了を確定：${s.scores[0]}-${s.scores[1]}`,()=>{s.finishedSets.push({set:old,scores:[...s.scores],names:s.teams.map(t=>t.name),winner:win,lastRallyServer:oldLast,lastRallyServerNumber:oldLastNumber,nextStartingTeam:s.format===9&&[0,1].includes(oldLast)?1-oldLast:null});s.ready=false;s.controlsLocked=false;if(endMatch){s.matchEnded=true;s.lastUpdate='試合終了';s.breakClock={active:false,fromSet:old,remaining:180,running:false,endsAt:0};}else{s.set++;s.scores=[0,0];s.rotationCounts=[0,0];s.courtChange={required:false,confirmed:false,threshold:null,reachedBy:null,reachedScore:null};s.lastUpdate='次セット準備中';s.breakClock={active:true,fromSet:old,remaining:180,running:true,endsAt:Date.now()+180000};s.attempt=1;s.leftTeam=1-s.leftTeam;s.expectedNextServing=s.format===9&&[0,1].includes(oldLast)?1-oldLast:null;s.serving=s.expectedNextServing===null?1-oldServ:s.expectedNextServing;s.lastRallyServer=null;s.lastRallyServerNumber=null;s.teams.forEach(t=>{t.timeouts=0;t.subs=0;t.lastSubRally=-1;});}});endReview=false;queue=[];clearTimer();draftFromState();syncBreakTicker();tab=endMatch?'history':'setup';notify(endMatch?'試合終了。確定スコアを履歴に保存しました。':'セットの結果を確定しました。次のサービス順を再確認してください。','ok');render();}
+function download(file,data,type){let blob=new Blob([data],{type}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=file;a.click();setTimeout(()=>URL.revokeObjectURL(u),1200);}
+function saveJSON(){download('volley_referee_v10_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({app:'VOLLEY REFEREE ASSIST',version:10,state:s},null,2),'application/json;charset=utf-8');}
+function saveCSV(){const rows=[['セット','時刻','操作','A点数','B点数'],...s.events.map(e=>[e.set,e.at,e.label,...e.score])];download('volley_referee_history_'+new Date().toISOString().slice(0,10)+'.csv','\ufeff'+rows.map(row=>row.map(cell=>'"'+String(cell).replaceAll('"','""')+'"').join(',')).join('\r\n'),'text/csv;charset=utf-8');}
+async function restoreFile(file){if(!file)return;try{let txt=await file.text(),obj=JSON.parse(txt),d=obj.state;if(![2,3,4,5,6,7,8,9,10].includes(obj.version)||![2,3,4,5,6,7,8,9,10].includes(d?.v)||![6,9].includes(d.format)||!Array.isArray(d.teams)||d.teams.length!==2||!d.teams.every(t=>Array.isArray(t.roster)&&t.slots?.length===d.format))throw Error('対応するv0.2〜v1.0形式のJSONではありません。');if(!confirm('現在の試合記録を選択したJSONファイルで置き換えますか？'))return;s=upgrade(d);draftFromState();undo=[];redo=[];queue=[];endReview=false;reviewOpen=false;clearTimer();syncBreakTicker();tab=s.ready?'game':'setup';persist();notify('試合データを復元しました。','ok');render();}catch(e){notify(`復元できませんでした：${e.message}`,'error');render();}}
+function refreshClock(){const d=document.getElementById('clock-digits');if(d)d.innerHTML=`${String(Math.ceil(Math.max(0,timeoutClock.remaining))).padStart(2,'0')}<small>秒</small>`;let wrap=document.querySelector('.timeout-clock');if(wrap)wrap.classList.toggle('clock-ending',timeoutClock.team>=0&&timeoutClock.remaining<=5);}
+function stopClockInterval(){if(timerTick!==null){clearInterval(timerTick);timerTick=null;}}
+function clockTick(){if(!timeoutClock.running)return;timeoutClock.remaining=Math.max(0,(timeoutClock.endsAt-Date.now())/1000);if(timeoutClock.remaining<=0){timeoutClock.running=false;stopClockInterval();persist();if(navigator.vibrate)navigator.vibrate([100,80,100]);render();}else refreshClock();}
+function clockStart(team){stopClockInterval();timeoutClock={team,remaining:30,running:true,endsAt:Date.now()+30000};timerTick=setInterval(clockTick,120);persist();render();}
+function recordTimeout(team){if(!s.ready||winnerOfScore()!==null||!Number.isInteger(team)||team<0||team>1||s.teams[team].timeouts>=2)return;modify(`${s.teams[team].name} タイムアウト ${s.teams[team].timeouts+1}/2`,()=>{s.teams[team].timeouts++});clockStart(team);}
+function clockToggle(){if(timeoutClock.team<0)return;if(timeoutClock.running){clockTick();timeoutClock.running=false;stopClockInterval();persist();render();}else{if(timeoutClock.remaining<=0)timeoutClock.remaining=30;timeoutClock.endsAt=Date.now()+timeoutClock.remaining*1000;timeoutClock.running=true;stopClockInterval();timerTick=setInterval(clockTick,120);persist();render();}}
+function clockReset(){stopClockInterval();timeoutClock.remaining=30;timeoutClock.running=false;timeoutClock.endsAt=0;persist();render();}
+function clearTimer(){stopClockInterval();timeoutClock={team:-1,remaining:30,running:false,endsAt:0};persist();}
+function syncTimeoutTicker(){stopClockInterval();if(timeoutClock.running){clockTick();if(timeoutClock.running)timerTick=setInterval(clockTick,120);}}
+// セット間の3分時計。画面の再描画や端末スリープ後も予定終了時刻で補正する。
+function breakRemaining(){const x=s.breakClock;if(!x?.active)return 0;return x.running?Math.max(0,(x.endsAt-Date.now())/1000):Math.max(0,x.remaining);}
+function breakFormat(){const n=Math.ceil(breakRemaining());return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
+function breakPanel(){const x=s.breakClock;if(!x?.active)return '';const ended=breakRemaining()<=0;return `<section class="break-wrap ${ended?'break-done':''}" role="region" aria-label="セット間タイマー"><div class="break-heading"><div><strong>セット間・3分</strong><span>第${x.fromSet}セット終了 → 第${s.set}セット準備</span></div><div class="break-time" id="break-time" role="timer">${breakFormat()}</div></div><div class="break-controls"><span id="break-status">${ended?'3分経過しました':x.running?'計測中':'一時停止中'}</span><button data-action="break-toggle">${ended?'再スタート':x.running?'一時停止':'再開'}</button><button data-action="break-reset">3分に戻す</button></div></section>`;}
+function breakStopTick(){if(breakTick!==null){clearInterval(breakTick);breakTick=null;}}
+function syncBreakTicker(){breakStopTick();const x=s.breakClock;if(!x?.active||!x.running)return;breakPulse();if(x.running)breakTick=setInterval(breakPulse,150);}
+function breakPulse(){const x=s.breakClock;if(!x?.active||!x.running)return;const n=breakRemaining();if(n<=0){x.running=false;x.remaining=0;x.endsAt=0;breakStopTick();persist();if(navigator.vibrate)navigator.vibrate([180,100,180]);render();return;}const digits=document.getElementById('break-time');if(digits)digits.textContent=breakFormat();}
+function breakToggle(){const x=s.breakClock;if(!x?.active)return;if(x.running){x.remaining=breakRemaining();x.running=false;x.endsAt=0;}else{x.remaining=x.remaining>0?x.remaining:180;x.running=true;x.endsAt=Date.now()+x.remaining*1000;}persist();syncBreakTicker();render();}
+function breakReset(){const x=s.breakClock;if(!x?.active)return;x.remaining=180;x.running=false;x.endsAt=0;persist();syncBreakTicker();render();}
+function clickAction(e){let t=e.target.closest('[data-tab]');if(t){reviewOpen=false;endReview=false;tab=t.dataset.tab;flash='';if(orientationLocked&&tab!=='game'&&screen.orientation?.unlock){try{screen.orientation.unlock();orientationLocked=false;}catch(e){}}render();return;}let b=e.target.closest('[data-action]');if(!b)return;let act=b.dataset.action,team=Number(b.dataset.team);if(s.controlsLocked&&['point','fault','nocount','timeout','swapSides','court-confirm','nextset','endCommit','addSub','commitSubs','undo','redo'].includes(act)){notify('操作ロック中です。解除してから記録してください。','warn');render();return;}switch(act){case'review':reviewOpen=true;endReview=false;render();break;case'reviewClose':reviewOpen=false;render();break;case'toggleLock':toggleLock();break;case'wake-toggle':toggleWake();break;case'fullscreen-toggle':toggleFullscreen();break;case'redo':redoLast();break;case'point':point(team);break;case'court-confirm':confirmCourtChange();break;case'swapSides':if(s.ready&&s.courtChange?.required&&!s.courtChange?.confirmed){confirmCourtChange();}else if(s.ready){modify('コート表示の左右を手動で入替',()=>{s.leftTeam=1-s.leftTeam;s.lastUpdate='コート表示の左右を修正';});}break;case'fault':fault9();break;case'verify':verify();break;case'timeout':recordTimeout(team);break;case'timer-toggle':clockToggle();break;case'timer-reset':clockReset();break;case'break-toggle':breakToggle();break;case'break-reset':breakReset();break;case'openSub':reviewOpen=false;tab='sub';flash='';render();break;case'undo':undoLast();break;case'nocount':if(s.ready&&winnerOfScore()===null)modify(`ノーカウント（第${s.attempt}サービス維持）`,()=>{});break;case'nextset':openEndReview();break;case'endCancel':endReview=false;render();break;case'endCommit':nextSet();break;case'benchAdd':addBench(team);break;case'benchRemove':removeBench(team,Number(b.dataset.index));break;case'clearLine':if(confirm('このチームの先発背番号入力を空欄にしますか？')){document.querySelectorAll(`[data-slot=\"${team}\"]`).forEach(e=>e.value='');previewNextService();}break;case'applySetup':applySetup();break;case'addSub':addSub();break;case'clearQueue':queue=[];notify('交代候補をクリアしました。','ok');render();break;case'removeQueue':queue.splice(Number(b.dataset.index),1);render();break;case'commitSubs':commitSubs();break;case'json':saveJSON();break;case'csv':saveCSV();break;case'reset':if(confirm('記録をすべて初期化します。元には戻せません。')){const f=s.format;s=init(f);draftFromState();endReview=false;reviewOpen=false;undo=[];redo=[];queue=[];clearTimer();syncBreakTicker();tab='setup';flash='';persist();render();}break;}}
+function onChange(e){const v=e.target;if(v.id==='format'){if(s.ready||s.set>1)return;const f=Number(v.value);if(f!==s.format){if(confirm('競技方式を切り替えると現在の準備データを初期化します。続行しますか？')){s=init(f);draftFromState();undo=[];redo=[];queue=[];syncBreakTicker();persist();}render();}return;}if(v.id==='courtChangeAt'){if(s.ready||s.set>1)return;const choice=String(v.value);if(!['auto','8','11','13','off'].includes(choice))return;s.rules.courtChangeAt=choice;persist();render();return;}if(v.id==='matchSets'){if(s.ready||s.set>1)return;const count=Number(v.value);if(![3,5].includes(count))return;s.rules.sets=count;if(s.format===6)s.rules.final=count===5?15:25;persist();render();return;}if(v.id==='regularTarget'||v.id==='finalTarget'){if(s.ready||s.set>1)return;const n=Number(v.value);if(![15,21,25].includes(n))return;s.rules[v.id==='regularTarget'?'regular':'final']=n;persist();render();return;}if(v.id==='subteam'){selectedTeam=Number(v.value);queue=[];render();return;}if(v.id==='jsonfile'){restoreFile(v.files?.[0]);return;}if(v.id==='firstServe'||v.matches('[data-slot],[data-name],[data-next9]'))previewNextService();}
+document.addEventListener('click',clickAction);document.addEventListener('change',onChange);document.addEventListener('input',e=>{if(e.target.matches('[data-slot],[data-name],[data-next9]'))previewNextService();});document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-bench-new]')){e.preventDefault();addBench(Number(e.target.dataset.benchNew));}});restore();draftFromState();if(restoredFromStorage)notify('端末内に保存した試合を復元しました。','ok');render();document.getElementById('boot-state')?.remove();
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='visible'){
+  if(wakeDesired)acquireWake();
+  if(timeoutClock.running){clockTick();if(timeoutClock.running)syncTimeoutTicker();}
+  if(s.breakClock?.running)breakPulse();
+  render();
+ } else {persist();}
+});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement){orientationLocked=false;}if(tab==='game'||reviewOpen)render();});
+if(wakeDesired)acquireWake();
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
+ navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+let currentOrientation=isLandscape();window.addEventListener('resize',()=>{const now=isLandscape();if(now!==currentOrientation){currentOrientation=now;if(tab==='game')render();}});
+})();
+</script>
+</body>
+</html>
