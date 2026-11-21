@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b">
+<title>STEP 27｜バックアップ復元・実機検証</title>
+<style>
+:root{font-family:system-ui,"Noto Sans JP",sans-serif;color:#19384b;background:#f3f6f8;color-scheme:light}*{box-sizing:border-box}body{margin:0}main{max-width:810px;margin:auto;padding:15px}h1{font-size:22px;margin:0 0 8px}h2{font-size:17px;margin:0 0 10px}p,li{font-size:14px;line-height:1.65}.card{background:#fff;border:1px solid #dce6eb;border-radius:12px;padding:15px;margin:11px 0}.warning{background:#fff6e8;border:1px solid #e4bf7b;border-radius:8px;padding:10px;font-size:14px;line-height:1.6}.status{padding:10px;border-radius:7px;background:#e8f2f7;white-space:pre-line;line-height:1.6;font-size:13px}.status[data-kind="good"]{background:#e8f6ee}.status[data-kind="error"]{background:#fff1ee}.status[data-kind="warn"]{background:#fff5e5}button,a.action{background:#12668e;color:#fff;border:0;border-radius:8px;font-size:14px;font-weight:700;padding:11px 13px;text-decoration:none;display:inline-block;margin:4px 4px 4px 0;cursor:pointer;min-height:43px}button.secondary{color:#164c65;background:#e4eef3}button.danger{background:#8a3933}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #db940a;outline-offset:2px}.checks label{display:flex;align-items:flex-start;gap:8px;background:#f2f6f8;border-radius:6px;padding:9px;margin:6px 0;font-size:14px;line-height:1.5}.checks input{width:21px;height:21px;flex:none;margin:0}.file-input{display:block;margin:7px 0;font-size:14px;max-width:100%}textarea{width:100%;height:190px;resize:vertical;border:1px solid #a9bfcb;border-radius:7px;padding:10px;font:12px/1.5 monospace}ol{padding-left:24px}ol li{margin:6px 0}small{color:#526c7c;font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px}td{border-bottom:1px solid #e3e9ed;padding:9px 4px}td:first-child{width:42%;font-weight:700}.row{display:flex;gap:6px;flex-wrap:wrap}.pill{display:inline-block;background:#edf4f7;border-radius:7px;padding:4px 8px;font-size:12px;margin:4px 3px 0 0}@media(max-width:420px){main{padding:9px}.card{padding:11px}h1{font-size:19px}}
+</style>
+</head>
+<body><main>
+<h1>STEP 27｜バックアップ復元・実機検証</h1>
+<p>練習用試合の保存→変更→復元を、保存状態の照合値（SHA-256）で確認するテストです。<b>このページ自体は試合データを変更しません。</b></p>
+<div class="warning"><b>安全上の注意：</b>必ず練習用試合で実施してください。試合アプリでの「JSONから復元」は現在の試合を上書きします。重要な本番データは別途バックアップし、本番中は実施しないでください。照合の対象は試合状態です。タイマーの残り時間・戻す／やり直す履歴は対象外です。</div>
+<div class="card">
+<h2>準備と実施条件</h2>
+<div class="checks"><label><input type="checkbox" id="practice">練習用試合を使用している</label><label><input type="checkbox" id="safety">重要な試合データは別途JSON保存済みで、復元による上書きを理解している</label></div>
+<p><a href="./index.html" class="action">試合アプリへ</a><a href="./diagnostics.html" class="action">Android診断へ</a></p>
+<p id="current" class="status" role="status">現在の試合状態を確認します。</p>
+</div>
+<div class="card"><h2>① 基準を記録</h2><p>試合アプリで練習用試合を開始し、少なくとも1点入力した後、このページで「基準を記録」を押してください。<b>この操作で得点は変わりません。</b></p>
+<button id="capture">現在の試合状態を基準として記録</button><p id="baseline" class="status" aria-live="polite">未記録</p></div>
+<div class="card"><h2>② バックアップJSONを確認</h2><p>試合アプリの「履歴 → JSON形式で保存」でファイルをダウンロードしてください。次にそのファイルをここで選びます。選択時に試合データが変更されることはありません。</p>
+<input id="backup" class="file-input" type="file" accept=".json,application/json"><p id="file-status" class="status" aria-live="polite">未確認</p></div>
+<div class="card"><h2>③ 練習用試合を1点進める</h2><ol><li>試合アプリに戻り、得点を1点追加する（セットが終了しない状態で実施）</li><li>ここへ戻り「変更を確認」を押す</li></ol><button id="changed">得点変更を確認</button><p id="changed-status" class="status" aria-live="polite">未確認</p></div>
+<div class="card"><h2>④ JSONから復元して照合</h2><ol><li>試合アプリの「履歴 → JSONファイルから復元」で、②で確認したバックアップを選ぶ</li><li>試合アプリの内容を確認して、置き換えに同意する</li><li>ここへ戻り「復元後の一致を確認」を押す</li></ol><button id="restored">復元後の一致を確認</button><p id="restore-status" class="status" aria-live="polite">未確認</p></div>
+<div class="card"><h2>⑤ アプリ再起動後に再確認</h2><p>一度アプリを閉じ、機内モードでも開けることを確認してから、この画面に戻って再確認してください。<b>ボタンだけではアプリの再起動実施を証明できません。</b></p><button id="reopened">再起動後の一致を確認</button><p id="reopen-status" class="status" aria-live="polite">未確認</p></div>
+<div class="card"><h2>結果と共有</h2><p id="overview" class="status" role="status">未実施</p><textarea readonly id="report" aria-label="検証結果のテキスト"></textarea><div class="row"><button id="copy">結果をコピー</button><button id="reset" class="danger">診断記録のみ消去</button></div><p><small>照合値と進捗のみを端末内に保存します。選手名・背番号・試合データそのものは、このページの診断領域には保存しません。共有用レポートにも含めません。外部への自動送信はありません。</small></p></div>
+</main>
+<script>
+'use strict';
+const KEY='volley_referee_assist_v10',TEST_KEY='__volley_step27_recovery_test__';
+const el=id=>document.getElementById(id);
+let test=null;
+function getState(){const x=JSON.parse(localStorage.getItem(KEY)||'null');if(!x||!x.s||![6,9].includes(x.s.format)||!Array.isArray(x.s.teams)||x.s.teams.length!==2)throw Error('端末内に有効な試合記録がありません。');return x.s;}
+function projection(s){return {v:s.v,format:s.format,set:s.set,ready:s.ready,matchEnded:s.matchEnded,rules:s.rules,scores:s.scores,serving:s.serving,attempt:s.attempt,leftTeam:s.leftTeam,rallyNo:s.rallyNo,rotationCounts:s.rotationCounts,teams:s.teams.map(t=>({name:t.name,roster:t.roster,slots:t.slots,next9:t.next9,timeouts:t.timeouts,subs:t.subs,lastSubRally:t.lastSubRally})),finishedSets:s.finishedSets,events:s.events,serverChecks:s.serverChecks,betweenSetChanges:s.betweenSetChanges,opsChecks:s.opsChecks,lastRallyServer:s.lastRallyServer,lastRallyServerNumber:s.lastRallyServerNumber,lastRallyAttempt:s.lastRallyAttempt,courtChange:s.courtChange,expectedNextServing:s.expectedNextServing};}
+function stable(x){if(Array.isArray(x))return '['+x.map(stable).join(',')+']';if(x&&typeof x==='object')return '{'+Object.keys(x).filter(k=>x[k]!==undefined).sort().map(k=>JSON.stringify(k)+':'+stable(x[k])).join(',')+'}';return JSON.stringify(x);}
+async function fingerprint(s){if(!crypto?.subtle?.digest)throw Error('SHA-256を利用できません。HTTPSのアプリから開いてください。');const input=new TextEncoder().encode(stable(projection(s)));const bytes=await crypto.subtle.digest('SHA-256',input);return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+function summary(s){return {format:s.format,set:s.set,scores:[...s.scores],serving:s.serving,rallyNo:s.rallyNo,events:s.events?.length||0,finishedSets:s.finishedSets?.length||0};}
+function store(){localStorage.setItem(TEST_KEY,JSON.stringify(test));}
+function load(){try{let x=JSON.parse(localStorage.getItem(TEST_KEY)||'null');return x&&x.version===1&&/^[0-9a-f]{64}$/.test(x.hash)&&x.summary?x:null;}catch(e){return null;}}
+function fmt(t){return t?new Date(t).toLocaleString('ja-JP'):'未確認';}
+function setStatus(id,message,kind='warn'){el(id).textContent=message;el(id).dataset.kind=kind;}
+function error(id,e){setStatus(id,'確認できません：'+(e&&e.message?e.message:String(e)),'error');}
+function refresh(){test=load();try{const s=getState();setStatus('current',s.format+'人制・第'+s.set+'セット／得点 '+s.scores.join('－')+'／ラリー'+s.rallyNo+(s.ready?'（試合中）':'（準備中または終了）'),'good');}catch(e){error('current',e);}
+ setStatus('baseline',test?'記録済み：'+fmt(test.capturedAt)+'／'+test.summary.format+'人制・第'+test.summary.set+'セット／得点 '+test.summary.scores.join('－')+'／照合値 '+test.hash.slice(0,12)+'…':'未記録',test?'good':'warn');
+ setStatus('file-status',test?.fileConfirmedAt?'照合値一致：バックアップJSON確認済み（'+fmt(test.fileConfirmedAt)+'）':'未確認',test?.fileConfirmedAt?'good':'warn');
+ setStatus('changed-status',test?.changedAt?'基準と異なる得点またはラリーを確認（'+fmt(test.changedAt)+'）':'未確認',test?.changedAt?'good':'warn');
+ setStatus('restore-status',test?.restoredAt?'基準と同じ試合状態に戻ったことを確認（'+fmt(test.restoredAt)+'）':'未確認',test?.restoredAt?'good':'warn');
+ setStatus('reopen-status',test?.reopenAt?'再確認時も基準と一致（'+fmt(test.reopenAt)+'）':'未確認',test?.reopenAt?'good':'warn');
+ const pass=!!(test?.capturedAt&&test?.fileConfirmedAt&&test?.changedAt&&test?.restoredAt&&test?.reopenAt);
+ setStatus('overview',pass?'自動照合5段階完了。Android操作の実施状況は利用者の操作記録として取り扱ってください。':test?'検証途中です。未確認項目は合格と扱いません。':'検証記録なし',pass?'good':'warn');
+ const summaryText=test?[`競技方式：${test.summary.format}人制`,`記録時セット：${test.summary.set}`,`基準点数：${test.summary.scores.join('－')}`,`基準の記録時刻：${fmt(test.capturedAt)}`,`照合値（先頭12桁）：${test.hash.slice(0,12)}`]:['基準未記録'];
+ el('report').value=['STEP27 Volley審判 JSON復元・実機検証','作成日時：'+new Date().toLocaleString('ja-JP'),...summaryText,'バックアップファイル一致：'+(test?.fileConfirmedAt?'確認済み':'未確認'),'得点変更：'+(test?.changedAt?'確認済み':'未確認'),'JSON復元後：'+(test?.restoredAt?'基準と一致':'未確認'),'再起動後：'+(test?.reopenAt?'基準と一致（実機での再起動操作は利用者確認）':'未確認'),'注：試合記録の状態照合であり、実際の審判判定・タイマー精度を保証するものではありません。'].join('\n');}
+async function handle(id,fn){const b=el(id);b.disabled=true;try{await fn();refresh();}catch(e){error(id==='capture'?'baseline':id==='changed'?'changed-status':id==='restored'?'restore-status':id==='reopened'?'reopen-status':'file-status',e);}finally{b.disabled=false;}}
+el('capture').addEventListener('click',()=>handle('capture',async()=>{if(!el('practice').checked||!el('safety').checked)throw Error('練習用試合・別途バックアップの2項目を確認してください。');const s=getState();if(!s.ready||s.rallyNo<1)throw Error('練習用試合を開始し、少なくとも1点を入力してください。');if(test&&!confirm('STEP27の診断記録だけを新しい基準に置き換えますか？'))return;test={version:1,hash:await fingerprint(s),summary:summary(s),capturedAt:Date.now(),fileConfirmedAt:null,changedAt:null,restoredAt:null,reopenAt:null};store();}));
+el('backup').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;await handle('backup',async()=>{if(!test)throw Error('先に基準を記録してください。');test.fileConfirmedAt=null;test.changedAt=null;test.restoredAt=null;test.reopenAt=null;store();if(file.size>8*1024*1024)throw Error('8MBを超えるファイルは確認できません。');const obj=JSON.parse(await file.text());if(obj?.app!=='VOLLEY REFEREE ASSIST'||![2,3,4,5,6,7,8,9,10].includes(obj.version)||!obj.state)throw Error('試合アプリの対応するJSONではありません。');const h=await fingerprint(obj.state);if(h!==test.hash)throw Error('基準とバックアップの試合状態が一致しません。基準記録後に得点を変更していないか確認してください。');test.fileConfirmedAt=Date.now();test.changedAt=null;test.restoredAt=null;test.reopenAt=null;store();});e.target.value='';});
+el('changed').addEventListener('click',()=>handle('changed',async()=>{if(!test?.fileConfirmedAt)throw Error('先にバックアップJSONを確認してください。');const s=getState(),h=await fingerprint(s);if(h===test.hash)throw Error('得点がまだ変更されていません。');if(s.rallyNo===test.summary.rallyNo&&s.scores.join(',')===test.summary.scores.join(','))throw Error('得点またはラリー数の変更を確認できません。');test.changedAt=Date.now();test.restoredAt=null;test.reopenAt=null;store();}));
+el('restored').addEventListener('click',()=>handle('restored',async()=>{if(!test?.changedAt)throw Error('先に得点変更を確認してください。');if((await fingerprint(getState()))!==test.hash)throw Error('現在の試合状態が基準と一致しません。正しいJSONの復元と得点・サービス順を確認してください。');test.restoredAt=Date.now();test.reopenAt=null;store();}));
+el('reopened').addEventListener('click',()=>handle('reopened',async()=>{if(!test?.restoredAt)throw Error('先に復元後の一致を確認してください。');if((await fingerprint(getState()))!==test.hash)throw Error('現在の試合状態が基準と一致しません。');test.reopenAt=Date.now();store();}));
+el('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(el('report').value);el('copy').textContent='コピーしました';}catch(e){el('report').select();el('copy').textContent='テキストを選択しました';}});
+el('reset').addEventListener('click',()=>{if(confirm('STEP27の診断記録だけを削除しますか？ 試合データは削除しません。')){localStorage.removeItem(TEST_KEY);refresh();}});
+window.addEventListener('pageshow',refresh);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});refresh();
+</script>
+</body>
+</html>
