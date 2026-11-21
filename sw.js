@@ -1,4 +1,4 @@
-const CACHE = 'volley-referee-assist-v18-20261121';
+const CACHE = 'volley-referee-assist-v19-20261121';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './diagnostics.html'];
 const SCOPE = new URL('./', self.location.href).pathname;
 self.addEventListener('install', event => {
