@@ -4,15 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10334b">
-<title>STEP 23｜審判操作性テスト</title>
+<title>STEP 24｜審判操作性テストと改善課題</title>
 <style>
 :root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#17364a;background:#f1f5f8;color-scheme:light}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer;touch-action:manipulation}a{color:#13658c}header{background:#10334b;color:white;padding:15px 16px}header .inner{max-width:920px;margin:auto}header h1{font-size:19px;margin:0 0 5px}header p{margin:0;font-size:12px;color:#c5dce6}main{max-width:920px;padding:13px;margin:auto}.card{background:#fff;border:1px solid #d8e4eb;border-radius:12px;padding:15px;margin:0 0 13px}.card h2{font-size:17px;margin:0 0 8px}.card h3{font-size:14px;margin:0 0 6px}.muted{color:#526e7d;font-size:12px;line-height:1.6}.warning{border-left:4px solid #c58a36;background:#fff8e9;padding:10px 12px;font-size:12px;line-height:1.6;margin-bottom:13px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:650;margin:8px 0}select,textarea{width:100%;padding:10px;border:1px solid #aac2d0;border-radius:8px;color:#14354c;background:#fff;min-height:44px}textarea{resize:vertical;min-height:92px;line-height:1.5}button,.btnlink{border:0;border-radius:9px;padding:10px 15px;min-height:44px;background:#17698f;color:#fff;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}button.secondary,.btnlink.secondary{background:#e7f0f5;color:#1b526d}button.negative{background:#fff0ec;color:#943b2e}button:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.progress{background:#e5edf2;border-radius:40px;height:10px;overflow:hidden}.progress>span{display:block;height:100%;background:#168367;transition:width .2s}.status{font-size:13px;font-weight:750;margin:8px 0}.tasks{display:grid;gap:7px;max-height:310px;overflow:auto}.task{display:flex;gap:10px;align-items:center;text-align:left;justify-content:space-between;width:100%;min-height:46px;padding:8px 10px;border:1px solid #d1e0e8;border-radius:8px;background:#f7fbfd;color:#28516a}.task.active{outline:2px solid #16728d;background:#eaf8fb}.task small{font-size:11px;font-weight:750;white-space:nowrap}.task .ok{color:#067556}.task .problem{color:#9d4a24}.step{font-size:11px;letter-spacing:.025em;font-weight:850;color:#4c7486}.stepTitle{font-size:19px;font-weight:850;margin:6px 0}.instructions{padding-left:22px;line-height:1.75;font-size:14px}.instructions li{margin:6px 0}.hint{font-size:12px;line-height:1.6;color:#4b6978;background:#eef6f8;padding:10px;border-radius:7px}.resultButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.resultButtons button{background:#edf2f5;color:#31576b;border:1px solid #c6d5dc;min-width:0;padding:8px 4px}.resultButtons button[aria-pressed="true"]{color:#fff;background:#116d8a;border-color:#116d8a}.resultButtons button[data-value="pass"][aria-pressed="true"]{background:#087b5c;border-color:#087b5c}.resultButtons button[data-value="issue"][aria-pressed="true"]{background:#a85821;border-color:#a85821}.pill{font-size:12px;background:#e8f4f1;color:#126c56;padding:5px 8px;border-radius:20px;display:inline-block}.flex{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.timer{font-variant-numeric:tabular-nums;font-weight:800}.checklist{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px}.checklist label{background:#f2f6f8;border:1px solid #d8e4eb;border-radius:9px;padding:7px 9px;font-size:12px;cursor:pointer}.checklist input{accent-color:#17698f}.subtle{font-size:12px;color:#637d88}#copyStatus{font-size:12px;color:#166a53}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef4f7;padding:12px;border-radius:9px;font-size:12px;max-height:300px;overflow:auto}.small{font-size:12px}@media(max-width:680px){.layout{grid-template-columns:1fr}.card{padding:12px}.stepTitle{font-size:17px}.tasks{max-height:190px}.resultButtons button{font-size:12px;padding:8px 3px}}@media(orientation:landscape) and (max-height:450px){header{padding:7px 11px}header h1{font-size:16px}main{padding:8px}.card{margin-bottom:8px}.tasks{max-height:160px}}
+
+/* STEP 24: display an issue triage queue without modifying the scorer app. */
+.triage-list{display:grid;gap:9px;margin:11px 0}
+.triage-item{border:1px solid #d5e1e8;border-radius:10px;padding:12px;background:#fafcfd}
+.triage-title{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:800}
+.triage-details{font-size:12px;color:#4b6575;line-height:1.55;margin:7px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.triage-controls{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end}
+.triage-controls label{font-weight:700;font-size:11px;color:#476476;display:flex;flex-direction:column;gap:4px}
+.triage-controls select{min-height:38px;padding:6px;font-size:12px}
+.triage-controls button{min-height:38px;font-size:12px;padding:6px 9px}
+.priority{border-radius:8px;padding:4px 7px;display:inline-block;font-weight:850;font-size:11px}
+.priority.p0{background:#fde8e4;color:#a02a1c}.priority.p1{background:#fff0d8;color:#84510d}.priority.p2{background:#e9f2fa;color:#175b86}
+@media(max-width:540px){.triage-controls{grid-template-columns:1fr 1fr}.triage-controls button{grid-column:1/-1}}
 </style>
 </head>
 <body>
-<header><div class="inner"><h1>STEP 23｜審判操作性テスト</h1><p>VOLLEY REFEREE ASSIST v2.2｜Android実機・練習試合向け</p></div></header>
+<header><div class="inner"><h1>STEP 24｜操作性テスト・改善課題整理</h1><p>VOLLEY REFEREE ASSIST v2.3｜Android実機・練習試合向け</p></div></header>
 <main>
-<div class="warning"><strong>本番の試合中は使用しないでください。</strong> 別の練習用試合を使い、必要な場合は最初に試合データをJSONでバックアップしてください。このページの評価記録はアプリの得点・サービス順・選手登録を読み書きしません。利用者名や選手名などの個人情報は記入しないでください。</div>
+<div class="warning"><strong>本番の試合中は使用しないでください。</strong> 別の練習用試合を使い、必要な場合は最初に試合データをJSONでバックアップしてください。このページの評価記録はアプリの得点・サービス順・選手登録を読み書きしません。自動優先度は仮分類であり、利用者による実機評価ではありません。利用者名や選手名などの個人情報は記入しないでください。</div>
 <section class="card">
 <div class="flex"><div><h2>評価の準備</h2><p class="muted" style="margin:0">6人制・9人制を切り替えてそれぞれ評価できます。結果はこの端末に保存されます。</p></div><a class="btnlink secondary" href="./index.html" target="_blank" rel="noopener">試合アプリを開く</a></div>
 <div class="layout"><label class="field">競技方式<select id="format"><option value="6">6人制</option><option value="9">9人制</option></select></label><label class="field">画面の向き<select id="orientation"><option value="landscape">横向き</option><option value="portrait">縦向き（参考）</option></select></label></div>
@@ -31,12 +44,22 @@
 </div>
 <section class="card"><h2>集計・共有</h2><p class="muted">記録するのは評価結果・操作時間（計測した場合のみ）・問題の種類・入力したメモです。自動送信は行いません。報告用テキストは、この端末に表示してからコピーします。</p><div id="summary" class="status" aria-live="polite"></div>
 <div class="actions"><button id="showReport">報告文を表示</button><button id="copyReport" class="secondary">報告文をコピー</button><button id="downloadJSON" class="secondary">評価データJSON</button><button id="clearAll" class="negative">評価を初期化</button></div><p id="copyStatus" role="status"></p><pre id="report" hidden></pre></section>
+<section class="card" id="triageCard"><h2>改善課題の整理（STEP 24）</h2>
+<p class="muted">「問題あり」と記録された操作だけを表示します。優先度は問題の種類と使いやすさから<span style="font-weight:800">仮分類</span>します。必要なら手動で変更し、対応状況を記録してください。試合の得点や選手のデータには影響しません。</p>
+<div class="status" id="triageSummary" aria-live="polite"></div>
+<div id="triageList" class="triage-list" aria-label="改善課題一覧"></div>
+<div class="actions"><button id="showIssues">課題一覧を表示</button><button class="secondary" id="copyIssues">課題一覧をコピー</button><button class="secondary" id="downloadIssues">課題一覧CSV</button></div>
+<p class="muted">P0：記録・計算の不一致（最優先で事実確認）／P1：誤タップ・操作困難／P2：その他の使い勝手。実際の緊急度を確定するものではありません。「対応済み」は手動記録で、自動修正を意味しません。</p>
+<pre id="issuesReport" hidden></pre><p id="issueCopyStatus" class="subtle" role="status"></p>
+</section>
 <section class="card"><h2>評価の目安</h2><p class="muted">「問題あり」は操作できない場合だけでなく、間違えそうだった、表示が見つけにくい、1回で理解できなかった場合にも選びます。短時間の練習では現れない不具合があるため、最終的には実際の練習試合を通した確認が必要です。</p></section>
 </main>
 <script>
 'use strict';
-const STORE='volley_referee_step23_trial_v1';
+const STORE='volley_referee_step23_trial_v1'; // Same key: retain STEP23 data when upgrading to STEP24.
 const FLAGS=[['miss','誤タップ'],['visibility','表示の見づらさ'],['confusion','操作に迷った'],['incorrect','表示・計算の不一致'],['slow','処理が遅い'],['other','その他']];
+const PRIORITY_LABEL={P0:'P0：正確性確認',P1:'P1：誤操作・操作困難',P2:'P2：改善候補'};
+const WORK_STATUS_LABEL={new:'未対応',checking:'確認中',fixed:'対応済み（手動記録）',deferred:'保留'};
 const TASKS={
  '6':[
   ['開始前の準備','セット・選手番号・サーブ側の設定','「試合準備」で6人制とセット条件、選手番号を確認','「最終確認画面へ進む」を押し、両チームのポジションと開始サーバーを確認','「確定して試合開始」を押す','開始時の得点0-0、P1サーバー、両チームの配置が一致する'],
@@ -73,6 +96,47 @@ function current(){return TASKS[state.format][state.index[state.format]];}
 function record(){return state.items[state.format][String(state.index[state.format])]||{};}
 function put(patch){const key=String(state.index[state.format]);state.items[state.format][key]={...record(),...patch};save();render();}
 function duration(){return started===null?null:Math.max(0,Math.round((Date.now()-started)/1000));}
+function autoPriority(e){
+ const flags=Array.isArray(e.flags)?e.flags:[];
+ if(flags.includes('incorrect'))return 'P0';
+ if(flags.includes('miss')||Number(e.ease)>0&&Number(e.ease)<=2)return 'P1';
+ return 'P2';
+}
+function priorityOf(e){return ['P0','P1','P2'].includes(e.priorityOverride)?e.priorityOverride:autoPriority(e);}
+function triageIssues(){const issues=[];
+ for(const f of ['6','9'])TASKS[f].forEach((task,i)=>{const e=state.items[f][String(i)]||{};if(e.status==='issue')issues.push({f,i,task:task[0],e,priority:priorityOf(e)});});
+ return issues.sort((a,b)=>a.priority.localeCompare(b.priority)||Number(a.f)-Number(b.f)||a.i-b.i);
+}
+function renderTriage(){const issues=triageIssues(),counts={P0:0,P1:0,P2:0};for(const x of issues)counts[x.priority]++;
+ $('triageSummary').textContent=issues.length?`問題あり ${issues.length}件 ／ P0 ${counts.P0}件・P1 ${counts.P1}件・P2 ${counts.P2}件`:'「問題あり」の記録はありません。実機評価が未実施の場合、問題がないと判断したことにはなりません。';
+ $('triageList').innerHTML=issues.map(x=>{
+ const e=x.e,notes=String(e.notes||'').trim().slice(0,240),flags=(Array.isArray(e.flags)?e.flags:[]).map(v=>FLAGS.find(z=>z[0]===v)?.[1]||v).join('、');
+ const work=Object.hasOwn(WORK_STATUS_LABEL,e.workStatus)?e.workStatus:'new';
+ return `<div class="triage-item" data-f="${x.f}" data-i="${x.i}">
+ <div class="triage-title"><span>${x.f}人制／${x.i+1}. ${esc(x.task)}</span><span class="priority ${x.priority.toLowerCase()}">${PRIORITY_LABEL[x.priority]}</span></div>
+ <div class="triage-details">${esc(flags||'問題分類なし')}${e.ease?' ／ わかりやすさ '+esc(e.ease)+'/5':''}${Number.isFinite(e.seconds)?' ／ 約'+e.seconds+'秒':''}${notes?'\nメモ：'+esc(notes):''}</div>
+ <div class="triage-controls"><label>優先度<select data-triage-priority><option value="auto" ${!e.priorityOverride?'selected':''}>自動判定（${x.priority}）</option>${['P0','P1','P2'].map(k=>`<option value="${k}" ${e.priorityOverride===k?'selected':''}>${PRIORITY_LABEL[k]}</option>`).join('')}</select></label>
+ <label>対応状況<select data-triage-status>${Object.entries(WORK_STATUS_LABEL).map(([k,v])=>`<option value="${k}" ${work===k?'selected':''}>${v}</option>`).join('')}</select></label>
+ <button class="secondary" type="button" data-triage-open>操作へ移動</button></div></div>`;
+ }).join('');
+}
+function updateTriageEntry(f,i,patch){if(!TASKS[f]||!Number.isInteger(i)||i<0||i>=TASKS[f].length)return;
+ const key=String(i),e=state.items[f][key]||{};if(e.status!=='issue')return;
+ state.items[f][key]={...e,...patch};save();render();
+}
+function makeIssuesReport(){const issues=triageIssues(),lines=['VOLLEY REFEREE ASSIST STEP24 改善課題一覧','更新日時：'+(state.updatedAt||'未記録'),'仮優先度は利用者による実機評価に基づく自動分類です。正式な不具合認定ではありません。',''];
+ if(!issues.length)lines.push('問題ありの報告は0件（未評価の操作がある可能性があります）。');
+ for(const x of issues){const e=x.e,flags=(Array.isArray(e.flags)?e.flags:[]).map(v=>FLAGS.find(z=>z[0]===v)?.[1]||v).join('・');
+ lines.push(`[${x.priority}] ${x.f}人制 ${x.i+1}. ${x.task}（${e.priorityOverride?'手動指定':'仮分類'}）`);
+ lines.push('対応：'+(WORK_STATUS_LABEL[e.workStatus]||WORK_STATUS_LABEL.new)+(flags?' ／ '+flags:'')+(e.ease?' ／ わかりやすさ'+e.ease+'/5':''));
+ if(e.notes)lines.push('メモ：'+String(e.notes).replace(/\s+/g,' ').trim());
+ }
+ return lines.join('\n');
+}
+function issuesCSV(){const rows=[['優先度','区分','手動指定','競技方式','番号','操作','対応状況','問題分類','使いやすさ','所要時間(秒)','メモ']];
+ for(const x of triageIssues()){const e=x.e;rows.push([x.priority,PRIORITY_LABEL[x.priority],e.priorityOverride?'はい':'いいえ',x.f,x.i+1,x.task,WORK_STATUS_LABEL[e.workStatus]||WORK_STATUS_LABEL.new,(Array.isArray(e.flags)?e.flags:[]).map(v=>FLAGS.find(z=>z[0]===v)?.[1]||v).join('、'),e.ease||'',Number.isFinite(e.seconds)?e.seconds:'',e.notes||'']);}
+ return '﻿'+rows.map(row=>row.map(value=>'"'+String(value).replaceAll('"','""')+'"').join(',')).join('\r\n');
+}
 function summarize(f){const arr=TASKS[f].map((_,i)=>state.items[f][String(i)]||{});return {pass:arr.filter(x=>x.status==='pass').length,issue:arr.filter(x=>x.status==='issue').length,skip:arr.filter(x=>x.status==='skip').length,total:arr.length,timed:arr.filter(x=>Number.isFinite(x.seconds)).length};}
 function render(){const f=state.format,i=state.index[f],task=current(),entry=record(),sum=summarize(f),done=sum.pass+sum.issue+sum.skip;
  $('format').value=f;$('orientation').value=state.orientation;$('deviceInfo').textContent=innerWidth+'×'+innerHeight+' px';$('progressLabel').textContent=`記録済み ${done}/${sum.total} ／ 問題なし ${sum.pass} ／ 問題あり ${sum.issue}`;$('bar').style.width=(done/sum.total*100)+'%';$('progressBar').setAttribute('aria-valuenow',String(Math.round(done/sum.total*100)));
@@ -81,10 +145,10 @@ function render(){const f=state.format,i=state.index[f],task=current(),entry=rec
  $('startTimer').textContent=started===null?'操作時間を計測':'計測中（結果を選ぶと確定）';$('lastTime').textContent=Number.isFinite(entry.seconds)?`前回の所要時間：約${entry.seconds}秒`:'';$('elapsed').textContent=started===null?'未計測':'計測中';
  document.querySelectorAll('#results button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.value===entry.status)));$('ease').value=entry.ease||'';$('notes').value=entry.notes||'';
  $('issueFlags').innerHTML=FLAGS.map(([value,label])=>`<label><input type="checkbox" value="${value}" ${Array.isArray(entry.flags)&&entry.flags.includes(value)?'checked':''}>${label}</label>`).join('');
- $('prev').disabled=i===0;$('next').disabled=i===TASKS[f].length-1;$('summary').textContent=`6人制：${summarize('6').pass}成功・${summarize('6').issue}問題 ／ 9人制：${summarize('9').pass}成功・${summarize('9').issue}問題`;
+ $('prev').disabled=i===0;$('next').disabled=i===TASKS[f].length-1;$('summary').textContent=`6人制：${summarize('6').pass}成功・${summarize('6').issue}問題 ／ 9人制：${summarize('9').pass}成功・${summarize('9').issue}問題`;renderTriage();
 }
 function selectIndex(j){if(!Number.isInteger(j)||j<0||j>=TASKS[state.format].length)return;state.index[state.format]=j;started=null;save();render();}
-function makeReport(){const lines=['VOLLEY REFEREE ASSIST STEP23 操作性評価','更新日時：'+(state.updatedAt||'未記録'),'画面の向き：'+(state.orientation==='landscape'?'横向き':'縦向き（参考）'),'※記録は評価者が操作して入力した内容です。試合アプリの自動診断ではありません。',''];for(const f of ['6','9']){const s=summarize(f);lines.push(`【${f}人制】${s.pass}件成功／${s.issue}件問題あり／${s.skip}件未実施（全${s.total}項目）`);TASKS[f].forEach((t,i)=>{const e=state.items[f][String(i)];if(!e||!e.status)return;const label=e.status==='pass'?'問題なし':e.status==='issue'?'問題あり':'未実施';lines.push(`${i+1}. ${t[0]}：${label}${e.ease?'／使いやすさ '+e.ease+'/5':''}${Number.isFinite(e.seconds)?'／操作時間 約'+e.seconds+'秒':''}`);if(e.flags?.length)lines.push('   問題の種類：'+e.flags.map(v=>FLAGS.find(x=>x[0]===v)?.[1]||v).join('、'));if(e.notes)lines.push('   メモ：'+e.notes.replace(/\s+/g,' ').trim());});lines.push('');}return lines.join('\n');}
+function makeReport(){const lines=['VOLLEY REFEREE ASSIST STEP23 操作性評価','更新日時：'+(state.updatedAt||'未記録'),'画面の向き：'+(state.orientation==='landscape'?'横向き':'縦向き（参考）'),'※記録は評価者が操作して入力した内容です。試合アプリの自動診断ではありません。',''];for(const f of ['6','9']){const s=summarize(f);lines.push(`【${f}人制】${s.pass}件成功／${s.issue}件問題あり／${s.skip}件未実施（全${s.total}項目）`);TASKS[f].forEach((t,i)=>{const e=state.items[f][String(i)];if(!e||!e.status)return;const label=e.status==='pass'?'問題なし':e.status==='issue'?'問題あり':'未実施';lines.push(`${i+1}. ${t[0]}：${label}${e.ease?'／使いやすさ '+e.ease+'/5':''}${Number.isFinite(e.seconds)?'／操作時間 約'+e.seconds+'秒':''}`);if(e.flags?.length)lines.push('   問題の種類：'+e.flags.map(v=>FLAGS.find(x=>x[0]===v)?.[1]||v).join('、'));if(e.notes)lines.push('   メモ：'+e.notes.replace(/\s+/g,' ').trim());});lines.push('');}lines.push('【STEP24 改善課題】');lines.push(makeIssuesReport());return lines.join('\n');}
 function setReport(){reportText=makeReport();$('report').hidden=false;$('report').textContent=reportText;return reportText;}
 function download(name,content,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 $('format').addEventListener('change',e=>{if(!TASKS[e.target.value])return;state.format=e.target.value;started=null;save();render()});$('orientation').addEventListener('change',e=>{state.orientation=e.target.value;save();render()});
@@ -95,6 +159,14 @@ $('ease').addEventListener('change',e=>put({ease:e.target.value}));
 $('notes').addEventListener('input',e=>{const value=e.target.value;const key=String(state.index[state.format]);state.items[state.format][key]={...record(),notes:value};save()});
 $('issueFlags').addEventListener('change',()=>put({flags:[...document.querySelectorAll('#issueFlags input:checked')].map(x=>x.value)}));
 $('prev').addEventListener('click',()=>selectIndex(state.index[state.format]-1));$('next').addEventListener('click',()=>selectIndex(state.index[state.format]+1));
+$('triageList').addEventListener('change',e=>{const row=e.target.closest('[data-f][data-i]');if(!row)return;const f=row.dataset.f,i=Number(row.dataset.i);
+ if(e.target.matches('[data-triage-priority]')){const p=e.target.value;if(!['auto','P0','P1','P2'].includes(p))return;updateTriageEntry(f,i,{priorityOverride:p==='auto'?null:p});}
+ if(e.target.matches('[data-triage-status]')){const k=e.target.value;if(!Object.hasOwn(WORK_STATUS_LABEL,k))return;updateTriageEntry(f,i,{workStatus:k});}
+});
+$('triageList').addEventListener('click',e=>{const row=e.target.closest('[data-f][data-i]');if(!row||!e.target.closest('[data-triage-open]'))return;state.format=row.dataset.f;selectIndex(Number(row.dataset.i));$('detailCard').scrollIntoView({block:'start',behavior:'smooth'});});
+$('showIssues').addEventListener('click',()=>{$('issuesReport').textContent=makeIssuesReport();$('issuesReport').hidden=false;});
+$('copyIssues').addEventListener('click',async()=>{const text=makeIssuesReport();$('issuesReport').textContent=text;$('issuesReport').hidden=false;try{await navigator.clipboard.writeText(text);$('issueCopyStatus').textContent='課題一覧をコピーしました';}catch(e){$('issueCopyStatus').textContent='コピーできません。表示された一覧を選択してコピーしてください。';}});
+$('downloadIssues').addEventListener('click',()=>download('volley_issues_step24_'+new Date().toISOString().slice(0,10)+'.csv',issuesCSV(),'text/csv;charset=utf-8'));
 $('showReport').addEventListener('click',()=>{setReport();$('copyStatus').textContent='報告文を表示しました'});
 $('copyReport').addEventListener('click',async()=>{const text=setReport();try{await navigator.clipboard.writeText(text);$('copyStatus').textContent='報告文をコピーしました';}catch(e){$('copyStatus').textContent='クリップボードを使用できません。下の報告文を選択してコピーしてください。'}});
 $('downloadJSON').addEventListener('click',()=>download('volley_trial_step23_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({app:'VOLLEY REFEREE ASSIST',kind:'standalone-usability-trial',state},null,2),'application/json;charset=utf-8'));
