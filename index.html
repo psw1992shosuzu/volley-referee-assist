@@ -370,6 +370,11 @@ body.landscape-game #notice .status{padding:4px 8px;font-size:10px;line-height:1
 @media (orientation:landscape) and (max-height:339px) {
   .h-headline {height:30px}
   .h-top-actions button {min-height:30px}
+  /* Nine-player service order has nine numbers in a very short viewport. */
+  .h-court-number-grid.nine {grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:2px}
+  .h-court-number-grid.nine .h-player {gap:2px;padding:0 1px}
+  .h-court-number-grid.nine .h-player small {font-size:8px;line-height:1}
+  .h-court-number-grid.nine .h-player b {font-size:12px;line-height:1}
 }
 .h-top-actions button[data-action="swapSides"] {border-color:#cba568;background:#fff6e6;color:#684a16}
 .h-top-actions button[data-action="toggleLock"].on {border-color:#ae5d51;background:#ffe6dc;color:#822e25}
