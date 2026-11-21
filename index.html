@@ -477,7 +477,7 @@ function openSetupReview(){
  try{
   setupReviewPrepared=collectSetupData();setupReviewOpen=true;
   document.getElementById('dialog-root').innerHTML=setupReviewPanel();
- }catch(e){setupReviewPrepared=null;setupReviewOpen=false;notify(e.message,'error');if(s.format===9&&s.set>1&&/サービス順の背番号|次のサーバー順/.test(e.message)){render();}else{showNotice();}}
+ }catch(e){setupReviewPrepared=null;setupReviewOpen=false;notify(e.message,'error');if(s.format===9&&s.set>1){render();}else{showNotice();}}
 }
 function cancelSetupReview(){setupReviewOpen=false;setupReviewPrepared=null;document.getElementById('dialog-root').innerHTML='';}
 function applySetup(){
