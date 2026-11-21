@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b">
+<title>STEP 23｜審判操作性テスト</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#17364a;background:#f1f5f8;color-scheme:light}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer;touch-action:manipulation}a{color:#13658c}header{background:#10334b;color:white;padding:15px 16px}header .inner{max-width:920px;margin:auto}header h1{font-size:19px;margin:0 0 5px}header p{margin:0;font-size:12px;color:#c5dce6}main{max-width:920px;padding:13px;margin:auto}.card{background:#fff;border:1px solid #d8e4eb;border-radius:12px;padding:15px;margin:0 0 13px}.card h2{font-size:17px;margin:0 0 8px}.card h3{font-size:14px;margin:0 0 6px}.muted{color:#526e7d;font-size:12px;line-height:1.6}.warning{border-left:4px solid #c58a36;background:#fff8e9;padding:10px 12px;font-size:12px;line-height:1.6;margin-bottom:13px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:650;margin:8px 0}select,textarea{width:100%;padding:10px;border:1px solid #aac2d0;border-radius:8px;color:#14354c;background:#fff;min-height:44px}textarea{resize:vertical;min-height:92px;line-height:1.5}button,.btnlink{border:0;border-radius:9px;padding:10px 15px;min-height:44px;background:#17698f;color:#fff;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}button.secondary,.btnlink.secondary{background:#e7f0f5;color:#1b526d}button.negative{background:#fff0ec;color:#943b2e}button:disabled{opacity:.4;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.progress{background:#e5edf2;border-radius:40px;height:10px;overflow:hidden}.progress>span{display:block;height:100%;background:#168367;transition:width .2s}.status{font-size:13px;font-weight:750;margin:8px 0}.tasks{display:grid;gap:7px;max-height:310px;overflow:auto}.task{display:flex;gap:10px;align-items:center;text-align:left;justify-content:space-between;width:100%;min-height:46px;padding:8px 10px;border:1px solid #d1e0e8;border-radius:8px;background:#f7fbfd;color:#28516a}.task.active{outline:2px solid #16728d;background:#eaf8fb}.task small{font-size:11px;font-weight:750;white-space:nowrap}.task .ok{color:#067556}.task .problem{color:#9d4a24}.step{font-size:11px;letter-spacing:.025em;font-weight:850;color:#4c7486}.stepTitle{font-size:19px;font-weight:850;margin:6px 0}.instructions{padding-left:22px;line-height:1.75;font-size:14px}.instructions li{margin:6px 0}.hint{font-size:12px;line-height:1.6;color:#4b6978;background:#eef6f8;padding:10px;border-radius:7px}.resultButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.resultButtons button{background:#edf2f5;color:#31576b;border:1px solid #c6d5dc;min-width:0;padding:8px 4px}.resultButtons button[aria-pressed="true"]{color:#fff;background:#116d8a;border-color:#116d8a}.resultButtons button[data-value="pass"][aria-pressed="true"]{background:#087b5c;border-color:#087b5c}.resultButtons button[data-value="issue"][aria-pressed="true"]{background:#a85821;border-color:#a85821}.pill{font-size:12px;background:#e8f4f1;color:#126c56;padding:5px 8px;border-radius:20px;display:inline-block}.flex{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.timer{font-variant-numeric:tabular-nums;font-weight:800}.checklist{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px}.checklist label{background:#f2f6f8;border:1px solid #d8e4eb;border-radius:9px;padding:7px 9px;font-size:12px;cursor:pointer}.checklist input{accent-color:#17698f}.subtle{font-size:12px;color:#637d88}#copyStatus{font-size:12px;color:#166a53}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef4f7;padding:12px;border-radius:9px;font-size:12px;max-height:300px;overflow:auto}.small{font-size:12px}@media(max-width:680px){.layout{grid-template-columns:1fr}.card{padding:12px}.stepTitle{font-size:17px}.tasks{max-height:190px}.resultButtons button{font-size:12px;padding:8px 3px}}@media(orientation:landscape) and (max-height:450px){header{padding:7px 11px}header h1{font-size:16px}main{padding:8px}.card{margin-bottom:8px}.tasks{max-height:160px}}
+</style>
+</head>
+<body>
+<header><div class="inner"><h1>STEP 23｜審判操作性テスト</h1><p>VOLLEY REFEREE ASSIST v2.2｜Android実機・練習試合向け</p></div></header>
+<main>
+<div class="warning"><strong>本番の試合中は使用しないでください。</strong> 別の練習用試合を使い、必要な場合は最初に試合データをJSONでバックアップしてください。このページの評価記録はアプリの得点・サービス順・選手登録を読み書きしません。利用者名や選手名などの個人情報は記入しないでください。</div>
+<section class="card">
+<div class="flex"><div><h2>評価の準備</h2><p class="muted" style="margin:0">6人制・9人制を切り替えてそれぞれ評価できます。結果はこの端末に保存されます。</p></div><a class="btnlink secondary" href="./index.html" target="_blank" rel="noopener">試合アプリを開く</a></div>
+<div class="layout"><label class="field">競技方式<select id="format"><option value="6">6人制</option><option value="9">9人制</option></select></label><label class="field">画面の向き<select id="orientation"><option value="landscape">横向き</option><option value="portrait">縦向き（参考）</option></select></label></div>
+<div class="flex"><span class="status" id="progressLabel" aria-live="polite">未実施</span><span class="subtle" id="deviceInfo"></span></div><div class="progress" role="progressbar" aria-label="実施状況" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><span id="bar"></span></div>
+</section>
+<div class="layout">
+<section class="card"><h2>操作シナリオ</h2><div class="tasks" id="taskList" aria-label="操作手順の一覧"></div></section>
+<section class="card" id="detailCard"><div class="flex"><span class="step" id="stepCount">1 / 10</span><span class="pill" id="elapsed" role="timer">未計測</span></div><h2 class="stepTitle" id="title"></h2><p class="muted" id="objective"></p><ol class="instructions" id="instructions"></ol><p class="hint" id="expected"></p>
+<div class="actions"><button id="startTimer" class="secondary">操作時間を計測</button><span id="lastTime" class="subtle"></span></div>
+<h3 style="margin-top:14px">結果を記録</h3><div class="resultButtons" id="results" role="group" aria-label="この操作の結果"><button type="button" data-value="pass">問題なし</button><button type="button" data-value="issue">問題あり</button><button type="button" data-value="skip">未実施</button></div>
+<label class="field">操作のわかりやすさ<select id="ease"><option value="">未評価</option><option value="5">5：迷わず操作できた</option><option value="4">4：ほぼ迷わなかった</option><option value="3">3：少し迷った</option><option value="2">2：かなり迷った</option><option value="1">1：操作できなかった</option></select></label>
+<div class="field">気になった点（該当項目を選択）<div class="checklist" id="issueFlags"></div></div>
+<label class="field">問題の詳細・改善案（任意）<textarea id="notes" maxlength="1200" placeholder="例：サービス順の表示が小さく、確認に時間がかかった"></textarea></label>
+<div class="actions"><button class="secondary" id="prev">前の操作</button><button id="next">次の操作</button></div>
+</section>
+</div>
+<section class="card"><h2>集計・共有</h2><p class="muted">記録するのは評価結果・操作時間（計測した場合のみ）・問題の種類・入力したメモです。自動送信は行いません。報告用テキストは、この端末に表示してからコピーします。</p><div id="summary" class="status" aria-live="polite"></div>
+<div class="actions"><button id="showReport">報告文を表示</button><button id="copyReport" class="secondary">報告文をコピー</button><button id="downloadJSON" class="secondary">評価データJSON</button><button id="clearAll" class="negative">評価を初期化</button></div><p id="copyStatus" role="status"></p><pre id="report" hidden></pre></section>
+<section class="card"><h2>評価の目安</h2><p class="muted">「問題あり」は操作できない場合だけでなく、間違えそうだった、表示が見つけにくい、1回で理解できなかった場合にも選びます。短時間の練習では現れない不具合があるため、最終的には実際の練習試合を通した確認が必要です。</p></section>
+</main>
+<script>
+'use strict';
+const STORE='volley_referee_step23_trial_v1';
+const FLAGS=[['miss','誤タップ'],['visibility','表示の見づらさ'],['confusion','操作に迷った'],['incorrect','表示・計算の不一致'],['slow','処理が遅い'],['other','その他']];
+const TASKS={
+ '6':[
+  ['開始前の準備','セット・選手番号・サーブ側の設定','「試合準備」で6人制とセット条件、選手番号を確認','「最終確認画面へ進む」を押し、両チームのポジションと開始サーバーを確認','「確定して試合開始」を押す','開始時の得点0-0、P1サーバー、両チームの配置が一致する'],
+  ['サーブ側の得点','サーブ権を保持したまま加点','サーブしているチームの得点を1点増やす','得点とサーバーが適切に表示されるか確認','','得点が1増え、サーブ権と並びが維持される'],
+  ['サイドアウト','サーブ権移動時のローテーション','レシーブ側に1点を記録','「副審確認」で次のサーバーを照合','','サービス権が移り、得点した側が1つローテーションする'],
+  ['取り消し・やり直し','操作ミスから復帰できるか','直前の得点を「戻す」で取り消す','「履歴」から「やり直す」で元に戻す','','得点・サーバー・選手配置が元通りになる'],
+  ['タイムアウト','30秒タイマーと回数表示','いずれかのチームでタイムアウトを記録','残り時間と回数を確認し、タイマーの一時停止・再開を試す','','タイマーと回数が一致し、得点・ローテーションは変わらない'],
+  ['選手交代','通常交代と履歴の見やすさ','登録済み控えを使って選手交代を1回登録','「副審確認」で直近の交代を表示する','','交代した背番号と履歴の内容が一致する'],
+  ['サービス照合','直前と次のサービスの区別','「副審確認 → サービス順を記録用紙と照合」を開く','「直前のラリー」と「次のサービス」を切り替える','','参照するサーバーが切り替わり、記録しても得点は変わらない'],
+  ['セット終了と次セット','終了確定・3分タイマー・次セット準備','練習用の試合を規定点数まで進める','セット終了を確定し、3分タイマーと次セットの確認画面を見る','','確定スコアと次セットの開始表示が一致する'],
+  ['横向き画面と復帰','画面移動・復帰の読みやすさ','スマートフォン横向きで全操作が視認できるか確認','別アプリを開いた後戻り、得点とサーバーが読み取れるか確認','','ボタンが重ならず、表示内容が正しい'],
+  ['保存・復元','JSONとオフライン復帰','練習データをJSONで保存し、保存した値を控える','オフラインでアプリを再起動し、記録を照合する','','得点・サーバー・選手番号が一致する']
+ ],
+ '9':[
+  ['開始前の準備','9人制のサービス順1〜9番','「試合準備」で9人制と選手番号、サーバー順を確認','最終確認画面で両チームの1〜9番と開始サーバーを照合','','得点0-0、サーブ側と順番が一致する'],
+  ['第1サービス失敗','第2サービスへの移行','第1サービスの失敗を記録','第2サービス表示とサーバー背番号を確認','','失点せず同じ選手の第2サービスへ移る'],
+  ['第2サービス失敗','第2サービス失敗後の得点','第2サービス失敗を記録','得点、サービス権、次のサーバーを確認','','相手に1点を記録し、サービス権・順番が正しく移る'],
+  ['サイドアウト','9人制のサービス順引継ぎ','レシーブ側が得点した場面を記録','「副審確認」で双方の次のサーバーを照合','','得点とサーブ側が正しく更新され、順番が飛ばない'],
+  ['取り消し・やり直し','第1／第2サービスの状態復帰','サービス失敗または得点を「戻す」で取り消す','「やり直す」で再反映する','','得点・第1／第2サービス・選手番号が正しく戻る'],
+  ['選手交代','セット中の通常交代','登録済み控えを使って通常の交代を記録','「副審確認」で交代記録を照合','','交代前後の背番号とサービス順が一致する'],
+  ['サービス照合','直前ラリーと次のサービス','「副審確認」から記録用紙との照合を開く','直前のラリーと次のサービスを切り替えて照合する','','得点を変えずに照合記録が履歴に残る'],
+  ['セット間交代','次セットの交代とサービス順','練習用セットを終えて次セット準備へ進む','セット間の交代を登録し、最終確認で順番を照合する','','サービス順の位置は変わらず背番号だけ更新される'],
+  ['横向き画面と復帰','9人表示と誤タップ防止','横向きの9人分の配置が読めるか確認','素早い連続タップや別アプリからの復帰を試す','','番号が重ならず、誤入力防止・復帰時照合が機能する'],
+  ['保存・復元','セット間データ・オフライン復帰','試合データをJSON保存し、サーバー順を控える','機内モードでアプリを再起動し、得点・順番を照合する','','得点、選手、サーバー順が一致する']
+ ]
+};
+const $=id=>document.getElementById(id);
+const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const initial=()=>({version:1,format:'6',orientation:'landscape',items:{'6':{},'9':{}},index:{'6':0,'9':0},updatedAt:null});
+let state=initial(),started=null,reportText='';
+function load(){try{const raw=JSON.parse(localStorage.getItem(STORE)||'null');if(raw&&raw.version===1&&raw.items&&raw.index){state={...initial(),...raw,items:{'6':raw.items['6']||{},'9':raw.items['9']||{}},index:{'6':Number(raw.index['6'])||0,'9':Number(raw.index['9'])||0}};if(!TASKS[state.format])state.format='6';}}catch(e){}}
+function save(){state.updatedAt=new Date().toISOString();try{localStorage.setItem(STORE,JSON.stringify(state));$('copyStatus').textContent='この端末へ保存しました';}catch(e){$('copyStatus').textContent='保存できません。報告文をコピーしてください';}}
+function current(){return TASKS[state.format][state.index[state.format]];}
+function record(){return state.items[state.format][String(state.index[state.format])]||{};}
+function put(patch){const key=String(state.index[state.format]);state.items[state.format][key]={...record(),...patch};save();render();}
+function duration(){return started===null?null:Math.max(0,Math.round((Date.now()-started)/1000));}
+function summarize(f){const arr=TASKS[f].map((_,i)=>state.items[f][String(i)]||{});return {pass:arr.filter(x=>x.status==='pass').length,issue:arr.filter(x=>x.status==='issue').length,skip:arr.filter(x=>x.status==='skip').length,total:arr.length,timed:arr.filter(x=>Number.isFinite(x.seconds)).length};}
+function render(){const f=state.format,i=state.index[f],task=current(),entry=record(),sum=summarize(f),done=sum.pass+sum.issue+sum.skip;
+ $('format').value=f;$('orientation').value=state.orientation;$('deviceInfo').textContent=innerWidth+'×'+innerHeight+' px';$('progressLabel').textContent=`記録済み ${done}/${sum.total} ／ 問題なし ${sum.pass} ／ 問題あり ${sum.issue}`;$('bar').style.width=(done/sum.total*100)+'%';$('progressBar').setAttribute('aria-valuenow',String(Math.round(done/sum.total*100)));
+ $('taskList').innerHTML=TASKS[f].map((t,j)=>{const e=state.items[f][String(j)]||{};const status=e.status==='pass'?'完了':e.status==='issue'?'問題あり':e.status==='skip'?'未実施':'未記録';const cls=e.status==='pass'?'ok':e.status==='issue'?'problem':'';return `<button type="button" class="task ${i===j?'active':''}" data-index="${j}" aria-current="${i===j?'step':'false'}"><span>${j+1}. ${esc(t[0])}</span><small class="${cls}">${status}</small></button>`}).join('');
+ $('stepCount').textContent=`${i+1} / ${TASKS[f].length}`;$('title').textContent=task[0];$('objective').textContent=task[1];$('instructions').replaceChildren();task.slice(2,5).filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;$('instructions').append(li)});$('expected').textContent='期待する結果：'+task[5];
+ $('startTimer').textContent=started===null?'操作時間を計測':'計測中（結果を選ぶと確定）';$('lastTime').textContent=Number.isFinite(entry.seconds)?`前回の所要時間：約${entry.seconds}秒`:'';$('elapsed').textContent=started===null?'未計測':'計測中';
+ document.querySelectorAll('#results button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.value===entry.status)));$('ease').value=entry.ease||'';$('notes').value=entry.notes||'';
+ $('issueFlags').innerHTML=FLAGS.map(([value,label])=>`<label><input type="checkbox" value="${value}" ${Array.isArray(entry.flags)&&entry.flags.includes(value)?'checked':''}>${label}</label>`).join('');
+ $('prev').disabled=i===0;$('next').disabled=i===TASKS[f].length-1;$('summary').textContent=`6人制：${summarize('6').pass}成功・${summarize('6').issue}問題 ／ 9人制：${summarize('9').pass}成功・${summarize('9').issue}問題`;
+}
+function selectIndex(j){if(!Number.isInteger(j)||j<0||j>=TASKS[state.format].length)return;state.index[state.format]=j;started=null;save();render();}
+function makeReport(){const lines=['VOLLEY REFEREE ASSIST STEP23 操作性評価','更新日時：'+(state.updatedAt||'未記録'),'画面の向き：'+(state.orientation==='landscape'?'横向き':'縦向き（参考）'),'※記録は評価者が操作して入力した内容です。試合アプリの自動診断ではありません。',''];for(const f of ['6','9']){const s=summarize(f);lines.push(`【${f}人制】${s.pass}件成功／${s.issue}件問題あり／${s.skip}件未実施（全${s.total}項目）`);TASKS[f].forEach((t,i)=>{const e=state.items[f][String(i)];if(!e||!e.status)return;const label=e.status==='pass'?'問題なし':e.status==='issue'?'問題あり':'未実施';lines.push(`${i+1}. ${t[0]}：${label}${e.ease?'／使いやすさ '+e.ease+'/5':''}${Number.isFinite(e.seconds)?'／操作時間 約'+e.seconds+'秒':''}`);if(e.flags?.length)lines.push('   問題の種類：'+e.flags.map(v=>FLAGS.find(x=>x[0]===v)?.[1]||v).join('、'));if(e.notes)lines.push('   メモ：'+e.notes.replace(/\s+/g,' ').trim());});lines.push('');}return lines.join('\n');}
+function setReport(){reportText=makeReport();$('report').hidden=false;$('report').textContent=reportText;return reportText;}
+function download(name,content,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('format').addEventListener('change',e=>{if(!TASKS[e.target.value])return;state.format=e.target.value;started=null;save();render()});$('orientation').addEventListener('change',e=>{state.orientation=e.target.value;save();render()});
+$('taskList').addEventListener('click',e=>{const btn=e.target.closest('[data-index]');if(btn)selectIndex(Number(btn.dataset.index))});
+$('startTimer').addEventListener('click',()=>{started=Date.now();$('elapsed').textContent='計測中';$('startTimer').textContent='計測を再スタート'});
+$('results').addEventListener('click',e=>{const btn=e.target.closest('[data-value]');if(!btn)return;const seconds=duration();started=null;const patch={status:btn.dataset.value,reviewedAt:new Date().toISOString()};if(seconds!==null)patch.seconds=seconds;put(patch)});
+$('ease').addEventListener('change',e=>put({ease:e.target.value}));
+$('notes').addEventListener('input',e=>{const value=e.target.value;const key=String(state.index[state.format]);state.items[state.format][key]={...record(),notes:value};save()});
+$('issueFlags').addEventListener('change',()=>put({flags:[...document.querySelectorAll('#issueFlags input:checked')].map(x=>x.value)}));
+$('prev').addEventListener('click',()=>selectIndex(state.index[state.format]-1));$('next').addEventListener('click',()=>selectIndex(state.index[state.format]+1));
+$('showReport').addEventListener('click',()=>{setReport();$('copyStatus').textContent='報告文を表示しました'});
+$('copyReport').addEventListener('click',async()=>{const text=setReport();try{await navigator.clipboard.writeText(text);$('copyStatus').textContent='報告文をコピーしました';}catch(e){$('copyStatus').textContent='クリップボードを使用できません。下の報告文を選択してコピーしてください。'}});
+$('downloadJSON').addEventListener('click',()=>download('volley_trial_step23_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({app:'VOLLEY REFEREE ASSIST',kind:'standalone-usability-trial',state},null,2),'application/json;charset=utf-8'));
+$('clearAll').addEventListener('click',()=>{if(!confirm('6人制・9人制の操作性評価をすべて初期化しますか？試合アプリの記録は変更しません。'))return;state=initial();started=null;save();$('report').hidden=true;render()});
+load();render();
+</script>
+</body>
+</html>
