@@ -1,5 +1,5 @@
-const CACHE = 'volley-referee-assist-v26-20261122';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './diagnostics.html', './trial.html'];
+const CACHE = 'volley-referee-assist-v27-20261122';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './diagnostics.html', './trial.html', './recovery-test.html'];
 const SCOPE = new URL('./', self.location.href).pathname;
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
