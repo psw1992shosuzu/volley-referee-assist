@@ -4,100 +4,105 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10334b">
-<title>Android動作診断｜Volley審判</title>
+<title>STEP 20 Android実機診断｜Volley審判 v1.9</title>
 <style>
-:root{font-family:system-ui,"Noto Sans JP",sans-serif;color:#19384b;background:#f3f6f8}
-*{box-sizing:border-box}body{margin:0}main{max-width:680px;margin:auto;padding:16px}
-h1{font-size:21px;margin:0 0 8px}p{line-height:1.6}
-.card{padding:16px;background:white;border:1px solid #dce6eb;border-radius:12px;margin:12px 0}
-button,a.action{display:inline-block;border:0;background:#12668e;color:white;padding:12px 14px;border-radius:9px;font-weight:700;font-size:15px;text-decoration:none;margin:4px 5px 4px 0}
+:root{font-family:system-ui,"Noto Sans JP",sans-serif;color:#19384b;background:#f3f6f8;color-scheme:light}
+*{box-sizing:border-box}body{margin:0}main{max-width:750px;margin:auto;padding:15px}
+h1{font-size:21px;margin:0 0 8px}h2{font-size:16px;margin:0 0 10px}p{line-height:1.65;margin:7px 0 12px;font-size:14px}
+.card{padding:15px;background:white;border:1px solid #dce6eb;border-radius:12px;margin:12px 0}
+button,a.action{display:inline-block;border:0;background:#12668e;color:white;padding:11px 14px;border-radius:9px;font-weight:700;font-size:14px;text-decoration:none;margin:4px 5px 4px 0;cursor:pointer}
 button.secondary{background:#e3edf3;color:#164c65}
-table{width:100%;border-collapse:collapse;font-size:13px}
-td{padding:10px 5px;border-bottom:1px solid #e2e9ee;vertical-align:top;overflow-wrap:anywhere}
-td:first-child{font-weight:700;width:43%}
-.good{color:#0a7253;font-weight:800}.warn{color:#9a5a03;font-weight:800}
-small{color:#506777}textarea{width:100%;height:150px;border-radius:8px;border:1px solid #bacbd5;padding:10px;font:12px/1.5 monospace}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #dc9705;outline-offset:2px}
+.status{padding:11px;background:#e8f2f7;border-left:4px solid #12668e;border-radius:5px}
+table{width:100%;border-collapse:collapse;font-size:13px}td{padding:9px 6px;border-bottom:1px solid #e2e9ee;vertical-align:top;overflow-wrap:anywhere}td:first-child{font-weight:700;width:44%}
+.good{color:#08704c;font-weight:800}.warn{color:#975108;font-weight:800}.bad{color:#a42b29;font-weight:800}
+small{color:#506777;font-size:12px}textarea{width:100%;height:165px;border-radius:8px;border:1px solid #bacbd5;padding:10px;font:12px/1.5 monospace}
+.checkline{display:flex;gap:10px;align-items:flex-start;background:#f5f8fa;border-radius:7px;margin:8px 0;padding:11px;font-size:14px;line-height:1.6}
+.checkline input{margin-top:5px;width:20px;height:20px;flex:none}
+.steps{margin:8px 0;padding-left:22px;font-size:14px;line-height:1.7}.steps li{margin-bottom:7px}
+@media(max-width:420px){main{padding:9px}.card{padding:12px}h1{font-size:19px}td:first-child{width:41%}}
 </style>
 </head>
 <body><main>
-<h1>Android動作診断</h1>
-<p>審判補助アプリの導入確認用です。このページは端末情報や試合データを外部に送信しません。</p>
+<h1>Android実機診断｜STEP 20</h1>
+<p>オフライン起動・データ保存・長時間運用の確認に使用します。<strong>試合データは変更せず、診断結果は自動送信しません。</strong></p>
 <div class="card">
-<button id="run">診断を実行／更新</button>
-<a class="action" href="./index.html">試合画面へ</a>
-<p id="headline" aria-live="polite">「診断を実行」を押してください。</p>
-<table aria-label="診断結果"><tbody id="rows"></tbody></table>
+ <button id="run">端末状態を再診断</button><a class="action" href="./index.html">試合画面へ</a>
+ <p class="status" id="headline" role="status">診断を開始します。</p>
+ <table aria-label="端末の診断結果"><tbody id="rows"></tbody></table>
+ <p><small>「通信状態」はブラウザの参考表示です。キャッシュが準備済みでも、実際に機内モードで起動するテストが必要です。</small></p>
 </div>
 <div class="card">
-<h2>結果を共有する</h2>
-<p><small>個人情報や試合の内容は含めず、機能の使用可否だけをまとめます。</small></p>
-<textarea id="report" readonly aria-label="診断結果テキスト"></textarea>
-<button class="secondary" id="copy">結果をコピー</button>
+ <h2>1. 再起動後の保存確認</h2>
+ <p>試合データには触れず、診断専用の目印だけを端末に保存します。</p>
+ <button id="prepare">診断用の目印を保存</button><button class="secondary" id="clear">診断用の目印を消去</button>
+ <p class="status" id="marker-status" aria-live="polite">確認中</p>
+ <ol class="steps"><li>「診断用の目印を保存」を押す</li><li>アプリを閉じて再起動する</li><li>この診断ページを開いて、目印が「再起動後も確認可能」と表示されるか確かめる</li></ol>
 </div>
 <div class="card">
-<h2>機内モードでの確認</h2>
-<p>診断ページでキャッシュが準備済みと表示されても、オフライン起動が保証されたわけではありません。いったんオンラインでアプリを開き、その後、機内モードでホーム画面のアイコンから再起動してください。得点入力と保存復元も確認してください。</p>
+ <h2>2. Android実機で確認する項目</h2>
+ <ol class="steps"><li>オンラインで試合画面を一度開き、診断ページに戻る</li><li>機内モードにしてアプリを閉じ、ホーム画面から起動する</li><li>保存済み試合が復元され、得点・サービス順が変わっていないか確認する</li><li>30秒タイマーと3分タイマーを開始し、別アプリへ切り替えた後の残り時間を確認する</li><li>「画面保持」をONにして画面消灯の有無を確認する（端末の省電力設定で解除されることがあります）</li></ol>
+ <div id="manual-checks"></div>
+ <p><small>チェックは端末内の診断専用領域に保存します。実施していない項目は未確認のままにしてください。</small></p>
+</div>
+<div class="card">
+ <h2>3. 結果をコピー</h2>
+ <p><small>端末の型番・氏名・選手名・得点・具体的な試合内容は含めません。共有前に内容を確認してください。</small></p>
+ <textarea readonly id="report" aria-label="診断結果テキスト"></textarea>
+ <button id="copy">結果をコピー</button><a class="action" href="./index.html">アプリに戻る</a>
 </div>
 </main>
 <script>
 'use strict';
-const byId = id => document.getElementById(id);
-const rows = [];
-function add(label, value, good) { rows.push({label, value:String(value), good}); }
-function show() {
-  const tbody = byId('rows'); tbody.replaceChildren();
-  for (const r of rows) {
-    const tr = document.createElement('tr'), left = document.createElement('td'), right = document.createElement('td');
-    left.textContent=r.label; right.textContent=r.value; right.className=r.good?'good':'warn'; tr.append(left,right); tbody.append(tr);
-  }
-  const report = 'Volley審判 Android診断\n' + new Date().toLocaleString('ja-JP') + '\n' + rows.map(r=>r.label+'：'+r.value).join('\n');
-  byId('report').value=report;
+const $ = id=>document.getElementById(id);
+const STORAGE_KEY='__volley_step20_marker__',CHECKS_KEY='__volley_step20_checks__';
+const ITEMS=[
+ ['offline','機内モードでホーム画面から起動できた'],
+ ['restored','再起動後に得点・選手・サービス順が一致した'],
+ ['timeout','30秒タイマーの復帰が正しかった'],
+ ['break','3分タイマーの復帰が正しかった'],
+ ['wakelock','画面保持を実機で確認した'],
+];
+let results=[];
+function add(label,status,kind){results.push({label,status:String(status),kind});}
+function safeRead(key){try{return localStorage.getItem(key);}catch(e){return null;}}
+function safeWrite(key,value){try{localStorage.setItem(key,value);return true;}catch(e){return false;}}
+function loadChecks(){try{const d=JSON.parse(safeRead(CHECKS_KEY)||'{}');return d&&typeof d==='object'?d:{}}catch(e){return {}}}
+function initChecks(){const wrap=$('manual-checks');const values=loadChecks();wrap.replaceChildren();for(const [key,label] of ITEMS){const row=document.createElement('label');row.className='checkline';const inp=document.createElement('input');inp.type='checkbox';inp.checked=Boolean(values[key]);inp.addEventListener('change',()=>{const v=loadChecks();v[key]=inp.checked;if(!safeWrite(CHECKS_KEY,JSON.stringify(v)))alert('診断チェックを保存できません。ブラウザの保存設定を確認してください。');updateReport();});const span=document.createElement('span');span.textContent=label;row.append(inp,span);wrap.append(row);}}
+function markerStatus(){const value=safeRead(STORAGE_KEY);if(!value){$('marker-status').textContent='目印なし。保存ボタンから始めてください。';return '未実施';}let d;try{d=JSON.parse(value);}catch(e){$('marker-status').textContent='目印が読み取れません';return '不明';}if(!d||typeof d.created!=='number'||typeof d.token!=='string'){return '不明';}const when=new Date(d.created).toLocaleString('ja-JP');$('marker-status').textContent='保存済みの目印を確認：'+when+'（再起動後もこの表示なら保存を確認できます）';return '目印あり（再起動後の確認は手動）';}
+function updateReport(){const choices=loadChecks();const test=ITEMS.map(([key,label])=>label+'：'+(choices[key]?'実機で確認済み':'未確認'));
+ $('report').value=['STEP20 Volley審判 Android診断','記録日時：'+new Date().toLocaleString('ja-JP'),...results.map(r=>r.label+'：'+r.status),'診断用目印：'+markerStatus(),...test,'注：実機確認項目は利用者が操作して確認した結果'].join('\n');}
+async function diagnose(){results=[];$('headline').textContent='診断中…';const secure=window.isSecureContext;
+ add('安全な接続',secure?'はい':'いいえ',secure?'good':'bad');
+ add('Android端末の判定',/Android/i.test(navigator.userAgent)?'Android':'Android以外',/Android/i.test(navigator.userAgent)?'good':'warn');
+ add('画面の向き',innerWidth>innerHeight?'横向き':'縦向き',innerWidth>innerHeight?'good':'warn');
+ add('ホーム画面からの独立起動',matchMedia('(display-mode: standalone)').matches||Boolean(navigator.standalone)?'はい':'ブラウザ表示', 'warn');
+ add('通信状態（参考）',navigator.onLine?'オンライン表示':'オフライン表示','warn');
+ let storage=false;try{const k='__volley_step20_probe__';localStorage.setItem(k,'x');storage=localStorage.getItem(k)==='x';localStorage.removeItem(k);}catch(e){}
+ add('保存領域への読み書き',storage?'成功':'失敗',storage?'good':'bad');
+ const saved=safeRead('volley_referee_assist_v10');let savedStatus='保存済み試合なし（またはアクセス不可）';
+ if(saved){try{const x=JSON.parse(saved);savedStatus=x?.s&&[6,9].includes(x.s.format)&&Array.isArray(x.s.teams)?'読み込み可能（形式は有効）':'形式確認が必要';}catch(e){savedStatus='読取エラー／JSON破損の可能性';}}
+ add('試合データの読み取り',savedStatus,savedStatus.startsWith('読み込み可能')?'good':'warn');
+ const savedWrapped=saved?(()=>{try{return JSON.parse(saved).savedAt||null;}catch(e){return null;}})():null;
+ add('最終保存日時',typeof savedWrapped==='number'?new Date(savedWrapped).toLocaleString('ja-JP'):'未記録（旧版または試合データなし）','warn');
+ add('画面保持API',secure&&!!navigator.wakeLock?.request?'対応':'未対応／条件不足',secure&&!!navigator.wakeLock?.request?'good':'warn');
+ let reg=null,swError='';if(navigator.serviceWorker){try{reg=await navigator.serviceWorker.getRegistration('./');if(!reg&&secure)reg=await navigator.serviceWorker.register('./sw.js');}catch(e){swError=e?.name||'登録失敗';}}
+ add('オフライン制御の登録',reg?'登録あり':swError||'未登録',reg?'good':'warn');
+ add('現在のページの制御',navigator.serviceWorker?.controller?'有効':'未有効（初回は再読み込み）',navigator.serviceWorker?.controller?'good':'warn');
+ const paths=['index.html','manifest.webmanifest','icon-192.png','icon-512.png','diagnostics.html'];let cached=0,cacheName='未確認';
+ if(window.caches){try{const names=(await caches.keys()).filter(n=>n.startsWith('volley-referee-assist-'));cacheName=names.at(-1)||'未作成';for(const path of paths)if(await caches.match(new URL(path,location.href)))cached++;}catch(e){cacheName='確認不可';}}
+ add('オフライン用ファイル',cached+'/'+paths.length+'件',cached===paths.length?'good':'warn');
+ add('キャッシュ識別子',cacheName,'warn');
+ const tbody=$('rows');tbody.replaceChildren();for(const r of results){const tr=document.createElement('tr');const a=document.createElement('td'),b=document.createElement('td');a.textContent=r.label;b.textContent=r.status;b.className=r.kind;tr.append(a,b);tbody.append(tr);}
+ const ready=storage&&Boolean(reg)&&Boolean(navigator.serviceWorker?.controller)&&cached===paths.length;
+ $('headline').textContent=ready?'事前チェックは完了。機内モードでの実機起動を確認してください。':'準備が未完了の項目があります。オンラインでアプリを開き、再読み込みしてから再診断してください。';
+ updateReport();
 }
-async function check() {
-  rows.length=0; byId('headline').textContent='確認中…';
-  const secure = window.isSecureContext;
-  add('HTTPS / 安全な接続', secure?'はい':'いいえ', secure);
-  add('端末', /Android/i.test(navigator.userAgent)?'Android':'Android以外', /Android/i.test(navigator.userAgent));
-  add('画面サイズ', innerWidth+' × '+innerHeight+' px', innerWidth>innerHeight);
-  add('画面向き', innerWidth>innerHeight?'横向き':'縦向き', innerWidth>innerHeight);
-  const standalone = matchMedia('(display-mode: standalone)').matches || Boolean(navigator.standalone);
-  add('ホーム画面から独立起動',standalone?'はい':'ブラウザ内（未インストール等）',standalone);
-  add('通信状態（参考）',navigator.onLine?'オンライン表示':'オフライン表示',true);
-  let storage=false;
-  try {const k='__volley_diag__';localStorage.setItem(k,'ok');storage=localStorage.getItem(k)==='ok';localStorage.removeItem(k);}catch(e){}
-  add('端末内保存',storage?'利用可能':'利用不可',storage);
-  add('画面保持機能',secure && !!(navigator.wakeLock && navigator.wakeLock.request)?'対応APIあり':'未対応／条件不足',secure && !!(navigator.wakeLock && navigator.wakeLock.request));
-  add('全画面機能',!!document.documentElement.requestFullscreen?'対応APIあり':'未対応',!!document.documentElement.requestFullscreen);
-  let reg=null;
-  if ('serviceWorker' in navigator) {
-    try {
-      reg=await navigator.serviceWorker.getRegistration('./');
-      if(!reg && secure) reg=await navigator.serviceWorker.register('./sw.js');
-    } catch(e) { add('Service Worker登録', '失敗: '+e.name,false); }
-  }
-  add('Service Worker',reg && (reg.active || reg.installing || reg.waiting)?'登録あり':'未登録',!!reg);
-  add('ページのオフライン制御',navigator.serviceWorker?.controller?'有効':'無効（初回は再読み込み）',!!navigator.serviceWorker?.controller);
-  let cached=0;
-  const paths=['index.html','manifest.webmanifest','icon-192.png','icon-512.png','diagnostics.html'];
-  if ('caches' in window) {
-    try {
-      const names=await caches.keys();
-      const active=names.filter(n=>n.startsWith('volley-referee-assist-')).sort().at(-1);
-      for (const path of paths) if (await caches.match(new URL(path, location.href))) cached++;
-      add('オフライン用キャッシュ',cached+'/'+paths.length+'ファイル',cached===paths.length);
-      add('キャッシュ識別子',active||'未作成',!!active);
-    } catch(e) {add('オフライン用キャッシュ','確認不可: '+e.name,false);}
-  } else add('オフライン用キャッシュ','非対応',false);
-  const ready=secure && !!reg && !!navigator.serviceWorker?.controller && storage && cached===paths.length;
-  byId('headline').textContent=ready?'準備チェックは合格です。最後に機内モードで実起動を確認してください。':'未完了の項目があります。オンラインでアプリを一度開き、再読み込み後に再診断してください。';
-  show();
-}
-byId('run').addEventListener('click',check);
-byId('copy').addEventListener('click',async()=>{
-  const text=byId('report').value;
-  try {await navigator.clipboard.writeText(text);byId('copy').textContent='コピーしました';}
-  catch(e){byId('report').select();byId('copy').textContent='結果を選択しました';}
-});
-window.addEventListener('load',check);
+$('prepare').addEventListener('click',()=>{const marker={created:Date.now(),token:String(Date.now())+'-'+Math.random().toString(36).slice(2)};if(safeWrite(STORAGE_KEY,JSON.stringify(marker))){markerStatus();updateReport();}else alert('保存できません。保存領域の設定を確認してください。');});
+$('clear').addEventListener('click',()=>{try{localStorage.removeItem(STORAGE_KEY);}catch(e){}markerStatus();updateReport();});
+$('run').addEventListener('click',diagnose);
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('report').value);$('copy').textContent='コピーしました';}catch(e){$('report').focus();$('report').select();$('copy').textContent='内容を選択しました';}});
+initChecks();window.addEventListener('load',diagnose);
 </script>
-</body></html>
+</body>
+</html>
