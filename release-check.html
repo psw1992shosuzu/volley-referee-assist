@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b">
+<title>STEP 28｜実戦使用前・最終評価</title>
+<style>
+:root{font-family:system-ui,"Noto Sans JP",sans-serif;color:#1a3c51;background:#f1f5f7;color-scheme:light}
+*{box-sizing:border-box}body{margin:0}main{max-width:960px;margin:0 auto;padding:15px}h1{font-size:22px;margin:4px 0 8px}h2{font-size:18px;margin:0 0 9px}p,li{font-size:14px;line-height:1.55}.card{background:white;border:1px solid #d3e0e8;border-radius:11px;margin:10px 0;padding:15px}.intro{background:#fff7e8;border:1px solid #d8b46a;padding:12px;border-radius:9px;font-size:14px;line-height:1.65}.muted{color:#546b77;font-size:12px}.notice{padding:11px;border-radius:8px;background:#e7f1f7;white-space:pre-wrap;font-size:14px;line-height:1.6}.notice[data-kind=warn]{background:#fff1d6}.notice[data-kind=fail]{background:#ffe9e7}.notice[data-kind=pass]{background:#e1f4e8}.nav{display:flex;flex-wrap:wrap;gap:7px}.nav a,button{background:#12658b;color:white;border:0;text-decoration:none;padding:11px 13px;min-height:43px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer}.nav a.secondary,button.secondary{background:#e2edf3;color:#1b536e}button.danger{background:#883d37}button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #e4a22a;outline-offset:2px}.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.auto-row{display:flex;gap:7px;justify-content:space-between;align-items:center;padding:9px;background:#f5f8fa;border-radius:7px;font-size:13px}.pill{border-radius:30px;background:#e8f0f5;padding:4px 7px;white-space:nowrap;font-weight:700;font-size:12px}.pill.ok{background:#dff3e7;color:#176240}.pill.bad{background:#fde6e0;color:#903328}.pill.wait{background:#fff1d9;color:#8c5a18}.manual-row{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:5px 12px;padding:12px 3px;border-bottom:1px solid #e2eaf0}.manual-row:last-child{border-bottom:0}.manual-label{font-size:14px;font-weight:700;line-height:1.55}.manual-description{font-size:12px;color:#536d7f;margin-top:3px}.manual-row select{width:100%;height:43px;border:1px solid #9db4c4;border-radius:7px;padding:7px;background:white;color:#193d52;font-size:14px}.manual-row input{grid-column:1 / -1;width:100%;height:39px;border:1px solid #bdcbd6;border-radius:7px;padding:8px;font-size:13px}.counter{font-weight:700;margin:8px 0}.buttons{display:flex;flex-wrap:wrap;gap:7px}textarea{width:100%;height:200px;border:1px solid #b8cad6;border-radius:8px;padding:9px;font:12px/1.55 monospace;resize:vertical;margin-top:10px}strong{font-weight:750}@media(max-width:650px){main{padding:9px}.card{padding:11px}.auto-grid{grid-template-columns:1fr}.manual-row{grid-template-columns:minmax(0,1fr) 110px}h1{font-size:20px}}
+</style>
+</head>
+<body><main>
+<h1>STEP 28｜実戦使用前の最終評価</h1>
+<p>VOLLEY REFEREE ASSIST v2.7／Android試験運用の可否を整理するページです。端末上の環境を点検し、審判操作を<strong>利用者が実際に確認した結果</strong>を記録します。</p>
+<div class="intro"><b>正式な審判用記録システムの認証ではありません。</b>「試験運用可能」は、この端末・この評価項目について暫定的に条件を満たしたという意味です。大会要項・最新の競技規則・公式記録用紙・審判団の判断が優先されます。練習試合で確認し、本番中の復元テストや初期化は行わないでください。</div>
+<section class="card"><h2>検証ページ</h2><div class="nav"><a href="./index.html">試合アプリ</a><a href="./recovery-test.html" class="secondary">STEP 27 復元テスト</a><a href="./diagnostics.html" class="secondary">Android診断</a><a href="./trial.html" class="secondary">操作性評価</a></div></section>
+<section class="card"><h2>端末・データの自動確認</h2><p class="muted">チェック結果はこのページで利用できるAPI・保存状態から読み取ったものです。通信状態表示だけでオフライン起動に合格とは判定しません。</p><div id="auto" class="auto-grid" aria-live="polite"></div><div class="buttons" style="margin-top:10px"><button id="run">自動確認を再実行</button></div><p class="muted">STEP 27の診断記録が完了していても、実際に端末を再起動したかは自動では判断できません。下の手動確認が必要です。</p></section>
+<section class="card"><h2>実機・試合操作の確認</h2><p class="muted">各項目を「合格」「問題あり」「未確認」で記録します。端末・状況を確認せずに一括合格にはできません。メモには患者名・選手の氏名などの個人情報を記入しないでください。</p><p id="counts" class="counter">未確認</p><div id="manual"></div></section>
+<section class="card"><h2>総合判定</h2><div id="decision" class="notice" data-kind="warn" role="status">確認中…</div><p class="muted">試験運用可能となっても、公式試合への単独導入を保証するものではありません。バックアップを準備し、紙の公式記録と並行して使用してください。</p></section>
+<section class="card"><h2>検証結果の保存・共有</h2><p class="muted">このページのチェック内容・メモのみ専用保存領域に記録され、試合データを更新しません。外部への自動送信はありません。</p><textarea id="report" readonly aria-label="最終評価レポート"></textarea><div class="buttons"><button id="copy">結果をコピー</button><button id="export" class="secondary">評価JSONを書き出す</button><button id="reset" class="danger">評価のみ消去</button></div></section>
+</main>
+<script>
+'use strict';
+const VERSION='2.7',CACHE='volley-referee-assist-v28-20261122';
+const KEY='__volley_step28_readiness__',MATCH_KEY='volley_referee_assist_v10',RECOVERY_KEY='__volley_step27_recovery_test__';
+const RESOURCES=['index.html','manifest.webmanifest','icon-192.png','icon-512.png','diagnostics.html','trial.html','recovery-test.html','release-check.html'];
+const STEPS=[
+ {id:'offline',name:'機内モードでホーム画面から再起動',desc:'通信を切り、アプリを完全終了してホーム画面のアイコンから起動できた'},
+ {id:'step27',name:'STEP 27 のJSON復元を実機で実施',desc:'実際に得点変更→JSON復元→再起動後の一致を確認した（診断ページのボタンだけでは不可）'},
+ {id:'screen',name:'横向き画面の視認性・誤タップ確認',desc:'得点、サーバー、9人制9名、ロック、戻すの表示と操作を確認した'},
+ {id:'six',name:'6人制の得点・ローテーション',desc:'サイドアウト後のサービス順を公式記録用紙と比較した'},
+ {id:'nine',name:'9人制の第1・第2サービスと順番',desc:'サイドアウト、両チームのサービス順を公式記録用紙と比較した'},
+ {id:'sub',name:'選手交代・タイムアウト',desc:'交代登録と取り消し、30秒タイムアウトの記録を確認した'},
+ {id:'timers',name:'30秒・3分タイマーの画面復帰',desc:'画面を一度離れた後、残り時間と終了表示が適切だった'},
+ {id:'sets',name:'セット切替・コート交代と試合終了',desc:'設定点数、セットカウント、最終セットのコート交代通知を確認した'},
+ {id:'paper',name:'記録員・審判団との照合',desc:'得点・サービス順・反則の扱いを公式記録と照合し、非対応処理を理解した'},
+ {id:'backup',name:'JSONバックアップの別保管',desc:'試合データを別の安全な場所に保存し、復元時に上書きされることを理解した'}
+];
+const $=id=>document.getElementById(id);
+const AUTO_NAMES={secure:'HTTPSによる安全な起動',android:'Android端末での表示',storage:'端末内への保存',sw:'Service Workerによる制御',cache:'必要な8ファイルのキャッシュ',match:'試合状態の読み取り',recovery:'STEP27照合5段階の記録'};
+let records=load(),auto={},checking=false;
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(!x||x.version!==1||!x.results||typeof x.results!=='object')return {version:1,results:{}};return {version:1,results:x.results};}catch(e){return {version:1,results:{}};}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(records));return true;}catch(e){return false;}}
+function getRecord(id){const r=records.results[id];return r&&['ok','fail','pending'].includes(r.status)?r:{status:'pending',note:''};}
+function manualRender(){const el=$('manual');el.replaceChildren();STEPS.forEach((step,i)=>{const r=getRecord(step.id),row=document.createElement('div');row.className='manual-row';const txt=document.createElement('div'),headline=document.createElement('div'),info=document.createElement('div');headline.className='manual-label';headline.textContent=(i+1)+'. '+step.name;info.className='manual-description';info.textContent=step.desc;txt.append(headline,info);
+ const select=document.createElement('select');select.setAttribute('aria-label',step.name+'の判定');select.dataset.check=step.id;
+ [['pending','未確認'],['ok','合格'],['fail','問題あり']].forEach(([v,label])=>{const opt=document.createElement('option');opt.value=v;opt.textContent=label;select.append(opt);});select.value=r.status;
+ const memo=document.createElement('input');memo.type='text';memo.maxLength=300;memo.placeholder='任意のメモ（個人情報を含めない）';memo.setAttribute('aria-label',step.name+'のメモ');memo.dataset.note=step.id;memo.value=typeof r.note==='string'?r.note.slice(0,300):'';
+ select.addEventListener('change',()=>update(step.id,'status',select.value));memo.addEventListener('input',()=>update(step.id,'note',memo.value));row.append(txt,select,memo);el.append(row);});}
+function update(id,key,value){const r=getRecord(id);r[key]=key==='note'?String(value).slice(0,300):value;records.results[id]=r;persist();summaryRender();}
+function autoRow(label,pass,value){const wrap=document.createElement('div');wrap.className='auto-row';const title=document.createElement('span');title.textContent=label;const badge=document.createElement('span');badge.className='pill '+(pass?'ok':'wait');badge.textContent=value;wrap.append(title,badge);return wrap;}
+function autoRender(){const root=$('auto');root.replaceChildren();Object.keys(AUTO_NAMES).forEach(id=>{const x=auto[id]||{pass:false,text:'未確認'};root.append(autoRow(AUTO_NAMES[id],x.pass,x.text));});}
+function recoveryValid(){try{const r=JSON.parse(localStorage.getItem(RECOVERY_KEY)||'null');if(!r||r.version!==1||!(/^[a-f0-9]{64}$/.test(r.hash)))return false;const t=[r.capturedAt,r.fileConfirmedAt,r.changedAt,r.restoredAt,r.reopenAt];return t.every(n=>Number.isFinite(n)&&n>0&&n<=Date.now()+60000)&&t.every((n,i)=>i===0||t[i-1]<=n);}catch(e){return false;}}
+async function checkAuto(){if(checking)return;checking=true;$('run').disabled=true;
+ const status=(key,pass,text)=>auto[key]={pass:!!pass,text};
+ status('secure',!!window.isSecureContext,window.isSecureContext?'有効':'未対応');
+ status('android',/Android/i.test(navigator.userAgent),/Android/i.test(navigator.userAgent)?'Android':'Android以外');
+ let storage=false;try{const k='__volley_step28_write_test__';localStorage.setItem(k,'ok');storage=localStorage.getItem(k)==='ok';localStorage.removeItem(k);}catch(e){}status('storage',storage,storage?'成功':'確認不可');
+ let game=false;try{const data=JSON.parse(localStorage.getItem(MATCH_KEY)||'null');game=!!(data&&data.s&&[6,9].includes(data.s.format)&&Array.isArray(data.s.teams)&&data.s.teams.length===2&&Array.isArray(data.s.scores)&&data.s.scores.length===2);}catch(e){}status('match',game,game?'形式確認':'未確認');
+ status('recovery',recoveryValid(),recoveryValid()?'5段階記録あり':'未完了');
+ const controlled=!!navigator.serviceWorker?.controller;status('sw',controlled,controlled?'制御有効':'未制御');
+ let count=0;try{if('caches' in window){const keys=await caches.keys();if(keys.includes(CACHE)){const c=await caches.open(CACHE);for(const file of RESOURCES){const found=await c.match(new URL(file,document.baseURI));if(found)count++;}}}}catch(e){}status('cache',count===RESOURCES.length,count+'/'+RESOURCES.length);
+ autoRender();checking=false;$('run').disabled=false;summaryRender();}
+function decision(){const values=STEPS.map(x=>getRecord(x.id).status),fails=values.filter(x=>x==='fail').length,passed=values.filter(x=>x==='ok').length,waiting=values.length-passed-fails;
+ const critical=['secure','android','storage','sw','cache','match','recovery'],autoWaiting=critical.filter(k=>!auto[k]?.pass);
+ if(fails>0)return {kind:'fail',text:'要修正・再検証：実機チェックで「問題あり」が'+fails+'件あります。問題を改善し、該当項目を再検証してください。'};
+ if(waiting>0||autoWaiting.length)return {kind:'warn',text:'試験運用判定は保留です。手動の未確認 '+waiting+'件／自動確認の未完了 '+autoWaiting.length+'件。\n未完了：'+(autoWaiting.map(k=>AUTO_NAMES[k]).join('、')||'なし')};
+ return {kind:'pass',text:'練習試合での限定的な試験運用に進める状態です（自己申告による実機チェック）。\n※競技規則の正式認証や公式大会での単独利用を保証しません。紙の記録と並行し、バックアップを保持してください。'};}
+function summaryRender(){const all=STEPS.map(x=>getRecord(x.id));const passed=all.filter(x=>x.status==='ok').length,fail=all.filter(x=>x.status==='fail').length;$('counts').textContent='合格 '+passed+'／'+STEPS.length+'、問題あり '+fail+'、未確認 '+(STEPS.length-passed-fail);
+ const d=decision();$('decision').dataset.kind=d.kind;$('decision').textContent=d.text;
+ const lines=['STEP 28｜Volley審判 v'+VERSION+' 実戦使用前・最終評価','作成日時：'+new Date().toLocaleString('ja-JP'),'判定：'+(d.kind==='pass'?'限定的な練習試合での試験運用候補':d.kind==='fail'?'要修正':'保留'),'', '【自動確認】'];
+ Object.keys(AUTO_NAMES).forEach(k=>{const x=auto[k]||{pass:false,text:'未確認'};lines.push(AUTO_NAMES[k]+'：'+(x.pass?'確認済':'未完了')+'（'+x.text+'）');});lines.push('','【実機での確認】');
+ STEPS.forEach(st=>{const r=getRecord(st.id);lines.push(st.name+'：'+(r.status==='ok'?'合格':r.status==='fail'?'問題あり':'未確認')+(r.note?' ／ メモ：'+r.note:''));});
+ lines.push('','注：結果は端末の自動確認および利用者の自己申告を含み、公式試合への適合を認証するものではありません。');$('report').value=lines.join('\n');}
+$('run').addEventListener('click',checkAuto);
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('report').value);$('copy').textContent='コピーしました';}catch(e){$('report').select();$('copy').textContent='結果を選択しました';}});
+$('export').addEventListener('click',()=>{const payload={app:'VOLLEY REFEREE ASSIST readiness',version:1,createdAt:new Date().toISOString(),results:records.results,report:$('report').value};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='volley_step28_readiness.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);});
+$('reset').addEventListener('click',()=>{if(!confirm('STEP28の評価記録だけを削除しますか？ 試合データやSTEP27復元診断は削除しません。'))return;records={version:1,results:{}};try{localStorage.removeItem(KEY);}catch(e){}manualRender();summaryRender();});
+window.addEventListener('pageshow',()=>{records=load();manualRender();checkAuto();});document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkAuto();});
+manualRender();autoRender();checkAuto();
+</script>
+</body>
+</html>
