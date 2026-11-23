@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b">
+<title>STEP 32｜D03 JSON復元の原因切り分け</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#19394b;background:#f1f5f8;color-scheme:light}
+*{box-sizing:border-box}body{margin:0}main{max-width:790px;margin:auto;padding:13px}h1{font-size:22px;line-height:1.45}h2{font-size:17px;margin:0 0 9px}.card{background:#fff;border:1px solid #d1e1e9;border-radius:12px;padding:14px;margin:12px 0}p{font-size:14px;line-height:1.7}.warning{border:1px solid #d7b367;border-radius:8px;background:#fff6e3;padding:12px;font-size:13px;line-height:1.75}.muted{font-size:12px;color:#516d7c}.field{display:grid;gap:5px;margin:12px 0}.field label{font-size:14px;font-weight:750}input[type=file],select,textarea{width:100%;border:1px solid #b2c6d0;border-radius:8px;background:#fff;color:#163d53;padding:10px;font:14px system-ui,-apple-system,sans-serif;min-height:44px}textarea{min-height:170px;font:12px/1.6 monospace;resize:vertical}button,.nav a{display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:8px;min-height:44px;padding:10px 13px;background:#136489;color:#fff;font-size:14px;font-weight:750;text-decoration:none;cursor:pointer}.nav,.buttons{display:flex;gap:7px;flex-wrap:wrap}.nav .secondary,.buttons .secondary{background:#e2eff5;color:#17506c}.result{background:#eaf3f8;border-radius:8px;padding:12px;white-space:pre-wrap;font-size:13px;line-height:1.6}.result.warning{background:#fff2dc;border:none}.result.error{background:#ffebe6}.status{font-size:13px;font-weight:600}.group{margin:12px 0;border-top:1px solid #dce7eb;padding-top:12px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #dd9c27;outline-offset:2px}@media(max-width:500px){main{padding:9px}h1{font-size:19px}.card{padding:11px}}
+</style>
+</head>
+<body>
+<main>
+<h1>STEP 32｜D03 JSON復元の原因切り分け</h1>
+<p>STEP 31で「D03：問題あり」と判定された原因を特定するための読み取り専用診断です。</p>
+<div class="warning"><b>安全上の注意：</b>このページではJSONを復元しません。得点・試合記録・バックアップを変更しません。重要な試合データは事前に別途保管してください。診断するのはご自身が保存した試合JSONだけにしてください。選手名・ファイル名・背番号・試合データの全文は診断レポートに出しません。</div>
+<section class="card"><h2>1. どこで問題が起きたか</h2>
+<div class="field">
+<label for="stage">もっとも近い症状</label>
+<select id="stage">
+<option value="unknown">まだ特定できない</option>
+<option value="select">ファイルが選べない／見つからない</option>
+<option value="message">エラーが表示されて復元できない</option>
+<option value="confirm">置き換えの確認が表示されない</option>
+<option value="cancel">確認を押しても進まない</option>
+<option value="mismatch">復元後に得点・サービス順などが一致しない</option>
+<option value="restart">復元直後は正しいが再起動後に戻る</option>
+<option value="other">その他</option>
+</select>
+</div>
+<div class="field"><label for="message">アプリが表示したエラーメッセージ（任意・個人情報を除く）</label>
+<textarea id="message" rows="3" placeholder="例：試合データの整合性エラー：…"></textarea></div>
+</section>
+<section class="card"><h2>2. 現在の保存状態を確認（読み取りのみ）</h2>
+<p class="muted">同じURL・同じブラウザ／PWAで開いてください。現在の試合のチーム名・背番号はレポートに出力しません。</p>
+<button id="inspect" type="button">端末内の状態を確認</button>
+<div id="current" class="result" role="status" aria-live="polite">未確認</div>
+</section>
+<section class="card"><h2>3. JSONファイルを安全に点検</h2>
+<p>試合アプリの「履歴 → JSON形式で保存」で作成したファイルを選びます。ファイルの内容はこの画面の中で読み取るだけです。復元や送信はしません。</p>
+<div class="field"><label for="file">試合用JSONを選択</label><input id="file" type="file" accept=".json,application/json"></div>
+<div id="backup" class="result" role="status" aria-live="polite">ファイル未選択</div>
+<p class="muted">これは基本的な形式の検査です。「形式に問題なし」でもアプリ本体の詳細な整合性検査に合格するとは限りません。現在の試合とバックアップの点数が異なるのは、復元テスト中なら正常なことがあります。</p>
+</section>
+<section class="card"><h2>4. 切り分け結果の共有</h2>
+<textarea id="report" readonly aria-label="D03診断レポート"></textarea>
+<div class="buttons"><button id="copy" type="button">診断結果をコピー</button><button id="download" type="button" class="secondary">診断結果をテキスト保存</button></div>
+<p id="feedback" class="status" role="status" aria-live="polite"></p>
+<p class="muted">診断結果は自動送信しません。フォーム情報も端末内に自動保存しません。結果を共有する場合は内容を確認し、個人情報を含めないでください。</p>
+</section>
+<div class="nav"><a href="./index.html">試合アプリに戻る</a><a href="./match-test.html" class="secondary">STEP31検証票</a><a href="./recovery-test.html" class="secondary">STEP27照合</a></div>
+</main>
+<script>
+'use strict';
+(function(){
+ const MATCH_KEY='volley_referee_assist_v10',MAX_BYTES=8*1024*1024;
+ const $=id=>document.getElementById(id);
+ let currentResult={status:'未確認'},backupResult={status:'未確認'};
+ const format=x=>x===6?'6人制':x===9?'9人制':'不正または未確認';
+ const pair=x=>Array.isArray(x)&&x.length===2&&x.every(v=>Number.isInteger(v)&&v>=0&&v<=999)?x.join('－'):'不正または未確認';
+ const safeText=x=>String(x||'').slice(0,240);
+ function stateInfo(s){
+  if(!s||typeof s!=='object'||Array.isArray(s))return null;
+  return {format:format(s.format),set:Number.isInteger(s.set)?s.set:'不正または未確認',scores:pair(s.scores),rally:Number.isInteger(s.rallyNo)?s.rallyNo:'不正または未確認',started:typeof s.ready==='boolean'?(s.ready?'進行中':'準備中・終了'):'未確認',version:Number.isInteger(s.v)?s.v:'未確認'};
+ }
+ function inspect(){
+  try{
+   const raw=localStorage.getItem(MATCH_KEY);
+   if(!raw){currentResult={status:'このブラウザには試合データが保存されていません'};display();return;}
+   const obj=JSON.parse(raw);
+   const s=stateInfo(obj?.s);
+   currentResult=s?{status:'保存データあり',...s}:{status:'保存領域の形式が不正です'};
+  }catch(e){currentResult={status:'保存データを読み取れません（JSON不正またはブラウザ保存不可）'};}
+  display();
+ }
+ function validateFile(obj){
+  if(!obj||typeof obj!=='object'||Array.isArray(obj))return 'ファイル全体の形式が不正';
+  if(obj.app!=='VOLLEY REFEREE ASSIST')return '試合アプリ用のJSONではありません（識別子不一致）';
+  if(![2,3,4,5,6,7,8,9,10].includes(obj.version))return '未対応のバックアップ形式';
+  const s=obj.state;
+  if(!s||![6,9].includes(s.format)||!Array.isArray(s.teams)||s.teams.length!==2)return '試合データの基本形式が不正';
+  if(!Array.isArray(s.scores)||s.scores.length!==2||s.scores.some(v=>!Number.isInteger(v)||v<0||v>999))return '得点の基本形式が不正';
+  if(!Number.isInteger(s.set)||s.set<1||s.set>5)return 'セット番号の基本形式が不正';
+  if(!Number.isInteger(s.rallyNo)||s.rallyNo<0)return 'ラリー数の基本形式が不正';
+  return null;
+ }
+ async function inspectFile(file){
+  if(!file){backupResult={status:'ファイル未選択'};display();return;}
+  if(file.size>MAX_BYTES){backupResult={status:'8MBを超えるため取込対象外',bytes:file.size};display();return;}
+  try{
+   const text=await file.text();
+   if(text.length>MAX_BYTES){backupResult={status:'読み取り後の文字数が上限超過',bytes:file.size};display();return;}
+   const obj=JSON.parse(text),error=validateFile(obj);
+   const s=stateInfo(obj?.state);
+   backupResult={status:error?'形式の問題を検出':'基本形式を確認（詳細整合性は未判定）',reason:error||'',bytes:file.size,appVersion:Number.isInteger(obj?.version)?obj.version:'未確認'};
+   if(s)Object.assign(backupResult,s);
+  }catch(e){backupResult={status:'JSONとして読み取れません',bytes:file.size};}
+  display();
+ }
+ function summary(x){
+  const out=[x.status];
+  if(x.reason)out.push('判定理由：'+x.reason);
+  if(x.bytes!==undefined)out.push('サイズ：'+x.bytes+'バイト');
+  if(x.appVersion!==undefined)out.push('バックアップ形式：v'+x.appVersion);
+  if(x.format!==undefined)out.push('競技方式：'+x.format);
+  if(x.set!==undefined)out.push('セット：'+x.set);
+  if(x.scores!==undefined)out.push('得点：'+x.scores);
+  if(x.rally!==undefined)out.push('ラリー数：'+x.rally);
+  if(x.started!==undefined)out.push('試合状態：'+x.started);
+  return out.join('\n');
+ }
+ function report(){
+  return ['STEP 32｜D03 JSON復元切り分け（読み取り専用）',
+   '症状：'+$('stage').options[$('stage').selectedIndex].text,
+   'アプリのエラーメッセージ（ユーザー入力）：'+(safeText($('message').value)||'未入力'),
+   '【現在の端末保存】',summary(currentResult),
+   '【選択したJSON】',summary(backupResult),
+   '注：復元・上書きは実施していません。ファイル名、チーム名、背番号、試合JSON全文は出力しません。'
+  ].join('\n');
+ }
+ function display(){
+  $('current').textContent=summary(currentResult);$('backup').textContent=summary(backupResult);$('report').value=report();
+ }
+ $('stage').addEventListener('change',display);
+ $('message').addEventListener('input',display);
+ $('inspect').addEventListener('click',inspect);
+ $('file').addEventListener('change',async e=>{const file=e.target.files?.[0];await inspectFile(file);e.target.value='';});
+ $('copy').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(report());$('feedback').textContent='診断結果をコピーしました。';}
+  catch(e){$('report').focus();$('report').select();$('feedback').textContent='コピーできませんでした。選択した文字を手動でコピーしてください。';}
+ });
+ $('download').addEventListener('click',()=>{
+  const blob=new Blob([report()],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='volley-step32-d03-diagnostic.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
+  $('feedback').textContent='テキスト保存を開始しました。ダウンロード履歴を確認してください。';
+ });
+ inspect();display();
+})();
+</script>
+</body>
+</html>
