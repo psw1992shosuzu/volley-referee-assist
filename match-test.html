@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10334b">
+<title>STEP 31｜試合通し検証・Android実機記録</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#163a50;background:#f0f5f8;color-scheme:light}
+*{box-sizing:border-box}body{margin:0}main{max-width:960px;margin:auto;padding:12px 12px 28px}h1{font-size:22px;margin:12px 0 4px}h2{font-size:17px;margin:0 0 10px}p{font-size:14px;line-height:1.6}a,button{touch-action:manipulation}header{background:#10334b;color:#fff;padding:13px}header .inner{max-width:960px;margin:auto;font-size:15px;font-weight:750}.card{background:#fff;border:1px solid #d5e1e7;border-radius:12px;margin:12px 0;padding:15px}.alert{border:1px solid #dfbe72;background:#fff8e5;border-radius:9px;padding:12px;line-height:1.7;font-size:13px}.muted{color:#536f7c;font-size:12px}.nav,.actions{display:flex;gap:8px;flex-wrap:wrap}.nav a,button{padding:11px 14px;border:0;border-radius:9px;min-height:44px;text-decoration:none;background:#136187;color:#fff;font:700 14px system-ui,-apple-system,sans-serif;cursor:pointer}.nav a.secondary,button.secondary{background:#dfeef5;color:#144764}.danger{background:#8c4238!important}.summary{background:#eff6fa;border-radius:9px;padding:12px;font-weight:700;font-size:14px;line-height:1.65;white-space:pre-line}.summary.ok{background:#e6f4e9}.summary.fail{background:#ffede9}.summary.wait{background:#fff3df}.field{display:grid;grid-template-columns:130px minmax(0,1fr);gap:9px;align-items:center;margin:9px 0}.field label{font-size:13px;font-weight:700}.field input{min-height:43px;width:100%;border:1px solid #afc2ce;border-radius:8px;padding:9px;font:14px system-ui}.test{border-top:1px solid #dae4e9;padding:13px 0}.test:first-child{border-top:0}.test-title{font-weight:800;font-size:14px;line-height:1.5}.test-desc{font-size:12px;color:#506d7c;line-height:1.55;margin:5px 0 10px}.test-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.test-controls label{border:1px solid #acc1cd;border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:12px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:4px}.test-controls label:has(input:checked){background:#d7edf8;border-color:#0b719d;color:#104e6b}.test-controls label:has(input[value=fail]:checked){background:#ffe5e0;border-color:#b34b3a;color:#803b30}.test-controls label:has(input[value=ok]:checked){background:#e1f4e7;border-color:#278058;color:#165d3c}.test-controls input{width:16px;height:16px;margin:0;accent-color:#136187}.test-note{width:100%;margin-top:8px;min-height:40px;padding:9px;border:1px solid #b5c9d5;border-radius:7px;font:13px system-ui}.counter{font-size:12px;color:#4a6675;margin:0 0 8px;font-weight:700}textarea{width:100%;min-height:160px;padding:12px;border:1px solid #b2c6d2;border-radius:9px;font:12px/1.65 ui-monospace,monospace;resize:vertical}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #d89516;outline-offset:2px}@media(max-width:560px){main{padding:9px}.card{padding:11px}h1{font-size:19px}.field{grid-template-columns:1fr;gap:4px}.test-controls label{font-size:11px;padding:8px 3px}}
+</style>
+</head>
+<body>
+<header><div class="inner">VOLLEY REFEREE ASSIST｜実機検証専用</div></header>
+<main>
+<h1>STEP 31｜試合通し検証</h1>
+<p>6人制・9人制の試合を練習用データで操作し、各項目を記録するページです。<strong>これは自動試合判定ではありません。</strong>実際に確認した結果だけを選んでください。</p>
+<div class="alert"><b>重要：</b>実際の大会中には検証しないでください。試合アプリの「履歴」で重要な試合をJSON保存してから、架空のチーム・背番号で練習用試合を作ります。紙の記録と大会要項・審判団の判断を優先します。個人名などはメモに書かないでください。</div>
+<section class="card">
+<h2>操作ページ</h2>
+<div class="nav"><a href="./index.html">試合アプリを開く</a><a href="./recovery-test.html" class="secondary">復元テスト</a><a href="./release-check.html" class="secondary">最終評価</a></div>
+<p class="muted">このページと試合アプリは同じ端末で利用できます。検証結果は試合の得点データと別の保存領域を使います。</p>
+</section>
+<section class="card">
+<h2>実機情報（任意）</h2>
+<div class="field"><label for="device">端末・Android版</label><input id="device" type="text" maxlength="100" placeholder="例：Android 15／端末型番"></div>
+<div class="field"><label for="browser">Chrome／起動方法</label><input id="browser" type="text" maxlength="100" placeholder="例：Chrome／PWA"></div>
+<div class="field"><label for="date">実施日</label><input id="date" type="date"></div>
+<p id="storage" class="muted" role="status"></p>
+</section>
+<section class="card">
+<h2>検証の進捗</h2>
+<div id="status" class="summary wait" role="status" aria-live="polite">集計中</div>
+</section>
+<div id="groups"></div>
+<section class="card">
+<h2>検証結果の共有・保管</h2>
+<p class="muted">入力すると自動保存します。保存できない環境では警告します。試合データは読み取り・変更しません。</p>
+<textarea id="report" readonly aria-label="STEP31検証結果テキスト"></textarea>
+<div class="actions">
+<button id="copy" type="button">結果をコピー</button>
+<button id="export" type="button" class="secondary">評価JSONを書き出す</button>
+<button id="reset" type="button" class="danger">評価だけ消去</button>
+</div>
+<p id="message" class="muted" role="status" aria-live="polite"></p>
+</section>
+</main>
+<script>
+'use strict';
+(function(){
+  const KEY='__volley_step31_match_validation_v1__';
+  const GROUPS=[
+    {id:'A',name:'準備・入力保持',steps:[
+      ['A01','v2.8を起動','以前の保存データが意図せず消えず、画面がv2.8と表示される'],
+      ['A02','両チームを時間差で入力','片方の入力後に時間を置いても、先に入力したチーム名と背番号が残る'],
+      ['A03','試合準備中に消灯・再表示','消灯／復帰／再読み込み後にも確定前の入力が保持される'],
+      ['A04','片方の入力消去','確認があり、消去対象以外のチーム情報は変わらない']
+    ]},
+    {id:'B',name:'6人制の試合進行',steps:[
+      ['B01','第1セット開始・10得点以上','得点、サーバー、ローテーションを紙記録と照合できる'],
+      ['B02','サイドアウト・タイムアウト・交代','サービス順、30秒時計、選手交代履歴が紙記録と一致する'],
+      ['B03','入力の取り消し・再実行','スコア・サービス順・操作履歴に矛盾が残らない'],
+      ['B04','セット終了→次セット','3分時計がスクロール中も見え、次セットの開始条件が一致する']
+    ]},
+    {id:'C',name:'9人制の試合進行',steps:[
+      ['C01','第1サーブ失敗→第2サーブ','得点・サービス権の扱いが大会規則と紙記録に一致する'],
+      ['C02','サービス権移動・次セット','サーバー順と次セット開始サービス権が紙記録に一致する'],
+      ['C03','得点・交代・訂正を含む模擬セット','表示と履歴が紙記録と一致し、予期しない自動変更がない']
+    ]},
+    {id:'D',name:'保存・復旧・画面',steps:[
+      ['D01','試合途中で消灯・復帰','得点、チーム情報、サービス順が維持される'],
+      ['D02','模擬試合終了→履歴・JSON保存','正しい試合データを保存し、ファイルが開ける'],
+      ['D03','練習用データのJSON復元','確認を経て基準状態に戻る。復元は既存の試合を上書きするため注意'],
+      ['D04','オンライン表示後に機内モード再起動','一度更新してから通信を切り、アプリ起動と主要操作ができる'],
+      ['D05','横向き画面での連続操作','表示切れ、入力遅延、誤タップがない']
+    ]}
+  ];
+  const STEPS=GROUPS.flatMap(g=>g.steps);
+  const IDS=new Set(STEPS.map(s=>s[0]));
+  const $=id=>document.getElementById(id);
+  const fresh=()=>({schema:1,device:'',browser:'',date:'',results:{},updatedAt:null});
+  let data=load();
+  let storageOK=true;
+  function load(){
+    try{
+      const raw=localStorage.getItem(KEY),parsed=raw?JSON.parse(raw):null;
+      if(!parsed||parsed.schema!==1||typeof parsed.results!=='object'||Array.isArray(parsed.results))return fresh();
+      const out=fresh();
+      out.device=typeof parsed.device==='string'?parsed.device.slice(0,100):'';
+      out.browser=typeof parsed.browser==='string'?parsed.browser.slice(0,100):'';
+      out.date=/^\d{4}-\d{2}-\d{2}$/.test(parsed.date||'')?parsed.date:'';
+      out.updatedAt=typeof parsed.updatedAt==='string'?parsed.updatedAt:null;
+      for(const id of IDS){
+        const r=parsed.results[id];
+        if(r && ['ok','fail','pending'].includes(r.status))out.results[id]={status:r.status,note:typeof r.note==='string'?r.note.slice(0,250):''};
+      }
+      return out;
+    }catch(e){return fresh();}
+  }
+  function save(){
+    data.updatedAt=new Date().toISOString();
+    try{
+      localStorage.setItem(KEY,JSON.stringify(data));
+      storageOK=localStorage.getItem(KEY)===JSON.stringify(data);
+    }catch(e){storageOK=false;}
+    $('storage').textContent=storageOK?'検証結果をこの端末に自動保存しています。':'自動保存に失敗しました。画面を閉じる前に結果をコピー／JSON保存してください。';
+    $('storage').style.color=storageOK?'#536f7c':'#9c3428';
+    update();
+  }
+  function record(id){
+    return data.results[id]||{status:'pending',note:''};
+  }
+  function renderGroups(){
+    $('groups').replaceChildren();
+    for(const g of GROUPS){
+      const section=document.createElement('section');section.className='card';
+      const title=document.createElement('h2');title.textContent=g.name;section.append(title);
+      const counter=document.createElement('p');counter.className='counter';counter.id='count-'+g.id;section.append(counter);
+      for(const [id,name,desc] of g.steps){
+        const item=document.createElement('div');item.className='test';
+        const h=document.createElement('div');h.className='test-title';h.textContent=id+'｜'+name;
+        const p=document.createElement('div');p.className='test-desc';p.textContent=desc;
+        const ctl=document.createElement('div');ctl.className='test-controls';ctl.setAttribute('role','radiogroup');ctl.setAttribute('aria-label',id+' '+name);
+        for(const [value,label] of [['pending','未確認'],['ok','合格'],['fail','問題あり']]){
+          const l=document.createElement('label'),input=document.createElement('input');
+          input.type='radio';input.name=id;input.value=value;input.checked=record(id).status===value;
+          input.addEventListener('change',()=>{const r=record(id);r.status=value;data.results[id]=r;save();});
+          const span=document.createElement('span');span.textContent=label;l.append(input,span);ctl.append(l);
+        }
+        const note=document.createElement('input');note.type='text';note.className='test-note';note.maxLength=250;
+        note.placeholder='任意：問題の再現手順・期待結果・実際の結果';note.setAttribute('aria-label',id+' メモ');note.value=record(id).note;
+        note.addEventListener('input',()=>{const r=record(id);r.note=note.value;data.results[id]=r;save();});
+        item.append(h,p,ctl,note);section.append(item);
+      }
+      $('groups').append(section);
+    }
+  }
+  function counts(arr){
+    const totals={ok:0,fail:0,pending:0};
+    for(const s of arr){totals[record(s[0]).status]++;}
+    return totals;
+  }
+  function formatCounts(c){return '合格'+c.ok+'・問題あり'+c.fail+'・未確認'+c.pending;}
+  function decision(c){
+    if(c.fail>0)return {kind:'fail',label:'要修正：問題ありの項目があります。試合データの一致を確認するまで本番利用を拡大しないでください。'};
+    if(c.pending>0)return {kind:'wait',label:'継続検証：未確認の項目があります。正式な合格判定には進めません。'};
+    return {kind:'ok',label:'16項目すべて合格（自己申告）。練習用の限定試験結果であり、公式大会での使用適合を保証しません。'};
+  }
+  function reportText(){
+    const c=counts(STEPS),d=decision(c),out=[
+      'STEP 31｜Android実機・試合通し検証結果',
+      '実施日：'+(data.date||'未入力'),
+      '端末・Android：'+(data.device||'未入力'),
+      'Chrome／起動方法：'+(data.browser||'未入力'),
+      '全体：'+formatCounts(c),
+      '総合判定：'+d.label
+    ];
+    for(const g of GROUPS){
+      out.push('',g.name+'：'+formatCounts(counts(g.steps)));
+      for(const [id,name] of g.steps){
+        const r=record(id),j={ok:'合格',fail:'問題あり',pending:'未確認'};
+        out.push(id+' '+name+'：'+j[r.status]+(r.note?'／'+r.note:''));
+      }
+    }
+    out.push('','重要：判定は利用者が入力したもので、アプリが試合の正しさを自動検査した結果ではありません。');
+    return out.join('\n');
+  }
+  function update(){
+    const c=counts(STEPS),d=decision(c);
+    $('status').className='summary '+d.kind;
+    $('status').textContent='全16項目：'+formatCounts(c)+'\n'+d.label;
+    for(const g of GROUPS)$('count-'+g.id).textContent=formatCounts(counts(g.steps));
+    $('report').value=reportText();
+  }
+  function message(text){$('message').textContent=text;}
+  function exportJSON(){
+    const payload={tool:'volley-referee-assist-step31',...data};
+    const json=JSON.stringify(payload,null,2);
+    const blob=new Blob([json],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='volley-step31-validation-'+(data.date||'undated')+'.json';
+    document.body.append(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000);
+    message('評価JSONの保存操作を実行しました。端末のダウンロード履歴を確認してください。');
+  }
+  async function copy(){
+    const value=reportText();
+    try{await navigator.clipboard.writeText(value);message('結果をコピーしました。');}
+    catch(e){$('report').focus();$('report').select();message('自動コピー不可。選択された文章を手動でコピーしてください。');}
+  }
+  function reset(){
+    if(!confirm('検証結果とメモだけを消去します。試合アプリのデータは変更しません。よろしいですか？'))return;
+    data=fresh();$('device').value='';$('browser').value='';$('date').value='';
+    renderGroups();save();message('検証結果だけを消去しました。');
+  }
+  function boot(){
+    $('device').value=data.device;$('browser').value=data.browser;$('date').value=data.date;
+    for(const id of ['device','browser','date']){
+      $(id).addEventListener('input',()=>{data[id]=$(id).value;save();});
+    }
+    $('copy').addEventListener('click',copy);
+    $('export').addEventListener('click',exportJSON);
+    $('reset').addEventListener('click',reset);
+    renderGroups();
+    try{const k='__volley_step31_probe__';localStorage.setItem(k,'1');localStorage.removeItem(k);}
+    catch(e){storageOK=false;}
+    $('storage').textContent=storageOK?'入力結果はこの端末に自動保存されます。':'保存領域を利用できません。必要に応じてJSONを保存してください。';
+    $('storage').style.color=storageOK?'#536f7c':'#9c3428';
+    update();
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
