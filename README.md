@@ -122,3 +122,10 @@ Androidスマートフォンでの横向き使用を想定した、6人制・9�
 ## STEP 31：試合通し検証の記録ページ
 
 [Android実機・試合通し検証ページ](./match-test.html)では、STEP30の16項目について「合格／問題あり／未確認」を手動で記録し、自動保存、結果テキストコピー、評価専用JSON書き出しができます。試合データとは別の保存領域を使い、審判アプリの得点処理は変更しません。**このページは検証結果の記録補助であり、自動で試合ロジックを判定しません。** Android実機上のページ操作はまだ未確認です。詳細：[STEP31_TEST_REPORT.md](./STEP31_TEST_REPORT.md)。
+
+
+## STEP 32：D03 JSON復元の問題を切り分ける
+
+2026年11月23日に報告されたAndroid実機でのSTEP31結果は**合格12／問題あり1（D03）／未確認3（9人制）**。6人制の4項目は合格ですが、JSON復元に問題があるため総合判定は要修正です。
+
+[読み取り専用D03診断ページ](./restore-diagnostic.html)で、JSONを復元・変更せず、端末の保存状態とファイルの基本形式を確認し、症状をコピーできます。試合処理の不具合はまだ修正していません。詳細：[STEP32_TEST_REPORT.md](./STEP32_TEST_REPORT.md)。問題追跡：[GitHub issue #1](https://github.com/psw1992shosuzu/volley-referee-assist/issues/1)。
