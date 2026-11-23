@@ -12,9 +12,9 @@
 </head>
 <body><main>
 <h1>STEP 28｜実戦使用前の最終評価</h1>
-<p>VOLLEY REFEREE ASSIST v2.7／Android試験運用の可否を整理するページです。端末上の環境を点検し、審判操作を<strong>利用者が実際に確認した結果</strong>を記録します。</p>
+<p>VOLLEY REFEREE ASSIST v2.8／Android試験運用の可否を整理するページです。端末上の環境を点検し、審判操作を<strong>利用者が実際に確認した結果</strong>を記録します。</p>
 <div class="intro"><b>正式な審判用記録システムの認証ではありません。</b>「試験運用可能」は、この端末・この評価項目について暫定的に条件を満たしたという意味です。大会要項・最新の競技規則・公式記録用紙・審判団の判断が優先されます。練習試合で確認し、本番中の復元テストや初期化は行わないでください。</div>
-<section class="card"><h2>検証ページ</h2><div class="nav"><a href="./index.html">試合アプリ</a><a href="./recovery-test.html" class="secondary">STEP 27 復元テスト</a><a href="./diagnostics.html" class="secondary">Android診断</a><a href="./trial.html" class="secondary">操作性評価</a></div></section>
+<section class="card"><h2>検証ページ</h2><div class="nav"><a href="./index.html">試合アプリ</a><a href="./recovery-test.html" class="secondary">STEP 27 復元テスト</a><a href="./diagnostics.html" class="secondary">Android診断</a><a href="./trial.html" class="secondary">操作性評価</a><a href="./match-test.html" class="secondary">STEP31試合通し検証</a></div></section>
 <section class="card"><h2>端末・データの自動確認</h2><p class="muted">チェック結果はこのページで利用できるAPI・保存状態から読み取ったものです。通信状態表示だけでオフライン起動に合格とは判定しません。</p><div id="auto" class="auto-grid" aria-live="polite"></div><div class="buttons" style="margin-top:10px"><button id="run">自動確認を再実行</button></div><p class="muted">STEP 27の診断記録が完了していても、実際に端末を再起動したかは自動では判断できません。下の手動確認が必要です。</p></section>
 <section class="card"><h2>実機・試合操作の確認</h2><p class="muted">各項目を「合格」「問題あり」「未確認」で記録します。端末・状況を確認せずに一括合格にはできません。メモには患者名・選手の氏名などの個人情報を記入しないでください。</p><p id="counts" class="counter">未確認</p><div id="manual"></div></section>
 <section class="card"><h2>総合判定</h2><div id="decision" class="notice" data-kind="warn" role="status">確認中…</div><p class="muted">試験運用可能となっても、公式試合への単独導入を保証するものではありません。バックアップを準備し、紙の公式記録と並行して使用してください。</p></section>
@@ -22,7 +22,7 @@
 </main>
 <script>
 'use strict';
-const VERSION='2.7',CACHE='volley-referee-assist-v28-20261122';
+const VERSION='2.8',CACHE='volley-referee-assist-v29-20261122';
 const KEY='__volley_step28_readiness__',MATCH_KEY='volley_referee_assist_v10',RECOVERY_KEY='__volley_step27_recovery_test__';
 const RESOURCES=['index.html','manifest.webmanifest','icon-192.png','icon-512.png','diagnostics.html','trial.html','recovery-test.html','release-check.html'];
 const STEPS=[
